@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as LogoIcon } from '../../../assets/icons/logoname.svg';
 import introVideo from '../../../assets/videos/intro.mp4';
 
-const Intro = () =>
+const Intro = ({ onIntroLoaded }) =>
 {
     // const navigate = useNavigate();
     const videoRef = useRef(null);
@@ -13,6 +13,7 @@ const Intro = () =>
         document.body.style.overflow = 'hidden';
         const handleOnPlay = () =>
         {
+            onIntroLoaded();
             setTimeout(() =>
             {
                 document.getElementById('content').classList.remove('opacity-0');
