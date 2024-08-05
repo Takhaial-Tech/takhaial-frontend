@@ -12,7 +12,6 @@ import nine from '../../../assets/images/clients/9.png';
 import ten from '../../../assets/images/clients/10.png';
 import eleven from '../../../assets/images/clients/11.png';
 import twelve from '../../../assets/images/clients/12.png';
-import thirteen from '../../../assets/images/clients/13.png';
 import fourteen from '../../../assets/images/clients/14.jpg';
 import fifteen from '../../../assets/images/clients/15.png';
 import sixteen from '../../../assets/images/clients/16.webp';
@@ -140,7 +139,6 @@ experiences.
         { year: '2019', img: ten, href: '' },
         { year: '2021', img: eleven, href: '' },
         { year: '2022', img: twelve, href: '', width: 80 },
-        { year: '2023', img: thirteen, href: '' },
     ];
 
 
