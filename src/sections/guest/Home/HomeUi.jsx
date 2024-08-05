@@ -9,7 +9,7 @@ const HomeUi = (props) =>
     const videoRef = useRef();
     useEffect(() =>
     {
-        if (videoRef.current) videoRef.current.play();
+        if (videoRef?.current) videoRef.current.play();
     }, [])
     return (
         <section id="section_1" className={'min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1] relative py-[60px] home'} >

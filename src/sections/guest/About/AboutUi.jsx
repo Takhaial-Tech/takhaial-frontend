@@ -1,9 +1,15 @@
+import { useEffect, useRef } from 'react';
 import aboutVideo from '../../../assets/videos/about.mp4'
 
 const AboutUi = (props) =>
 {
     const { title, desc, title2, desc2 } = props;
-    
+    const videoRef = useRef();
+    useEffect(() =>
+    {
+        if (videoRef?.current) videoRef.current.play();
+    }, [])
+
     return (
         <section id="section_2" className={' min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px]'} >
 
@@ -18,7 +24,7 @@ const AboutUi = (props) =>
                     <h2 className={"leading-relaxed content-end text-sm"}> {desc2} </h2>
                 </div>
             </div>
-            <video src={aboutVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"/>
+            <video ref={videoRef} src={aboutVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"/>
         </section>
     )
 }
