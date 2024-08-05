@@ -2,16 +2,10 @@ import watchIcon from '../../../assets/icons/watch.svg'
 import quoteIcon from '../../../assets/icons/qouticonrev.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
 import CustomModal from '../../../components/CustomModal';
-import { useEffect, useRef } from 'react';
 
 const ProductsUi = (props) =>
 {
     const { title, products, product, setProduct } = props;
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef?.current) videoRef.current.play();
-    }, [])
 
     return (
         <>
@@ -36,7 +30,7 @@ const ProductsUi = (props) =>
                                             {'watch'}  <img alt={''} width={15} className="ml-2" height={15} src={watchIcon} />
                                         </button>
                                         <a
-                                            href="#section_9" 
+                                            href="#section_9"
                                             className="flex w-full transition-all duration-500  rounded-br-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] flex justify-center items-center">
                                             {'quote'}  <img alt={''} width={15} className="ml-2" height={15} src={quoteIcon} />
                                         </a>
@@ -47,16 +41,18 @@ const ProductsUi = (props) =>
                     </div>
                 </div>
 
-
-                <video ref={videoRef} muted src={productsVideo} type="video/mp4"  loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"/>
+                <video
+                    id="myVideo"
+                    webkit-playsinline="true"
+                    playsInline={true} muted src={productsVideo} type="video/mp4" loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
             </section>
 
             <CustomModal
                 isOpen={!!product}
-                onClose={() => {setProduct(false)}}
+                onClose={() => { setProduct(false) }}
                 contentLabel="Product page"
             >
-                <video controls  
+                <video controls
                     style={{ width: '100%', height: 'calc(100vh - 200px)' }} // Set default width and height
                 >
                     {/* <source src={productsVideo} type="video/mp4" /> */}

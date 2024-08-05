@@ -1,16 +1,11 @@
 import homeVideo from '../../../assets/videos/home.mp4'
 import profilePdf from '../../../assets/documents/companyProfile.pdf'
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
 
 const HomeUi = (props) =>
 {
     const { title, desc } = props;
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef?.current) videoRef.current.play();
-    }, [])
+
     return (
         <section id="section_1" className={'min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1] relative py-[60px] home'} >
             <div className="bg-gradient-radial absolute top-0 left-0 right-0 bottom-0 z-[0]" />
@@ -41,7 +36,6 @@ const HomeUi = (props) =>
             </div>
 
             <video
-                ref={videoRef}
                 id="myVideo"
                 webkit-playsinline="true"
                 playsInline={true}

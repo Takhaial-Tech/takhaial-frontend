@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import  { Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import SwiperCore from 'swiper/core';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -9,17 +9,12 @@ import 'swiper/css/scrollbar';
 import logovertical from '../../../assets/icons/logovertical.svg'
 import bgVideo from '../../../assets/videos/home.mp4'
 import SlideNextButton from './SlideNextButton';
-import { useEffect, useRef } from 'react';
+
 SwiperCore.use([Autoplay]);
+
 const SuccessUi = (props) =>
 {
     const { title, desc, history, clients, activeStep, setActiveStep } = props;
-    
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef?.current) videoRef.current.play();
-    }, [])
 
     return (
         <section id="section_5" className={'min-h-[100vh] relative text-white justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px] '} >
@@ -66,7 +61,10 @@ const SuccessUi = (props) =>
 
                 <h1 className={'text-center mt-10 font-bold text-l text-white relative glitch-noise'} data-glitch={desc} >{desc}</h1>
             </div>
-            <video ref={videoRef} src={bgVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"/>
+            <video
+                id="myVideo"
+                webkit-playsinline="true"
+                playsInline={true} src={bgVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
         </section>
     )
 }
