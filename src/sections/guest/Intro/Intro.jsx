@@ -10,7 +10,7 @@ const Intro = ({ onIntroLoaded }) =>
 
     useEffect(() =>
     {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflowY = 'hidden';
         const handleOnPlay = () =>
         {
             onIntroLoaded();
@@ -21,8 +21,8 @@ const Intro = ({ onIntroLoaded }) =>
 
             setTimeout(() =>
             {
-                document.body.style.overflow = 'auto';
                 setIntroEnd(true)
+                document.body.style.overflowY = 'auto';
             }, 7000);
         };
 
