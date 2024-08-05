@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+}
+
+.btn {
+    width: 30px;
+}
+
+.firstInput {
+    width: calc(50% - 8px) !important;
+}
+
+.firstInput,
+.secondInput {
+    margin-right: 16px;
+}
+
+.secondInput {
+    width: calc(50% - 60px - 16px - 8px);
+}

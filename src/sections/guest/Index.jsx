@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import Navbar from '../../components/Navbar';
 import LoadingScreen from '../../components/LoadingScreen';
+import MediaCoverage from './MediaCoverage/MediaCoverage';
+import Clients from './Clients/Clients';
 
 const Intro = React.lazy(() => import('./Intro/Intro'));
 const Home = React.lazy(() => import('./Home/Home'));
@@ -18,7 +20,7 @@ const Index = () =>
 
     useEffect(() =>
     {
-        if (introLoaded && step < 7)
+        if (introLoaded && step < 9)
         {
             const timer = setTimeout(() => setStep(step + 1), 1000);
             return () => clearTimeout(timer);
@@ -44,12 +46,18 @@ const Index = () =>
                 <Products />
             )}
             {step >= 5 && (
-                    <Success />
+                <Success />
             )}
             {step >= 6 && (
                 <Sectors />
             )}
             {step >= 7 && (
+                <MediaCoverage />
+            )}
+            {step >= 8 && (
+                <Clients />
+            )}
+            {step >= 9 && (
                 <Contact />
             )}
         </>

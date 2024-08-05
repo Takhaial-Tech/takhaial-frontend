@@ -12,12 +12,18 @@ const Contact = () =>
         { img: inicon, href: '' },
         { img: tagicon, href: '' },
     ]
-
+    const onSendMessage = (values) =>
+    {
+        const emailDraft = `mailto:info@takhaialtech.com?subject=Email from ${values.name}&body=Phone: ${encodeURIComponent(values.phone)}%0D%0AEmail: ${encodeURIComponent(values.email)}%0D%0AMessage: ${encodeURIComponent(values.message)}`;
+        window.open(emailDraft, '_blank');
+    }
+    
     return (
         <ContactUi
             title="Contact Us"
             desc="We look forward to learning more about you and how we can help you achieve your goals!"
             channels={channels}
+            onSendMessage={onSendMessage}
         />
     )
 }

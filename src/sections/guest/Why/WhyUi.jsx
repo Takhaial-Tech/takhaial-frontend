@@ -5,11 +5,11 @@ const WhyUi = (props) =>
 {
     const {title, desc} = props;
     return (
-        <section dir={'ltr'} id="section_3" className={'min-h-[100vh] relative text-white flex justify-center items-center pt-[2rem] bg-[#000] z-[1]  relative py-[60px] overflow-hidden'} >
+        <section dir={'ltr'} id="section_3" className={'min-h-[100vh] relative text-white flex justify-center items-center pt-[2rem] bg-[#000] z-[1]  relative py-[60px] overflow-hidden '} >
 
             <div className="w-full bg-gradient-radial2 min-h-[80vh] content-center">
 
-                <div className="md:container md:mx-auto md:grid md:grid-cols-5 gap-6 items-center">
+                <div className="px-[20px]  md:container md:mx-auto md:grid md:grid-cols-5 gap-6 items-center">
                     <img src={whyBG} alt=''  height={130} width={230} className="absolute  right-[-20px] z-[-10] " />
                     <div className="" >
                     </div>

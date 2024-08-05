@@ -14,7 +14,7 @@ const Sectors = () =>
 
     const sectors = [
         {
-            video: 'https://arglb.blob.core.windows.net/video/vecteezy_abstract-glowing-line-particles-wave-dark-background_34769234.mp4',
+            // video: 'https://arglb.blob.core.windows.net/video/vecteezy_abstract-glowing-line-particles-wave-dark-background_34769234.mp4',
             icon: automotive,
             title_ar: 'السيارات',
             title: 'Automotive',
@@ -22,7 +22,7 @@ const Sectors = () =>
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },
         {
-            video: testVideo,
+            // video: testVideo,
             icon: tourism,
             title_ar: 'سياحة',
             title: 'Tourism',
@@ -30,7 +30,7 @@ const Sectors = () =>
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },
         {
-            video: testVideo,
+            // video: testVideo,
             icon: realestate,
             title_ar: 'عقارات',
             title: 'Real Estate',
@@ -38,7 +38,7 @@ const Sectors = () =>
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },
         {
-            video: testVideo,
+            // video: testVideo,
             icon: education,
             title_ar: 'تعليم',
             title: 'Educational',
@@ -46,7 +46,7 @@ const Sectors = () =>
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },
         {
-            video: testVideo,
+            // video: testVideo,
             icon: healthcare,
             title_ar: 'صحة',
             title: 'Healthcare',
@@ -54,10 +54,10 @@ const Sectors = () =>
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },
         {
-            video: testVideo,
+            // video: testVideo,
             icon: others,
             title_ar: 'أخرى',
-            title: 'Others',
+            title: 'Other services',
             description_ar: '',
             description: 'Virtual Reality Digital E-Showrooms. Virtual Reality Custom Vehicle Configurators. Augmented Reality True-To-Life Projections. Augmented Reality Custom Vehicle Configurators.'
         },

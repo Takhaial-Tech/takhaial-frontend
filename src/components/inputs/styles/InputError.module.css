@@ -1,0 +1,37 @@
+.errorText {
+    color: #d3272a;
+    font-size: var(--font-size-100);
+    margin: 0;
+}
+
+.borderError {
+    border-color: #d3272a !important;
+}
+
+.formError svg,
+.formError svg path {
+    color: #d3272a !important;
+    fill: #d3272a !important;
+    fill-opacity: 1;
+}
+
+.formError input,
+.formError fieldset,
+.formError textarea {
+    border: 1px solid #d3272a !important;
+}
+
+.formError label {
+    color: #d3272a !important;
+}
+
+.errorContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.errorIcon {
+    margin-left: 2px;
+    margin-right: 2px;
+}

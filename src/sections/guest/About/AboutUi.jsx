@@ -18,9 +18,7 @@ const AboutUi = (props) =>
                     <h2 className={"leading-relaxed content-end text-sm"}> {desc2} </h2>
                 </div>
             </div>
-            <video autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover">
-                <source src={aboutVideo} type="video/mp4" />
-            </video>
+            <video src={aboutVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"/>
         </section>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from '../assets/icons/logo.svg'
 import CustomModal from "./CustomModal";
 import ficon from '../assets/icons/ficon.svg'
@@ -10,15 +10,15 @@ import QuickActions from "./QuickActions";
 const Navbar = (props) =>
 {
 
-    const [progress, setProgress] = useState(0);
     const menuLinks = [
-        // {name_ar:'عن الشركة',name:'Home',url:'section_1'},
         { name: 'About', url: 'section_2' },
         { name: 'Why', url: 'section_3' },
         { name: 'Products', url: 'section_4' },
         { name: 'Success', url: 'section_5' },
         { name: 'Sectors', url: 'section_6' },
-        { name: 'Contact', url: 'section_8' },
+        { name: 'Media', url: 'section_7' },
+        { name: 'Clients', url: 'section_8' },
+        { name: 'Contact', url: 'section_9' },
     ]
     const [menu, setMenu] = useState(false);
 
@@ -28,19 +28,37 @@ const Navbar = (props) =>
         { img: inicon, href: '' },
         { img: tagicon, href: '' },
     ]
+
     const onScrollbasic = () =>
     {
-        const scrolled = window.scrollY;
-        const height = document.documentElement.scrollHeight - window.innerHeight;
-
-        const scrolledPercentage = ((scrolled / height) * 100) - 9;
-
-        var bar = document.getElementById('nav__track');
-        if (bar != null)
+        const sections = document.querySelectorAll('section');
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        let scrolled = window.scrollY;
+        let progress = 0;
+        console.log("sections", sections)
+        if (sections.length > 0)
         {
-            bar.style.width = scrolledPercentage + '%';
+            const firstSectionTop = sections[0].offsetTop;
+            const lastSectionBottom = sections[sections.length - 1].offsetTop + sections[sections.length - 1].offsetHeight;
+
+            if (scrolled < firstSectionTop)
+            {
+                progress = 0;
+            } else if (scrolled > lastSectionBottom)
+            {
+                progress = 100;
+            } else
+            {
+                const visibleHeight = scrolled - firstSectionTop;
+                progress = (visibleHeight / totalHeight) * 100 ;
+            }
         }
-        setProgress(scrolledPercentage);
+
+        const bar = document.getElementById('nav__track');
+        if (bar)
+        {
+            bar.style.width = (progress ) + '%';
+        }
     };
 
     useEffect(() =>
@@ -49,45 +67,6 @@ const Navbar = (props) =>
         return () => window.removeEventListener("scroll", onScrollbasic);
     }, []);
 
-    const sections = {
-        section_1: useRef(null),
-        section_2: useRef(null),
-        section_3: useRef(null),
-        section_4: useRef(null),
-        section_5: useRef(null),
-        section_6: useRef(null),
-    };
-
-
-    useEffect(() =>
-    {
-        const observer = new IntersectionObserver(
-            (entries) =>
-            {
-                entries.forEach((entry) =>
-                {
-                    if (entry.isIntersecting)
-                    {
-                        // setActiveSection(entry.target.id);
-                    }
-                });
-            },
-            { rootMargin: "-50% 0px -50% 0px" }
-        );
-
-        Object.values(sections).forEach((ref) =>
-        {
-            if (ref.current) observer.observe(ref.current);
-        });
-
-        return () =>
-        {
-            Object.values(sections).forEach((ref) =>
-            {
-                if (ref.current) observer.unobserve(ref.current);
-            });
-        };
-    }, [sections]);
 
     return (
         <>
@@ -107,14 +86,16 @@ const Navbar = (props) =>
                     </button>
 
 
-                    <nav className="top-[15px] md:block hidden relative top-0 right-0 w-[55%] text-white z-10 h-[6rem] after:content after:absolute after:top-[1.7rem] after:left-0 after:w-full after:z-[-1] after:bg-[#fff]">
+                    <nav className="top-[15px] md:block hidden relative top-0 right-0  text-white z-10 h-[6rem] after:content after:absolute after:top-[1.7rem] after:left-0 after:w-full after:z-[-1] after:bg-[#fff]">
 
 
                         <small id="nav__track" className={"z-10 absolute top-[1.7rem] left-[0] h-[0.3rem]  bg-[red] bottom-0 before:left-[0] before:bg-[red] before:top-[-4px]  before:z-50 before:h-[5.5px] before:content before:absolute before:w-[0] rounded-[40px]"}></small>
-                        <div className="relative w-[max(150rem, 200%)] pb-[0px] pl-[0px] p-[1.5rem] h-[6rem]" data-draggable>
+                        <div className="relative w-[max(150rem, 200%)] pb-[0px] px-[0px] p-[1.5rem] h-[6rem]" data-draggable>
                             <ul className="justify-between list-img-none flex content-center m-[0px] p-[0px] after:content after:absolute after:top-[1.7rem] after:left-[0] after:w-[100%] after:h-[0.25rem] after:z-[-1] after:bg-[#fff] after:cursor-pointer after:rounded-[40px]">
                                 {menuLinks.map((a, k) =>
-                                    <li key={k}> <a href={"#" + a.url} className="min-w-[5rem] after:transform   text-sm after:content after:absolute after:top-0 after:left-[44%] after:w-[0.65rem] after:h-[0.65rem] after:bg-[red] after:rounded-full  relative block  pt-[1.25rem] px-[1rem] pb-[0.5rem] text-center text-white no-underline " data-link><span>{a.name}</span></a> </li>
+                                    <li key={k}> <a href={"#" + a.url} className={`${!k || k === menuLinks.length - 1? 'w-[5rem]' : 'w-[5rem]' } after:transform   text-sm after:content after:absolute after:top-0 dots-nav after:w-[0.65rem] after:h-[0.65rem] after:bg-[red] after:rounded-full  relative block  pt-[1.25rem] px-[1rem] pb-[0.5rem] text-center text-white no-underline `}
+                                        style={{ backgroundColor:"" }}
+                                    data-link><span>{a.name}</span></a> </li>
                                 )}
                             </ul>
                         </div>

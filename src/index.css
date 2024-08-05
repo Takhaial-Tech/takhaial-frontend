@@ -412,6 +412,27 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    overflow-x: hidden;
+body, html {
+    overflow-x: hidden !important;
+}
+
+.test{
+    background-color: #494e53;
+    width: 100%;
+}
+
+.dots-nav::after{
+    left: calc(50% - 0.325rem);
+}
+
+
+@media (max-width:768px) {
+    /* h1{
+        font-size: 1.1rem !important;
+    } */
+    .home{
+        /* max-width: 90%; */
+        /* background-color: red !important;
+        z-index: 99999999; */
+    }
 }
