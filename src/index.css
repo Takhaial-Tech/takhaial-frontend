@@ -412,27 +412,59 @@ html {
     scroll-behavior: smooth;
 }
 
-body, html {
+body,
+html {
     overflow-x: hidden !important;
 }
 
-.test{
+.test {
     background-color: #494e53;
     width: 100%;
 }
 
-.dots-nav::after{
+.dots-nav::after {
     left: calc(50% - 0.325rem);
 }
 
 
 @media (max-width:768px) {
+
     /* h1{
         font-size: 1.1rem !important;
     } */
-    .home{
+    .home {
         /* max-width: 90%; */
         /* background-color: red !important;
         z-index: 99999999; */
+    }
+}
+
+.media-coverage {
+
+    /* background: linear-gradient(to bottom, rgba(16, 16, 16, 0.8), rgb(41, 41, 41)) !important; */
+    /* background: linear-gradient(180deg, #000818, #1B355B); */
+    /* background: linear-gradient(180deg, #000715, #1B355B 50%, #000715); */
+    /* background: linear-gradient(180deg, #000715, #1B355B ); */
+    /* background-color: #494e53; */
+}
+
+.clients {
+    /* background: linear-gradient(180deg, #1B355B, #000715); */
+    /* background: linear-gradient(180deg, #00040a, #152947 50%, #000715); */
+}
+
+@media (max-width:600px) {
+
+    .media-coverage img,
+    .clients img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width:600px) {
+
+    .media-coverage h1,
+    .clients h1 {
+        font-size: 1rem !important;
     }
 }

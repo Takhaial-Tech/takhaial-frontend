@@ -9,12 +9,60 @@ import 'swiper/css/scrollbar';
 import logovertical from '../../../assets/icons/logovertical.svg'
 import bgVideo from '../../../assets/videos/home.mp4'
 import SlideNextButton from './SlideNextButton';
+import { useEffect, useRef } from 'react';
 
 SwiperCore.use([Autoplay]);
 
 const SuccessUi = (props) =>
 {
     const { title, desc, history, clients, activeStep, setActiveStep } = props;
+
+    // autoplay when appear
+    const swiperRef = useRef(null);
+    const containerRef = useRef(null);
+
+    useEffect(() =>
+    {
+        const swiperInstance = swiperRef.current.swiper;
+
+        const handleIntersection = (entries) =>
+        {
+            entries.forEach(entry =>
+            {
+                if (entry.isIntersecting)
+                {
+                    swiperInstance.autoplay.start();
+                } else
+                {
+                    swiperInstance.autoplay.stop();
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.5, // Adjust as needed
+        });
+
+        if (containerRef.current)
+        {
+            observer.observe(containerRef.current);
+        }
+
+        return () =>
+        {
+            if (containerRef.current)
+            {
+                observer.unobserve(containerRef.current);
+            }
+        };
+    }, []);
+
+    // enforce video to play 
+    const videoRef = useRef();
+    useEffect(() =>
+    {
+        if (videoRef.current) videoRef.current.play();
+    }, [])
 
     return (
         <section id="section_5" className={'min-h-[100vh] relative text-white justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px] '} >
@@ -28,14 +76,16 @@ const SuccessUi = (props) =>
                 </div>
 
                 <div className="z-[10] relative">
-                    <div className="lg:ml-[90px] ">
+                    <div ref={containerRef} className="lg:ml-[90px] " >
                         <Swiper
+                            ref={swiperRef}
                             autoplay={{
                                 delay: 3000,
                                 disableOnInteraction: false,
                             }}
                             className='success-slider'
                             slidesPerView={1}
+                            loop={true}
                             onSlideChange={(e) => setActiveStep(e.activeIndex)}
                         >
                             <SlideNextButton activeStep={activeStep} setActiveStep={setActiveStep} history={history} />
@@ -45,8 +95,8 @@ const SuccessUi = (props) =>
                                     <div className="flex items-baseline flex-wrap mb-[30px]">
                                         <div className="leading-tight  font-bold text-7xl text-white glitch w-full sm:w-auto" data-glitch={a.year}>{a.year}</div>
                                         {clients.filter(e => e.year === a.year).map((c, key) => (
-                                            <div key={key} className={'ml-2 content-center' + (activeStep === k ? 'transition duration-700 delay-' + (key + 2) + '00 opacity-1' : 'opacity-0')}>
-                                                <img className="m-auto max-h-[60px] max-w-[60px]" alt="" src={c.img} />
+                                            <div key={key} className={'m-2 content-center' + (activeStep === k ? 'transition duration-700 delay-' + (key + 2) + '00 opacity-1' : 'opacity-0')}>
+                                                <img className="m-auto h-[50px] w-[auto]" alt="" src={c.img} />
                                             </div>
                                         ))}
                                     </div>
@@ -62,9 +112,15 @@ const SuccessUi = (props) =>
                 <h1 className={'text-center mt-10 font-bold text-l text-white relative glitch-noise'} data-glitch={desc} >{desc}</h1>
             </div>
             <video
-                id="myVideo"
+                ref={videoRef}
                 webkit-playsinline="true"
-                playsInline={true} src={bgVideo} type="video/mp4" autoPlay muted loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
+                playsInline={true}
+                src={bgVideo}
+                type="video/mp4"
+                autoPlay
+                muted
+                loop
+                className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
         </section>
     )
 }

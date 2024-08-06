@@ -2,10 +2,17 @@ import watchIcon from '../../../assets/icons/watch.svg'
 import quoteIcon from '../../../assets/icons/qouticonrev.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
 import CustomModal from '../../../components/CustomModal';
+import { useEffect, useRef } from 'react';
 
 const ProductsUi = (props) =>
 {
     const { title, products, product, setProduct } = props;
+    // enforce video to play 
+    const videoRef = useRef();
+    useEffect(() =>
+    {
+        if (videoRef.current) videoRef.current.play();
+    }, [])
 
     return (
         <>
@@ -42,10 +49,15 @@ const ProductsUi = (props) =>
                 </div>
 
                 <video
+                    ref={videoRef}
                     autoPlay
-                    id="myVideo"
                     webkit-playsinline="true"
-                    playsInline={true} muted src={productsVideo} type="video/mp4" loop className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
+                    playsInline={true}
+                    muted
+                    src={productsVideo}
+                    type="video/mp4"
+                    loop
+                    className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
             </section>
 
             <CustomModal

@@ -38,7 +38,7 @@ const Intro = ({ onIntroLoaded }) =>
                 videoRef.current.removeEventListener('play', handleOnPlay);
             }
         };
-    }, []);
+    }, [onIntroLoaded]);
 
     return (
         <div className={"h-full w-full fixed inset-0 z-[100] bg-[#000] transition duration-700 ease-in-out" + (introEnd ? ' pointer-events-none opacity-0' : '')}>
@@ -53,7 +53,6 @@ const Intro = ({ onIntroLoaded }) =>
                 muted
                 src={introVideo}
                 type="video/mp4"
-                id="myVideo"
                 webkit-playsinline="true"
                 playsInline={true}
                 autoPlay

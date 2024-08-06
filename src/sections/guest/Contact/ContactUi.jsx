@@ -9,11 +9,18 @@ import { FormikContainer, Input } from '../../../components/inputs'
 import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
 import { contactValidationSchema } from './contactValidationSchema'
+import { useEffect, useRef } from 'react'
 
 const ContactUi = (props) =>
 {
     const { title, desc, channels, onSendMessage } = props;
-
+    // enforce video to play 
+    const videoRef = useRef();
+    useEffect(() =>
+    {
+        if (videoRef.current) videoRef.current.play();
+    }, [])
+    
     return (
         <>
             <section id="section_9" className={' mb-20 md:mb-0 min-h-screen relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#020815] z-[1] grid'} >
@@ -86,9 +93,15 @@ const ContactUi = (props) =>
                 </ul>
                 <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > © 2024 <a href="#section_1" >Takhaial.tech</a> All rights reserved. developed by <a href="https://digi-sail.com/" target="_black">DIGI-SAIL</a> </p>
                 {<video
-                    id="myVideo"
+                    ref={videoRef}
                     webkit-playsinline="true"
-                    playsInline={true} src={contactVideo} type="video/mp4" autoPlay muted loop className=" absolute  left-0 z-[-1] top-[0] h-[100vh] bottom-[0] w-full  object-cover" />
+                    playsInline={true}
+                    src={contactVideo}
+                    type="video/mp4"
+                    autoPlay
+                    muted
+                    loop
+                    className=" absolute  left-0 z-[-1] top-[0] h-[100vh] bottom-[0] w-full  object-cover" />
                 }
             </section>
 

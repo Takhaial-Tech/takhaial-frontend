@@ -12,11 +12,14 @@ import nine from '../../../assets/images/clients/9.png';
 import ten from '../../../assets/images/clients/10.png';
 import eleven from '../../../assets/images/clients/11.png';
 import twelve from '../../../assets/images/clients/12.png';
-import fourteen from '../../../assets/images/clients/14.jpg';
+import fourteen from '../../../assets/images/clients/14.png';
 import fifteen from '../../../assets/images/clients/15.png';
 import sixteen from '../../../assets/images/clients/16.webp';
 import seventeen from '../../../assets/images/clients/17.png';
 import eighteen from '../../../assets/images/clients/18.png';
+import corona from '../../../assets/images/clients/corona.png';
+import ndg from '../../../assets/images/clients/ndg.png';
+import giu from '../../../assets/images/clients/giu.png';
 
 
 const Success = () =>
@@ -120,12 +123,13 @@ experiences.
     ]
 
     const clients = [
-        { year: '2015', img: fourteen, href: '', width: 150 },
-        { year: '2016', img: four, href: '', width: 80 },
-        { year: '2017', img: fifteen, href: '', width: 120 },
-        { year: '2022', img: sixteen, href: '', width: 40 },
-        { year: '2023', img: seventeen, href: '', width: 80 },
-        { year: '2024', img: eighteen, href: '', width: 90 },
+        { year: '2015', img: fourteen, href: '', },
+        { year: '2016', img: four, href: '',  },
+        { year: '2017', img: fifteen, href: '',  },
+        { year: '2020', img: corona, href: '', },
+        { year: '2022', img: sixteen, href: '' },
+        { year: '2023', img: seventeen, href: ''},
+        { year: '2024', img: eighteen, href: '' },
 
         { year: '2022', img: one, href: '' },
         { year: '2019', img: two, href: '' },
@@ -138,7 +142,11 @@ experiences.
         { year: '2016', img: nine, href: '' },
         { year: '2019', img: ten, href: '' },
         { year: '2021', img: eleven, href: '' },
-        { year: '2022', img: twelve, href: '', width: 80 },
+        { year: '2022', img: ndg, href: '' },
+
+        { year: '2022', img: twelve, href: '' },
+        { year: '2022', img: giu, href: '' },
+
     ];
 
 
