@@ -412,9 +412,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body,
-html {
+body {
     overflow-x: hidden !important;
+    /* overflow-y: auto; */
 }
 
 .test {
@@ -453,11 +453,9 @@ html {
     /* background: linear-gradient(180deg, #00040a, #152947 50%, #000715); */
 }
 
-@media (max-width:600px) {
-
-    .media-coverage img,
-    .clients img {
-        max-width: 100%;
+@media (max-width:768px) {
+    .modal-video video {
+        margin-bottom: 20px;
     }
 }
 
@@ -466,5 +464,10 @@ html {
     .media-coverage h1,
     .clients h1 {
         font-size: 1rem !important;
+    }
+
+    .media-coverage img,
+    .clients img {
+        max-width: 100%;
     }
 }

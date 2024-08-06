@@ -1,4 +1,5 @@
-import Modal  from 'react-modal';
+import { useEffect } from 'react';
+import Modal from 'react-modal';
 
 
 // Make sure to set the app element to avoid accessibility issues
@@ -7,6 +8,12 @@ Modal.setAppElement('#root');
 const CustomModal = (props) =>
 {
     const { children, isOpen, onClose, contentLabel } = props;
+    
+    useEffect(() =>
+    {
+        if (isOpen) document.body.style.overflowY = 'hidden';
+        else document.body.style.overflowY = 'auto';
+    }, [isOpen])
 
     return (
         <Modal

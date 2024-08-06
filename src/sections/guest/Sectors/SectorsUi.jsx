@@ -14,16 +14,16 @@ const SectorsUi = (props) =>
                 {desc && <p className="mt-[30px] justify-self-center">{desc}</p>}
                 <div className="px-[20px] w-full md:grid md:grid-cols-3 gap-6 items-center">
                     {sectors.map((ser, key) =>
-                        <Sector ser={ser} key={key} />
+                        <Sector setModal={setModal} ser={ser} key={key} />
                     )}
                 </div>
             </section>
 
             <CustomModal isOpen={!!modal} onClose={() => setModal(false)}>
                 {sectors.filter(e => e.title === modal.title).map((ser, key) => (
-                    <div key={key} className="relative inline-table md:grid grid-cols-2 gap-6">
-                        <video controls autoPlay muted style={{ borderRadius: "0.75rem", width: "100%" }}>
-                            {/* <source src={ser.video} type="video/mp4" /> */}
+                    <div key={key} className="modal-video relative inline-table md:grid grid-cols-2 gap-6 flex items-center pb-[40px]" >
+                        <video className='' controls autoPlay style={{ borderRadius: "0.75rem", width: "100%" }}>
+                            <source src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'} type="video/mp4" />
                         </video>
                         <div className="min-h-[250px] border border-solid border-[red] p-5 rounded-xl transition-all duration-500 grid relative content-end bg-[#000] group/item">
                             <img alt="" width={50} height={50} src={ser.icon} />

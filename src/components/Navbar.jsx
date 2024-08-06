@@ -75,7 +75,7 @@ const Navbar = (props) =>
                     <a href="#section_1" className="m-5">
                         <img src={logo} alt="" width={200} height={40} className="cursor-pointer hover:animate-slowspin " />
                     </a>
-                    <button onClick={() => setMenu(true)} className="md:hidden block transition-all duration-500 rounded-xl mr-5 p-[6px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]">
+                    <button onClick={() => setMenu(true)} className="lg:hidden block transition-all duration-500 rounded-xl mr-5 p-[6px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]">
                         <svg id="hamburger" className="w-[50px] h-[30px]" viewBox="0 0 60 40">
                             <g stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M10,7 L50,7 Z"></path>
@@ -86,7 +86,7 @@ const Navbar = (props) =>
                     </button>
 
 
-                    <nav className="top-[15px] md:block hidden relative top-0 right-0  text-white z-10 h-[6rem] after:content after:absolute after:top-[1.7rem] after:left-0 after:w-full after:z-[-1] after:bg-[#fff]">
+                    <nav className="top-[15px] lg:block hidden relative top-0 right-0  text-white z-10 h-[6rem] after:content after:absolute after:top-[1.7rem] after:left-0 after:w-full after:z-[-1] after:bg-[#fff]">
 
 
                         <small id="nav__track" className={"z-10 absolute top-[1.7rem] left-[0] h-[0.3rem]  bg-[red] bottom-0 before:left-[0] before:bg-[red] before:top-[-4px]  before:z-50 before:h-[5.5px] before:content before:absolute before:w-[0] rounded-[40px]"}></small>
@@ -111,7 +111,7 @@ const Navbar = (props) =>
 
                     <ul className={'m-0 w-full grid'} >
                         {menuLinks.map((a, k) =>
-                            <a href={"#" + a.url} key={k} ><button onClick={() => setMenu(false)} key={k} className="md:hidden block transition-all duration-500  mr-5 p-[6px] border-b border-solid border-[#ef4444] text-[#ef4444] w-full"> <span>{a.name}</span></button></a>
+                            <a href={"#" + a.url} key={k} ><button onClick={() => setMenu(false)} key={k} className="lg:hidden block transition-all duration-500  mr-5 p-[6px] border-b border-solid border-[#ef4444] text-[#ef4444] w-full"> <span>{a.name}</span></button></a>
                         )}
                     </ul>
                     <ul className=" z-30 mb-3 justify-self-center mt-5 text-white flex width-fit" >

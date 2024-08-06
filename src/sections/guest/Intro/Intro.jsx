@@ -10,9 +10,10 @@ const Intro = ({ onIntroLoaded }) =>
 
     useEffect(() =>
     {
-        document.body.style.overflowY = 'hidden';
+        
         const handleOnPlay = () =>
         {
+            document.body.style.overflowY = 'hidden';
             onIntroLoaded();
             setTimeout(() =>
             {

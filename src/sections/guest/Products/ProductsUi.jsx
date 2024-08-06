@@ -65,10 +65,12 @@ const ProductsUi = (props) =>
                 onClose={() => { setProduct(false) }}
                 contentLabel="Product page"
             >
-                <video controls
+                <video 
+                autoPlay
+                controls
                     style={{ width: '100%', height: 'calc(100vh - 200px)' }} // Set default width and height
                 >
-                    {/* <source src={productsVideo} type="video/mp4" /> */}
+                    <source src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}  type="video/mp4" />
                 </video>
             </CustomModal>
         </>
