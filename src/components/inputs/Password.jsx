@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
 import { Input } from './'
+import { ReactComponent as Visibility } from '../../assets/icons/visibility.svg'
+import { ReactComponent as VisibilityOff } from '../../assets/icons/visibilityOff.svg'
+
 export const Password = (props) =>
 {
     const {
@@ -21,19 +24,18 @@ export const Password = (props) =>
             {...rest}
         >
             <button
+                type='button'
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
-                // className={classes.iconButton}
+                className='absolute right-[-10px] top-[0] password-icon-btn '
             >
-                {/* {showPassword ?
-                    <VisibilityOffIcon
-                        className={classes.icon}
-                    /> :
-                    <VisibilityIcon
-                        className={classes.icon}
-                    />} */}
+                {showPassword ?
+                    <Visibility />
+                    :
+                    <VisibilityOff />
+                }
             </button>
         </Input>
     )

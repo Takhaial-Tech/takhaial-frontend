@@ -10,17 +10,18 @@ import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
 import { contactValidationSchema } from './contactValidationSchema'
 import { useEffect, useRef } from 'react'
+import Btn from '../../../components/Btn'
 
 const ContactUi = (props) =>
 {
-    const { title, desc, channels, onSendMessage } = props;
+    const { title, desc, channels, onSendMessage, isAdmin, logout } = props;
     // enforce video to play 
     const videoRef = useRef();
     useEffect(() =>
     {
         if (videoRef.current) videoRef.current.play();
     }, [])
-    
+
     return (
         <>
             <section id="section_9" className={' mb-20 md:mb-0 min-h-screen relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#020815] z-[1] grid'} >
@@ -112,7 +113,7 @@ const ContactUi = (props) =>
             <div className={'rounded-2xl fixed z-50 bottom-[10px] w-[190px] right-[10px] bg-[#000] border-red-500 border-red border border-solid'} >
                 <h2 className="text-white my-[5px] mx-[10px]">{'Quick action'}</h2>
 
-                <QuickActions />
+                {isAdmin ? <Btn className={"w-full " }type="button" onClick={logout}>Logout</Btn> : <QuickActions />}
             </div>
         </>
     )

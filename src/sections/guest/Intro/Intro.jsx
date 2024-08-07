@@ -10,10 +10,9 @@ const Intro = ({ onIntroLoaded }) =>
 
     useEffect(() =>
     {
-        
         const handleOnPlay = () =>
         {
-            document.body.style.overflowY = 'hidden';
+
             onIntroLoaded();
             setTimeout(() =>
             {
@@ -23,7 +22,6 @@ const Intro = ({ onIntroLoaded }) =>
             setTimeout(() =>
             {
                 setIntroEnd(true)
-                document.body.style.overflowY = 'auto';
             }, 7000);
         };
 
@@ -39,7 +37,7 @@ const Intro = ({ onIntroLoaded }) =>
                 videoRef.current.removeEventListener('play', handleOnPlay);
             }
         };
-    }, [onIntroLoaded]);
+    }, [introEnd, onIntroLoaded]);
 
     return (
         <div className={"h-full w-full fixed inset-0 z-[100] bg-[#000] transition duration-700 ease-in-out" + (introEnd ? ' pointer-events-none opacity-0' : '')}>

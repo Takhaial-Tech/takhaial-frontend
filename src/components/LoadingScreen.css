@@ -29,6 +29,10 @@
     animation: spin 1s linear infinite;
 }
 
+.sm-loading{
+    width: 25px;
+    height: 25px;
+}
 /* Spinner animation */
 @keyframes spin {
     0% {

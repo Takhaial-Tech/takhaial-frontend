@@ -18,6 +18,7 @@ export const Input = (props) =>
         formik,
         isCustomValidate,
         className,
+        containerClassName,
         ...rest
     } = props;
 
@@ -36,6 +37,7 @@ export const Input = (props) =>
                         className={`
                             md:inline-block
                             ${inputError ? classesError.formError : ""}
+                            ${containerClassName}
                         `}
                         // style={{display:"inline-block"}}
                         // className='md:inline-block'
@@ -65,7 +67,7 @@ export const Input = (props) =>
                             }}
                             disabled={disabled}
                         />
-                        
+                        {children}
                     </div>
                 );
             }}
