@@ -2,6 +2,7 @@ import React from 'react'
 import { FormikContainer, Input, Password } from '../../../components/inputs'
 import { loginIntialValues } from './loginInputsData'
 import Btn from '../../../components/Btn'
+import { loginValidationSchema } from './loginValidationSchema'
 
 const LoginUi = ({ isLoadingLogin, handleLogin }) =>
 {
@@ -12,6 +13,7 @@ const LoginUi = ({ isLoadingLogin, handleLogin }) =>
                 <h1 className='mb-5'>Admin login</h1>
                 <FormikContainer
                     initialValues={loginIntialValues}
+                    validationSchema={loginValidationSchema}
                     onSubmit={handleLogin}
                 >
                     <Input

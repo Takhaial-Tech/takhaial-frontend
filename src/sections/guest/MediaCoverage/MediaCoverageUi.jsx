@@ -13,8 +13,8 @@ const MediaCoverageUi = (props) =>
     }, [])
 
     return (
-        <section id="section_7" className={' p-[20px]  mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] pb-[4rem]  z-[1] grid media-coverage'}>
-            <div className="bg-gradient-radial2 absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
+        <section id="section_7" className={'media p-[20px]  mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] pb-[4rem]  z-[1] grid media-coverage'}>
+            <div className="absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
 
             <h1 className="font-bold justify-self-center text-2xl mb-6 glitch-trans" data-glitch={title}>{title}</h1>
             <div className="w-full grid grid-cols-1  grid-cols-3 gap-10 items-center justify-center">

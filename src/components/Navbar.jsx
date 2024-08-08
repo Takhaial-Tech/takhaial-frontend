@@ -35,7 +35,6 @@ const Navbar = (props) =>
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         let scrolled = window.scrollY;
         let progress = 0;
-        console.log("sections", sections)
         if (sections.length > 0)
         {
             const firstSectionTop = sections[0].offsetTop;

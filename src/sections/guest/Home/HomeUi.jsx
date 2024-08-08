@@ -18,9 +18,9 @@ const HomeUi = (props) =>
     }, [])
 
     return (
-        <section id="section_1" className={'min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1] relative py-[60px] home'} >
+        <section id="section_1" className={` min-h-[100vh] relative text-white flex justify-center items-center px-[20px] bg-[#000] z-[1] relative py-[60px] home ${isAdmin ? 'pt-[10rem] ' : "pt-[6rem] "}`} >
             <div className="bg-gradient-radial absolute top-0 left-0 right-0 bottom-0 z-[0]" />
-            {isLoadingGetSection && <LoadingScreen/>}
+            {isLoadingGetSection && <LoadingScreen />}
             {isAdmin &&
                 <EditSection
                     isOpenEditModal={isOpenEditModal}
@@ -29,6 +29,7 @@ const HomeUi = (props) =>
                     isLoadingEdit={isLoadingEdit}
                     inputs={homeInputsData}
                     initialValues={{ title: data?.title, disc: data?.disc }}
+                    className='right-[20px]'
                 />
             }
 

@@ -4,18 +4,18 @@ import { FormikContainer, LoopOnInputs } from './inputs';
 
 const EditSection = (props) =>
 {
-    const { children, isOpenEditModal, setIsOpenEditModal, initialValues, onEdit, isLoadingEdit, validationSchema, inputs, actionTitle } = props;
+    const { children, editTitle, isOpenEditModal, setIsOpenEditModal, initialValues, onEdit, isLoadingEdit, validationSchema, inputs, actionTitle, className } = props;
 
     return (
         <>
-            <div>
+            <>
                 {/* Admin edit btn */}
                 <Btn
                     type='button'
-                    className="absolute right-[10px] top-20 z-[11] block mt-[10px]   "
+                    className={`absolute right-[10px] top-20 z-[11] block mt-[10px] ${className}`}
                     onClick={() => setIsOpenEditModal(true)}
                 >
-                    Edit Section
+                    {editTitle ||"Edit Section"  }
                 </Btn>
 
                 <CustomModal
@@ -29,11 +29,12 @@ const EditSection = (props) =>
                             initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={onEdit}
+                            enableReinitialize={true}
                         >
                             {inputs && <LoopOnInputs inputs={inputs} disabled={isLoadingEdit} />}
                             {children}
                             <Btn
-                                type="submit" 
+                                type="submit"
                                 className="w-full mt-8"
                                 isLoading={isLoadingEdit}
                             >
@@ -42,7 +43,7 @@ const EditSection = (props) =>
                         </FormikContainer>
                     </div>
                 </CustomModal>
-            </div>
+            </>
         </>
     )
 }

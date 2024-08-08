@@ -53,7 +53,6 @@ export const Input = (props) =>
                             label={label}
                             {...field}
                             {...rest}
-                            variant="outlined"
                             className={`md:w-auto w-full p-[10px] bg-[#262626] rounded-xl mb-[10px] backdrop-blur-md bg-[#262626] ${className}`}
                             onBlur={(e) =>
                             {

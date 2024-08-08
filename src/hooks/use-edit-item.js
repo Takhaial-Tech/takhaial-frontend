@@ -16,12 +16,20 @@ const useEditItem = (sectionNumber) =>
   const dispatch = useDispatch();
   const sectionData = useSelector(state => state.sections.sectionsData)[sectionNumber]
 
-  const handleEditSection = async (values, itemId, onSuccess) =>
+  const handleEditSection = async (values, itemId, onSuccess, media) =>
   {
     const intialItemData = sectionData.find(ele => ele._id === itemId)
     console.log("sectionData", sectionData)
     console.log("intialItemData", intialItemData)
     const updatedData = compareObjects(intialItemData, values)
+    console.log("values", values)
+    const submitData = new FormData();
+    for (const key in updatedData)
+    {
+      submitData.append(key, updatedData[key]);
+    }
+    if (media?.video) submitData.append('video', media.video);
+    if (media?.image) submitData.append('image', media.image);
 
     const getResponse = ({ success, record }) =>
     {
@@ -29,7 +37,7 @@ const useEditItem = (sectionNumber) =>
       {
         console.log("record getResponse", record)
         dispatch(sectionsActions.updateSectionItemData(record))
-        popMessage("Edited successfully", {variant:"success"});
+        popMessage("Edited successfully", { variant: "success" });
         onSuccess()
       }
     };
@@ -38,7 +46,8 @@ const useEditItem = (sectionNumber) =>
       {
         url: `${sectionsModulePath}/${itemId}`,
         method: "PATCH",
-        body: updatedData,
+        body: submitData,
+        contentType: "form-data"
       },
       getResponse
     );

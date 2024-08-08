@@ -414,7 +414,9 @@ html {
     overscroll-behavior: contain;
 }
 
-
+#root{
+    overflow: hidden !important;
+}
 .dots-nav::after {
     left: calc(50% - 0.325rem);
 }
@@ -440,7 +442,10 @@ html {
 
 .password-icon-btn {
     width: 50px;
-    height: calc(100% - 10px);
+    height: 66px;
+    bottom: 0;
+    position: absolute;
+    top: auto;
 }
 
 .password-icon-btn svg {
