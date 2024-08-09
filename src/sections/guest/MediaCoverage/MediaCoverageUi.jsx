@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import aboutVideo from '../../../assets/videos/about.mp4'
+// import aboutVideo from '../../../assets/videos/about.mp4'
 import EditSection from '../../../components/EditSection';
 import { mediaItemInputsData, mediaTitleInput } from './mediaInputs';
 import { FormikControl } from '../../../components/inputs';
@@ -10,7 +10,7 @@ import LoadingScreen from '../../../components/LoadingScreen';
 
 const MediaCoverageUi = (props) =>
 {
-    const { list, title, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, isAdmin,  isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
+    const { list, title, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, isAdmin, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
 
     // enforce video to play 
     const videoRef = useRef();
@@ -20,8 +20,11 @@ const MediaCoverageUi = (props) =>
     }, [])
 
     return (
-        <section id="section_7" className={'media p-[20px]  mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] pb-[4rem]  z-[1] grid media-coverage'}>
-            <div className="absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
+        <section id="section_7" className={'background media p-[20px]  mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center  py-[10rem]  z-[1] grid media-coverage'}>
+            {/* <div className='glow '></div> */}
+            <div className="radial absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
+
+            {/* <div className="absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" /> */}
             {isLoadingGetSection && <LoadingScreen />}
 
             {/* Edit title */}
@@ -68,7 +71,7 @@ const MediaCoverageUi = (props) =>
 
             <div className="w-auto grid grid-cols-1  grid-cols-3 gap-10 items-center justify-center">
                 {list.slice(1).map((item, key) => (
-                    <div className='z-[10] h-full relative pb-6'>
+                    <div className={isAdmin ? 'z-[10] h-full relative pb-6 ' : ''}>
                         {isAdmin && (
                             <div className='relative h-[70px] add-media '>
                                 <EditSection
@@ -107,7 +110,7 @@ const MediaCoverageUi = (props) =>
                 ))}
             </div>
 
-            <video
+            {/* <video
                 ref={videoRef}
                 webkit-playsinline="true"
                 playsInline={true}
@@ -116,7 +119,7 @@ const MediaCoverageUi = (props) =>
                 autoPlay
                 muted
                 loop
-                className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
+                className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" /> */}
 
         </section>
     )

@@ -458,7 +458,19 @@ html {
     width: 100% !important;
 }
 
-.add-media button{
+.add-media button {
     right: 0 !important
 }
-.add-media{}
+
+.background {
+    /* background: linear-gradient(180deg, #000000 0%, #0a1e3a 50%, #000000 100%); */
+    background: linear-gradient(180deg, #1a2a4e 0%, #2c3e70 50%, #1a2a4e 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.radial {
+    background: radial-gradient(700px 100%, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 150%)
+}

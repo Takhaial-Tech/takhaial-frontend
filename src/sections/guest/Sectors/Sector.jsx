@@ -33,7 +33,7 @@ const Sector = (props) =>
                             disabled={isLoadingEdit}
                             control="input"
                             type="file"
-                            name="image"
+                            name='image'
                             accept="image/*"
                             placeholder="Sector Icon"
                             className="block md:w-full w-[100%]"
@@ -45,7 +45,7 @@ const Sector = (props) =>
                             disabled={isLoadingEdit}
                             control="input"
                             type="file"
-                            name="video"
+                            name='video'
                             accept="video/*"
                             placeholder="Sector Video"
                             className="block md:w-full w-[100%]"

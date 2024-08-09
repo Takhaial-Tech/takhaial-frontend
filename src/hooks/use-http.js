@@ -60,6 +60,7 @@ const useHttp = () =>
             }
         } catch (error)
         {
+            setIsLoading(false)
             if (error.message.toLowerCase() === 'unauthorized')
             {
                 dispatch(authActions.logout());
@@ -67,7 +68,6 @@ const useHttp = () =>
                 popMessage("Login again to can edit.")
                 window.location.reload();
             }
-            setIsLoading(false)
             popMessage(error.message || "Something went wrong", { variant: "error" })
         }
         setIsLoading(false)

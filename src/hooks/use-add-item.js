@@ -21,7 +21,7 @@ const useAddItem = (sectionNumber) =>
     const submitData = new FormData();
     for (const key in values)
     {
-      submitData.append(key, values[key]);
+      if (key !== 'video' && key !== 'image')submitData.append(key, values[key]);
     }
     if (media?.video) submitData.append('video', media.video);
     if (media?.image) submitData.append('image', media.image);

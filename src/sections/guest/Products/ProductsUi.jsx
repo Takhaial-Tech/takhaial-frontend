@@ -5,44 +5,85 @@ import CustomModal from '../../../components/CustomModal';
 import { useEffect, useRef } from 'react';
 import EditSection from '../../../components/EditSection';
 import LoadingScreen from '../../../components/LoadingScreen';
-import { productInputsData } from './productsInputs';
+import { productInputsData, productsTitleInput } from './productsInputs';
 import { FormikControl } from '../../../components/inputs';
 import { mediaUrl } from '../../../config';
+import AddSection from '../../../components/AddSection';
+import DeleteItem from '../../../components/DeleteItem';
 
 const ProductsUi = (props) =>
 {
-    // const { title, products, product, setProduct } = props;
-    const { onChangeVideo, setProduct, product, isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, setIsOpenEditModal2, isOpenEditModal2 } = props;
+    const { onChangeVideo, title, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, setProduct, product, isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal } = props;
     // enforce video to play 
     const videoRef = useRef();
     useEffect(() =>
     {
         if (videoRef.current) videoRef.current.play();
     }, [])
-    console.log("v", product)
+
     return (
         <>
             <section id="section_4" className={'min-h-[100vh] content-center relative text-white flex justify-center items-center pt-[6rem] pb-[2rem]  bg-[#000] z-[1] grid'}>
                 {isLoadingGetSection && <LoadingScreen />}
 
                 <div className="bg-gradient-radial2 absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
-                <h1 className="font-bold justify-self-center text-2xl mb-4 z-[1]" >{"Our Products"} </h1>
+                {/* Edit title */}
+                {isAdmin &&
+                    <EditSection
+                        editTitle="Edit Header"
+                        isOpenEditModal={isOpenEditTitleModal}
+                        setIsOpenEditModal={setIsOpenEditTitleModal}
+                        onEdit={onEditTitle}
+                        isLoadingEdit={isLoadingEdit}
+                        inputs={productsTitleInput}
+                        initialValues={{ title }}
+                        className='right-[21px]'
+                    />
+                }
+                <h1 className={`${isAdmin ? "mt-[5rem] mb-[6rem]" : ""} mb-[3rem] font-bold justify-self-center text-2xl mb-4 glitch-trans`} data-glitch={title}>{title}</h1>
                 <div className="md:container  px-10 md:mx-auto">
-                    <div className="w-full  md:grid md:grid-cols-2 gap-6">
-                        {data.map((productItem, key) => (
+                    <div className="relative w-full  md:grid md:grid-cols-2 gap-6">
+                        {isAdmin && <AddSection
+                            addTitle="Add Product"
+                            className="top-[-5rem] right-[0px] mt-[0px]"
+                            isOpenAddModal={isOpenAddModal}
+                            setIsOpenAddModal={setIsOpenAddModal}
+                            onAdd={(values) => onAdd(values)}
+                            isLoadingAdd={isLoadingAddSection}
+                            inputs={productInputsData}
+                            initialValues={{ title: "", disc: "" }}
+                        >
+                            <h1>Product Video</h1>
+                            <FormikControl
+                                disabled={isLoadingAddSection}
+                                control="input"
+                                type="file"
+                                name="video"
+                                accept="video/*"
+                                placeholder="Sector Video"
+                                className="block md:w-full w-[100%]"
+                                containerClassName="block w-full"
+                                onChange={onChangeVideo} // Necessary to update Formik state with the selected file
+                            />
+                        </AddSection>}
+                        {data.slice(1).map((productItem, key) => (
                             <div key={key} className={'relative md:mb-0 mb-5 '}>
                                 <div className="hover:scale-105 grid items-center  border border-solid border-[red] rounded-xl hover:shadow-3xl transition-all duration-500 grid relative content-end hover:bg-[#000] hover:shadow-3xl group/item" key={key} >
                                     {isAdmin &&
                                         <EditSection
+                                            isItem={true}
+                                            itemId={productItem._id}
                                             editTitle="Edit"
                                             className="top-[16px] right-[26px] mt-[0px]"
-                                            isOpenEditModal={!key ? isOpenEditModal : isOpenEditModal2}
-                                            setIsOpenEditModal={!key ? setIsOpenEditModal : setIsOpenEditModal2}
-                                            onEdit={(values) => onEdit(values, key)}
+                                            isOpenEditModal={isOpenEditModal === productItem._id}
+                                            setIsOpenEditModal={setIsOpenEditModal }
+                                            onEdit={(values) => onEdit(values, key + 1)}
                                             isLoadingEdit={isLoadingEdit}
                                             inputs={productInputsData}
+                                            index={key + 1}
                                             initialValues={{ title: productItem?.title || "", disc: productItem?.disc || "" }}
                                         >
+                                            <h1>Product Video</h1>
                                             <FormikControl
                                                 disabled={isLoadingEdit}
                                                 control="input"
@@ -62,6 +103,8 @@ const ProductsUi = (props) =>
                                     <p className="p-4  group-hover/item:text-base transition-all duration-500 transition-all duration-500  text-xs  group/edit  overflow-hidden   ">
                                         {productItem.disc}
                                     </p>
+                                    {isAdmin && <DeleteItem className='m-[30px]' sectionNumber={4} itemId={productItem?._id} />}
+
                                     <div className="flex">
                                         <button
                                             onClick={() => setProduct(productItem)}

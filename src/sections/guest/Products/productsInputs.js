@@ -18,3 +18,14 @@ export const productInputsData = [
     },
 
 ]
+
+export const productsTitleInput = [
+    {
+        control: "input",
+        type: "text",
+        name: "title",
+        placeholder: "Products Header",
+        className: 'block md:w-full w-[100%] ',
+        containerClassName: 'block w-full'
+    },
+]
