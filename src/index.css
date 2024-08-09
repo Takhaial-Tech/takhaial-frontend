@@ -414,9 +414,10 @@ html {
     overscroll-behavior: contain;
 }
 
-#root{
+#root {
     overflow: hidden !important;
 }
+
 .dots-nav::after {
     left: calc(50% - 0.325rem);
 }
@@ -428,11 +429,6 @@ html {
 }
 
 @media (max-width:600px) {
-
-    .media-coverage h1,
-    .clients h1 {
-        font-size: 1rem !important;
-    }
 
     .media-coverage img,
     .clients img {
@@ -457,3 +453,12 @@ html {
 .notistack-SnackbarContainer {
     z-index: 3000 !important;
 }
+
+.delete svg path {
+    width: 100% !important;
+}
+
+.add-media button{
+    right: 0 !important
+}
+.add-media{}

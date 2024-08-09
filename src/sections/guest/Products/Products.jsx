@@ -23,7 +23,6 @@ const Products = () =>
 
     const onChangeVideo = (e) =>
     {
-        console.log("e.target.files[0]", e.target.files[0])
         setVideo(e.target.files[0])
     }
 

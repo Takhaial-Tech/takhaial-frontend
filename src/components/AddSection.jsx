@@ -2,43 +2,43 @@ import Btn from './Btn';
 import CustomModal from './CustomModal';
 import { FormikContainer, LoopOnInputs } from './inputs';
 
-const EditSection = (props) =>
+const AddSection = (props) =>
 {
-    const { children, editTitle, isOpenEditModal, setIsOpenEditModal, initialValues, onEdit, isLoadingEdit, validationSchema, inputs, actionTitle, className, isItem, itemId } = props;
+    const { children, addTitle, isOpenAddModal, setIsOpenAddModal, initialValues, onAdd, isLoadingAdd, validationSchema, inputs, actionTitle, className } = props;
 
     return (
         <>
             <>
-                {/* Admin edit btn */}
+                {/* Admin Add btn */}
                 <Btn
                     type='button'
                     className={`absolute right-[10px] top-20 z-[11] block mt-[10px] ${className}`}
-                    onClick={() => isItem ? setIsOpenEditModal(itemId): setIsOpenEditModal(true) }
+                    onClick={() => setIsOpenAddModal(true)}
                 >
-                    {editTitle || "Edit Section"}
+                    {addTitle ||"Add Section"  }
                 </Btn>
 
                 <CustomModal
-                    isOpen={isOpenEditModal}
-                    onClose={() => { setIsOpenEditModal(false) }}
-                    contentLabel="Edit page"
+                    isOpen={isOpenAddModal}
+                    onClose={() => { setIsOpenAddModal(false) }}
+                    contentLabel="Add page"
                 >
                     <div className=' w-[500px] max-w-[100%] mt-1 p-1 '>
 
                         <FormikContainer
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={onEdit}
+                            onSubmit={onAdd}
                             enableReinitialize={true}
                         >
-                            {inputs && <LoopOnInputs inputs={inputs} disabled={isLoadingEdit} />}
+                            {inputs && <LoopOnInputs inputs={inputs} disabled={isLoadingAdd} />}
                             {children}
                             <Btn
                                 type="submit"
                                 className="w-full mt-8"
-                                isLoading={isLoadingEdit}
+                                isLoading={isLoadingAdd}
                             >
-                                {actionTitle || "Confirm Edit"}
+                                {actionTitle || "Confirm Add"}
                             </Btn>
                         </FormikContainer>
                     </div>
@@ -48,4 +48,4 @@ const EditSection = (props) =>
     )
 }
 
-export default EditSection
+export default AddSection

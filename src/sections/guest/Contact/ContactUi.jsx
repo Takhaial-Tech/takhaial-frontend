@@ -85,14 +85,14 @@ const ContactUi = (props) =>
                 </div>
                 <ul className=" z-30 mb-3 justify-self-center text-white flex width-fit" >
                     {channels.map((a, k) =>
-                        <button key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] " + (k < channels.length - 1 && 'mr-[10px]')} href="#">
+                        <a target='__blank' key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] " + (k < channels.length - 1 && 'mr-[10px]')} href={a.href}>
                             <li>
                                 <img width={15} height={15} alt="" src={a.img} />
                             </li>
-                        </button>
+                        </a>
                     )}
                 </ul>
-                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > © 2024 <a href="#section_1" >Takhaial.tech</a> All rights reserved. developed by <a href="https://digi-sail.com/" target="_black">DIGI-SAIL</a> </p>
+                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > © {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> All rights reserved. developed by <a href="https://digi-sail.com/" target="_black">DIGI-SAIL</a> </p>
                 {<video
                     ref={videoRef}
                     webkit-playsinline="true"

@@ -65,6 +65,7 @@ const useHttp = () =>
                 dispatch(authActions.logout());
                 error.message+=" ,Logged out...";
                 popMessage("Login again to can edit.")
+                window.location.reload();
             }
             setIsLoading(false)
             popMessage(error.message || "Something went wrong", { variant: "error" })

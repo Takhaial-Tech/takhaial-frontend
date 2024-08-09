@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SuccessUi from './SuccessUi'
 import one from '../../../assets/images/clients/1.png';
 import two from '../../../assets/images/clients/2.png';
-import three from '../../../assets/images/clients/3.png';
+import lexus from '../../../assets/images/clients/lexus.png';
 import four from '../../../assets/images/clients/4.png';
 import five from '../../../assets/images/clients/5.png';
 import six from '../../../assets/images/clients/6.png';
@@ -11,15 +11,21 @@ import eight from '../../../assets/images/clients/8.png';
 import nine from '../../../assets/images/clients/9.png';
 import ten from '../../../assets/images/clients/10.png';
 import eleven from '../../../assets/images/clients/11.png';
-import twelve from '../../../assets/images/clients/12.png';
-import fourteen from '../../../assets/images/clients/14.png';
+import generalSenses from '../../../assets/images/clients/generalSenses.jpg';
 import fifteen from '../../../assets/images/clients/15.png';
 import sixteen from '../../../assets/images/clients/16.webp';
 import seventeen from '../../../assets/images/clients/17.png';
-import eighteen from '../../../assets/images/clients/18.png';
+import ghaliah from '../../../assets/images/clients/ghaliah.jpg';
 import corona from '../../../assets/images/clients/corona.png';
 import ndg from '../../../assets/images/clients/ndg.png';
 import giu from '../../../assets/images/clients/giu.png';
+import unknownClient from '../../../assets/images/clients/unknownClient.jpg';
+import NMEC from '../../../assets/images/clients/NMEC.jpg';
+import tmdeen from '../../../assets/images/clients/tmdeen.jpg';
+import beeHive from '../../../assets/images/clients/beeHive.jpg';
+import GUC from '../../../assets/images/clients/GUC.jpg';
+import awdet from '../../../assets/images/clients/awdet.jpg';
+import ibm from '../../../assets/images/clients/ibm.jpg';
 
 
 const Success = () =>
@@ -101,41 +107,34 @@ and GIU.`
         {
             year: '2023', description_ar: '',
             description:
-                `2023 Apple announces the Apple
-Vision Pro, the world’s most
-advanced Mixed Reality headset,
-kickstarting a new phase of
-explosive growth and enthusiasm
-for Virtual Reality, Augmented
-Reality and the Metaverse.
+                `2023 Apple announces the Apple Vision Pro, the world’s most advanced Mixed Reality headset, kickstarting a new phase of explosive growth and enthusiasm for Virtual Reality, Augmented Reality and the Metaverse.
+
 `
         },
         {
             year: '2024', description_ar: '', description:
-                `General Senses rebrands to 
-a specialized VR/AR brand in joint venture
-with the innovative technology company
- Ghaliah, signifying a strategic management restructuring and a renewed
-commitment to cutting-edge virtual
-experiences.
+                `General Senses turns into a brand Takhaial.tech, a specialized VR/AR brand in joint venture with the innovative technology company Beehive and Ghaliah , signifying a strategic management restructuring and a renewed commitment to cutting-edge virtual experiences.
 `
         },
     ]
 
     const clients = [
-        { year: '2015', img: fourteen, href: '', },
+        { year: '2015', img: generalSenses, href: '', },
         { year: '2016', img: four, href: '',  },
         { year: '2017', img: fifteen, href: '',  },
         { year: '2020', img: corona, href: '', },
         { year: '2022', img: sixteen, href: '' },
         { year: '2023', img: seventeen, href: ''},
-        { year: '2024', img: eighteen, href: '' },
-
+        { year: '2023', img: lexus, href: ''},
+        { year: '2023', img: unknownClient, href: ''},
+        { year: '2023', img: NMEC, href: ''},
+        { year: '2024', img: ghaliah, href: '' },
+        { year: '2024', img: lexus, href: '' },
+        { year: '2024', img: tmdeen, href: '' },
+        { year: '2024', img: beeHive, href: '' },
         { year: '2022', img: one, href: '' },
         { year: '2019', img: two, href: '' },
-        { year: '2022', img: three, href: '' },
-        { year: '', img: four, href: '' },
-        { year: '', img: five, href: '' },
+        { year: '2022', img: lexus, href: '' },
         { year: '2018', img: six, href: '' },
         { year: '2018', img: seven, href: '' },
         { year: '2018', img: eight, href: '' },
@@ -143,9 +142,10 @@ experiences.
         { year: '2019', img: ten, href: '' },
         { year: '2021', img: eleven, href: '' },
         { year: '2022', img: ndg, href: '' },
-
-        { year: '2022', img: twelve, href: '' },
+        { year: '2022', img: GUC, href: '' },
         { year: '2022', img: giu, href: '' },
+        { year: '2021', img: awdet, href: '' },
+        { year: '2024', img: ibm, href: '' },
 
     ];
 

@@ -6,6 +6,7 @@ import xicon from '../assets/icons/xicon.svg'
 import inicon from '../assets/icons/inicon.svg'
 import tagicon from '../assets/icons/tagicon.svg'
 import QuickActions from "./QuickActions";
+import { channels } from "../sections/guest/Contact/Contact";
 
 const Navbar = (props) =>
 {
@@ -21,13 +22,6 @@ const Navbar = (props) =>
         { name: 'Contact', url: 'section_9' },
     ]
     const [menu, setMenu] = useState(false);
-
-    const channels = [
-        { img: ficon, href: '' },
-        { img: xicon, href: '' },
-        { img: inicon, href: '' },
-        { img: tagicon, href: '' },
-    ]
 
     const onScrollbasic = () =>
     {
@@ -115,11 +109,11 @@ const Navbar = (props) =>
                     </ul>
                     <ul className=" z-30 mb-3 justify-self-center mt-5 text-white flex width-fit" >
                         {channels.map((a, k) =>
-                            <button key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] " + (k < channels.length - 1 && 'mr-[10px]')} href="#">
+                            <a target="__blank" key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] " + (k < channels.length - 1 && 'mr-[10px]')} href={a.href}>
                                 <li>
                                     <img width={15} height={15} alt="" src={a.img} />
                                 </li>
-                            </button>
+                            </a>
                         )}
                     </ul>
 

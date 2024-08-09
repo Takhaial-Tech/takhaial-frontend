@@ -35,6 +35,14 @@ const sectionsSlice = createSlice({
                 }
             });
         },
+        addSectionItemData(state, action)
+        {
+            state.sectionsData[action.payload?.section].push(action.payload)
+        },
+        deleteSectionItemData(state, action)
+        {
+            state.sectionsData[action.payload?.sectionNumber] = state.sectionsData[action.payload?.sectionNumber].filter((ele) => ele._id !== action.payload?.itemId)
+        },
     }
 })
 
