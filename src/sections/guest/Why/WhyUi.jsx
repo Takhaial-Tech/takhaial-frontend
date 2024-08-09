@@ -10,7 +10,7 @@ const WhyUi = (props) =>
 
     return (
         <section dir={'ltr'} id="section_3" className={'min-h-[100vh] relative text-white flex flex-wrap justify-center items-center pt-[2rem] bg-[#000] z-[1]  py-[60px] overflow-hidden '} >
-            {isLoadingGetSection && <LoadingScreen />}
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             {isAdmin &&
                 <div className="w-screen relative "

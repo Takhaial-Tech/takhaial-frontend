@@ -13,7 +13,7 @@ const ClientsUi = (props) =>
 
     return (
         <section id="section_8" className={'clients p-[20px]  mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] pb-[4rem] bg-[#000] z-[1] grid'}>
-            {isLoadingGetSection && <LoadingScreen />}
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             {/* Edit title */}
             {isAdmin &&

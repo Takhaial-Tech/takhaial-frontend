@@ -16,7 +16,7 @@ const SectorsUi = (props) =>
     return (
         <>
             <section id="section_6" className="w-[90%] mx-auto md:container md:mx-auto content-center min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] pb-[2rem] bg-[#000] z-[1] grid">
-                {isLoadingGetSection && <LoadingScreen />}
+                {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
                 {/* Edit title */}
                 {isAdmin &&

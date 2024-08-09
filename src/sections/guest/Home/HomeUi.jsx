@@ -20,7 +20,7 @@ const HomeUi = (props) =>
     return (
         <section id="section_1" className={` min-h-[100vh] relative text-white flex justify-center items-center px-[20px] bg-[#000] z-[1] relative py-[60px] home ${isAdmin ? 'pt-[10rem] ' : "pt-[6rem] "}`} >
             <div className="bg-gradient-radial absolute top-0 left-0 right-0 bottom-0 z-[0]" />
-            {isLoadingGetSection && <LoadingScreen />}
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
             {isAdmin &&
                 <EditSection
                     isOpenEditModal={isOpenEditModal}

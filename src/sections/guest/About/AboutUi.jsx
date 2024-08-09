@@ -18,7 +18,7 @@ const AboutUi = (props) =>
 
     return (
         <section id="section_2" className={' min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px]'} >
-            {isLoadingGetSection && <LoadingScreen />}
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             <div className="bg-gradient-radial absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
             <div className="w-full  md:grid md:grid-cols-2 gap-6 z-[10]">

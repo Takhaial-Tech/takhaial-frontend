@@ -25,7 +25,7 @@ const MediaCoverageUi = (props) =>
             <div className="radial absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
 
             {/* <div className="absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" /> */}
-            {isLoadingGetSection && <LoadingScreen />}
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             {/* Edit title */}
             {isAdmin &&

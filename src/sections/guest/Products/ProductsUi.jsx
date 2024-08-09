@@ -24,7 +24,7 @@ const ProductsUi = (props) =>
     return (
         <>
             <section id="section_4" className={'min-h-[100vh] content-center relative text-white flex justify-center items-center pt-[6rem] pb-[2rem]  bg-[#000] z-[1] grid'}>
-                {isLoadingGetSection && <LoadingScreen />}
+                {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
                 <div className="bg-gradient-radial2 absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
                 {/* Edit title */}
