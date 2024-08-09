@@ -17,20 +17,27 @@ const useAddItem = (sectionNumber) =>
   const handleAddSection = async (values, onSuccess, media) =>
   {
 
-    console.log("values", values)
     const submitData = new FormData();
     for (const key in values)
     {
-      if (key !== 'video' && key !== 'image')submitData.append(key, values[key]);
+      if (key !== 'video' && key !== 'image') submitData.append(key, values[key]);
     }
     if (media?.video) submitData.append('video', media.video);
     if (media?.image) submitData.append('image', media.image);
     submitData.append('section', sectionNumber)
+
+    if (media?.images)
+    {
+      media.images.forEach(element =>
+      {
+        submitData.append('images', element.file);
+      });
+    }
+
     const getResponse = ({ success, record }) =>
     {
       if (!!success)
       {
-        console.log("record getResponse", record)
         dispatch(sectionsActions.addSectionItemData(record))
         popMessage("Added successfully", { variant: "success" });
         onSuccess()

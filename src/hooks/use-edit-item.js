@@ -18,30 +18,70 @@ const useEditItem = (sectionNumber) =>
 
   const handleEditSection = async (values, itemId, onSuccess, media) =>
   {
-    const intialItemData = sectionData.find(ele => ele._id === itemId)
-    console.log("sectionData", sectionData)
-    console.log("intialItemData", intialItemData)
-    const updatedData = compareObjects(intialItemData, values)
-    console.log("values", values)
+    const intialItemData = sectionData.find(ele => ele._id === itemId);
+    const updatedData = compareObjects(intialItemData, values);
     const submitData = new FormData();
+
+    // Append updated data
     for (const key in updatedData)
     {
       submitData.append(key, updatedData[key]);
     }
+
+    // Append video if present
     if (media?.video) submitData.append('video', media.video);
+
+    // Append image if present
     if (media?.image) submitData.append('image', media.image);
 
+    // Helper function to convert URL to File
+    async function urlToFile(url, filename, mimeType)
+    {
+      try
+      {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: mimeType });
+      } catch (error)
+      {
+        popMessage(error.message || "Something went wrong", { variant: "error" })
+      }
+    }
+
+    // Process images
+    if (media?.images)
+    {
+      for (const image of media.images)
+      {
+        if (image.file)
+        {
+          // It's a new image file
+          submitData.append('images', image.file);
+        } else
+        {
+          // Fetch the image from the URL and convert it to a File
+          const mimeType = 'image/jpeg'; // Adjust the MIME type as needed
+          const file = await urlToFile(image.data_url, `image_123.jpg`, mimeType);
+          if (file)
+          {
+            submitData.append('images', file);
+          }
+        }
+      }
+    }
+
+    // Define response handler
     const getResponse = ({ success, record }) =>
     {
-      if (!!success)
+      if (success)
       {
-        console.log("record getResponse", record)
-        dispatch(sectionsActions.updateSectionItemData(record))
+        dispatch(sectionsActions.updateSectionItemData(record));
         popMessage("Edited successfully", { variant: "success" });
-        onSuccess()
+        onSuccess();
       }
     };
 
+    // Send request to edit section
     await editSection(
       {
         url: `${sectionsModulePath}/${itemId}`,

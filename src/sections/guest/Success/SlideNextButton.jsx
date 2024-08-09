@@ -10,7 +10,7 @@ export default function SlideNextButton(props)
   return (
     <div >
       
-      <Carousel showDots={false} arrows={true} responsive={{ superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 8 }, desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 }, tablet: { breakpoint: { max: 1024, min: 464 }, items: 7 }, mobile: { breakpoint: { max: 464, min: 0 }, items: 5 } }} className="relative after:content after:h-[1px] after:bg-[red] after:absolute after:left-[0] after:right-[0] after:bottom-[50px]">
+      <Carousel  showDots={false} arrows={true} responsive={{ superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 8 }, desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 }, tablet: { breakpoint: { max: 1024, min: 464 }, items: 7 }, mobile: { breakpoint: { max: 464, min: 0 }, items: 5 } }} className="relative after:content after:h-[1px] after:bg-[red] after:absolute after:left-[0] after:right-[0] after:bottom-[50px]">
         {props.history.map((a, k) => (
           <div
             key={k}
@@ -22,7 +22,7 @@ export default function SlideNextButton(props)
               ' z-10'
             }
           >
-            <label>{a.year}</label>
+            <label>{a.title}</label>
           </div>
         ))}
       </Carousel>

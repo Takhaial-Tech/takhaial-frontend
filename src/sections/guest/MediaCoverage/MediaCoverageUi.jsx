@@ -71,7 +71,7 @@ const MediaCoverageUi = (props) =>
 
             <div className="w-auto grid grid-cols-1  grid-cols-3 gap-10 items-center justify-center">
                 {list.slice(1).map((item, key) => (
-                    <div className={isAdmin ? 'z-[10] h-full relative pb-6 ' : ''}>
+                    <div key={key} className={isAdmin ? 'z-[10] h-full relative pb-6 ' : ''}>
                         {isAdmin && (
                             <div className='relative h-[70px] add-media '>
                                 <EditSection

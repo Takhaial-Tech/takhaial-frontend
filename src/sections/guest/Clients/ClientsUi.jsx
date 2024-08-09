@@ -56,7 +56,7 @@ const ClientsUi = (props) =>
                 </div>}
             <div className="w-full grid grid-cols-1 grid-cols-3 gap-14 items-center ">
                 {list.slice(1).map((item, key) => (
-                    <div className='z-[10] h-full relative pb-6'>
+                    <div key={key} className='z-[10] h-full relative pb-6'>
                         {isAdmin && (
                             <div className='relative h-[70px] add-media '>
                                 <EditSection

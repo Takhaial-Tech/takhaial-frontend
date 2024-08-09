@@ -22,7 +22,6 @@ const useGetSection = (sectionNumber) =>
             {
                 if (!!success)
                 {
-                    console.log("record getResponse", record)
                     dispatch(sectionsActions.setSectionData(record))
                 }
             };

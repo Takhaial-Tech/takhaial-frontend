@@ -343,7 +343,7 @@
 .modal-content {
     overflow: auto;
     max-height: calc(100vh - 120px);
-    max-width: calc(100vw - 100px);
+    max-width: calc(100vw - 60px);
 }
 
 .modal-content video {
@@ -473,4 +473,15 @@ html {
 
 .radial {
     background: radial-gradient(700px 100%, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 150%)
+}
+
+.edit-icon-btn {}
+
+.edit-icon-btn svg {
+    width: 60%;
+    height: 60%;
+    fill: #ef4444;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
