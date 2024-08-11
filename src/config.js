@@ -1,8 +1,8 @@
-export const backendUrl = "https://takhaial-production.up.railway.app/v1/";
+export const backendUrl = "https://takhaial-production-5158.up.railway.app/v1/";
 
 export const authModulePath = "auth"
 
 export const sectionsModulePath = "sections"
 
-export const mediaUrl ='https://takhaial-production.up.railway.app/v1/sections/media/'
+export const mediaUrl ='https://takhaial-production-5158.up.railway.app/v1/sections/media/'
 

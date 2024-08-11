@@ -98,19 +98,23 @@ const SuccessUi = (props) =>
                     <h1 className={'font-bold text-l'} >{title}</h1>
                 </div>
 
-                <div className="z-[10] relative add-media">
-                    {isAdmin && <AddSection
-                        addTitle="Add Year"
-                        className="top-[0rem] right-[0px] mt-[0px]"
-                        isOpenAddModal={isOpenAddModal}
-                        setIsOpenAddModal={setIsOpenAddModal}
-                        onAdd={onAdd}
-                        isLoadingAdd={isLoadingAddSection}
-                        inputs={yearInputsData}
-                        initialValues={{ title: "", disc: "" }}
-                    >
-                        <ImageUploader defaultImages={[]} images={images} setImages={setImages} />
-                    </AddSection>}
+                <div className="z-[10] relative">
+                    {isAdmin &&
+                        <div className='add-media '>
+                            <AddSection
+                                addTitle="Add Year"
+                                className="top-[0rem] right-[0px] mt-[0px]"
+                                isOpenAddModal={isOpenAddModal}
+                                setIsOpenAddModal={setIsOpenAddModal}
+                                onAdd={onAdd}
+                                isLoadingAdd={isLoadingAddSection}
+                                inputs={yearInputsData}
+                                initialValues={{ title: "", disc: "" }}
+                            >
+                                <ImageUploader defaultImages={[]} images={images} setImages={setImages} />
+                            </AddSection>
+                        </div>
+                    }
                     <div ref={containerRef} className={`lg:ml-[90px] ${isAdmin ? 'mt-[2rem]' : ''}`}  >
                         <Swiper
                             ref={swiperRef}
@@ -126,23 +130,25 @@ const SuccessUi = (props) =>
 
                             {history.map((a, k) => (
                                 <SwiperSlide key={k} virtualIndex={k} className={isAdmin ? "mt-[2rem] " : ''}>
-                                    <div className="add-media flex items-baseline flex-wrap mb-[30px] relative">
+                                    <div className="flex items-baseline flex-wrap mb-[30px] relative">
                                         {isAdmin &&
-                                            <EditSection
-                                                isItem={true}
-                                                itemId={a._id}
-                                                editTitle="Edit"
-                                                className="top-[16px] right-[5px] mt-[0px]"
-                                                isOpenEditModal={isOpenEditModal === a._id}
-                                                index={k + 1}
-                                                setIsOpenEditModal={setIsOpenEditModal}
-                                                onEdit={(values) => onEdit(values, k + 1)}
-                                                isLoadingEdit={isLoadingEdit}
-                                                inputs={yearInputsData}
-                                                initialValues={{ title: a?.title || "", disc: a?.disc || "" }}
-                                            >
-                                                <ImageUploader defaultImages={a?.images} images={images} setImages={setImages} />
-                                            </EditSection>
+                                            <div className='add-media '>
+                                                <EditSection
+                                                    isItem={true}
+                                                    itemId={a._id}
+                                                    editTitle="Edit"
+                                                    className="top-[16px] right-[5px] mt-[0px]"
+                                                    isOpenEditModal={isOpenEditModal === a._id}
+                                                    index={k + 1}
+                                                    setIsOpenEditModal={setIsOpenEditModal}
+                                                    onEdit={(values) => onEdit(values, k + 1)}
+                                                    isLoadingEdit={isLoadingEdit}
+                                                    inputs={yearInputsData}
+                                                    initialValues={{ title: a?.title || "", disc: a?.disc || "" }}
+                                                >
+                                                    <ImageUploader defaultImages={a?.images} images={images} setImages={setImages} />
+                                                </EditSection>
+                                            </div>
                                         }
                                         <div className="leading-tight  font-bold text-7xl text-white glitch w-full sm:w-auto" data-glitch={a.title}>{a.title}</div>
                                         {a?.images?.map((c, key) => (
