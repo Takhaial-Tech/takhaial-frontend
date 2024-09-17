@@ -35,7 +35,7 @@ const ContactUi = (props) =>
                     </p>
                 </div>
                 <ul className=" justify-self-center text-white flex w-fit justify-self-center z-30" >
-                    <a href="tel:+96599743375" className="w-[100px] mr-10 hover:shadow-3xl transition-all duration-500 w-[100px]  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
+                    <a href="tel:+201500683889" className="w-[100px] mr-10 hover:shadow-3xl transition-all duration-500 w-[100px]  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
                         <li className="flex">
                             <img alt={''} className="mr-2" width={15} height={15} src={contact_img} />
                             <label className='cursor-pointer '> {'Call'} </label>
@@ -107,7 +107,7 @@ const ContactUi = (props) =>
             </section>
 
 
-            <a target='__blank' href="https://wa.me/+96599743375" className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
+            <a target='__blank' href="https://wa.me/+201500683889" className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
                 <img alt="" width={55} height={55} src={wicon} />
             </a>
             <div className={'rounded-2xl fixed z-50 bottom-[20px] w-[190px] right-[20px] bg-[#000] border-red-500 border-red border border-solid'} >
