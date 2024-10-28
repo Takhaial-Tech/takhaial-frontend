@@ -107,7 +107,7 @@ const ContactUi = (props) =>
             </section>
 
 
-            <a target='__blank' href="https://wa.me/+201500683889" className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
+            <a target='__blank' href="https://wa.me/+96565806543" className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
                 <img alt="" width={55} height={55} src={wicon} />
             </a>
             <div className={'rounded-2xl fixed z-50 bottom-[20px] w-[190px] right-[20px] bg-[#000] border-red-500 border-red border border-solid'} >
