@@ -1,7 +1,6 @@
 
 
 import Guest from './Guest'
-import Admin from './Admin'
 
 const IndexRoutes = () =>
 {

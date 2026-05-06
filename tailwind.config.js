@@ -8,9 +8,9 @@ module.exports = {
       backgroundImage: {
         'border-body': 'linear-gradient(-45deg, #555859, #000, #003bcd, #ed271e)',
         'hero-pattern': "url('/img3.png')",
-        "gradient-radial": "radial-gradient(210px 310px, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 150%)",
-        "gradient-radial2": "radial-gradient(870px 300px, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 100%)",
-        "gradient-radial-sec": "radial-gradient(250px 190px, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 100%)",
+        "gradient-radial": "radial-gradient(210px 310px at center, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 150%)",
+        "gradient-radial2": "radial-gradient(870px 300px at center, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 100%)",
+        "gradient-radial-sec": "radial-gradient(250px 190px at center, rgba(255, 51, 85, 0) 0%, rgb(0, 0, 0) 100%)",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       boxShadow: {

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from '../assets/icons/logo.svg'
 import CustomModal from "./CustomModal";
-import ficon from '../assets/icons/ficon.svg'
-import xicon from '../assets/icons/xicon.svg'
-import inicon from '../assets/icons/inicon.svg'
-import tagicon from '../assets/icons/tagicon.svg'
 import QuickActions from "./QuickActions";
 import { channels } from "../sections/guest/Contact/Contact";
 

@@ -7,17 +7,7 @@ import classes from './styles/InputArray.module.css'
 
 export const InputArray = (props) =>
 {
-    const { name, inputs, intialObject, disabled, formik } = props;
-
-    const addOne = (push) => () =>
-    {
-        push(intialObject)
-    }
-
-    const removeOne = (remove, index) => () =>
-    {
-        remove(index)
-    }
+    const { name, inputs, disabled, formik } = props;
 
     return (
         <FieldArray

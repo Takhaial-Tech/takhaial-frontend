@@ -24,7 +24,7 @@ const SuccessUi = (props) =>
 {
     const { title, disc, history, activeStep, setActiveStep,
         images, setImages,
-        isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, onChangeVideo, isAdmin, sectors, modal, setModal, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit
+        isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, isAdmin, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit
     } = props;
 
     // autoplay when appear
@@ -33,7 +33,13 @@ const SuccessUi = (props) =>
 
     useEffect(() =>
     {
-        const swiperInstance = swiperRef.current.swiper;
+        const swiperInstance = swiperRef.current?.swiper;
+        const containerElement = containerRef.current;
+
+        if (!swiperInstance || !containerElement)
+        {
+            return undefined;
+        }
 
         const handleIntersection = (entries) =>
         {
@@ -53,17 +59,11 @@ const SuccessUi = (props) =>
             threshold: 0.5, // Adjust as needed
         });
 
-        if (containerRef.current)
-        {
-            observer.observe(containerRef.current);
-        }
+        observer.observe(containerElement);
 
         return () =>
         {
-            if (containerRef.current)
-            {
-                observer.unobserve(containerRef.current);
-            }
+            observer.unobserve(containerElement);
         };
     }, []);
 

@@ -4,6 +4,7 @@ import { mediaUrl } from '../../config';
 
 const ImageUploader = ({ images, setImages, isLoading, defaultImages }) =>
 {
+    const defaultImageKey = JSON.stringify(defaultImages || []);
 
     const onChange = (imageList, addUpdateIndex) =>
     {
@@ -12,15 +13,14 @@ const ImageUploader = ({ images, setImages, isLoading, defaultImages }) =>
     
     useEffect(() =>
     {
-        // Loop over defaultImages and concatenate mediaUrl
-        const updatedImages = defaultImages.map(img => ({
+        const parsedDefaultImages = JSON.parse(defaultImageKey);
+        const updatedImages = parsedDefaultImages.map(img => ({
             data_url: `${mediaUrl}${img}`
         }));
 
-        // Set the updated images to the state
         setImages(updatedImages);
 
-    }, [])
+    }, [defaultImageKey, setImages])
 
     return (
         <ImageUploading

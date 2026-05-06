@@ -25,19 +25,21 @@ const Intro = ({ onIntroLoaded }) =>
             }, 7000);
         };
 
-        if (videoRef.current)
+        const videoElement = videoRef.current;
+
+        if (videoElement)
         {
-            videoRef.current.addEventListener('play', handleOnPlay);
+            videoElement.addEventListener('play', handleOnPlay);
         }
 
         return () =>
         {
-            if (videoRef.current)
+            if (videoElement)
             {
-                videoRef.current.removeEventListener('play', handleOnPlay);
+                videoElement.removeEventListener('play', handleOnPlay);
             }
         };
-    }, [introEnd, onIntroLoaded]);
+    }, [onIntroLoaded]);
 
     return (
         <div className={"h-full w-full fixed inset-0 z-[100] bg-[#000] transition duration-700 ease-in-out" + (introEnd ? ' pointer-events-none opacity-0' : '')}>
