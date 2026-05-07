@@ -163,7 +163,7 @@ const ServiceDetail = () =>
 
                     <div className="flex flex-wrap gap-4 mb-16">
                         <Link
-                            to="/#section_9"
+                            to={`/services/${service.slug}/request-quote`}
                             className="transition-all duration-500 rounded-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
                             Request a Quote
