@@ -33,11 +33,13 @@ const Products = () =>
 
             if (item) usedIds.add(item._id);
 
+            const hasCurrentServiceContent = item?.title === service.title;
+
             return {
                 ...service,
                 record: item,
                 video: item?.video,
-                adminDescription: item?.disc,
+                adminDescription: hasCurrentServiceContent ? item?.disc : null,
             }
         })
     }
