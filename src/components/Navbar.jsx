@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import logo from '../assets/icons/logo.svg'
 import CustomModal from "./CustomModal";
 import QuickActions from "./QuickActions";
-import { channels } from "../sections/guest/Contact/Contact";
+import useSiteSettings from "../hooks/use-site-settings";
+import { buildChannels } from "../site-settings";
 
 const Navbar = (props) =>
 {
+    const { settings } = useSiteSettings();
+    const channels = buildChannels(settings);
 
     const menuLinks = [
         { name: 'About', url: 'section_2' },

@@ -9,12 +9,16 @@ import { FormikContainer, Input } from '../../../components/inputs'
 import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
 import { contactValidationSchema } from './contactValidationSchema'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Btn from '../../../components/Btn'
+import EditSection from '../../../components/EditSection'
+import { contactSettingsInputs } from './contactSettingsInputs'
+import { buildWhatsappHref } from '../../../site-settings'
 
 const ContactUi = (props) =>
 {
-    const { title, desc, channels, onSendMessage, isAdmin, logout } = props;
+    const { title, desc, channels, settings, onEditSettings, onSendMessage, isAdmin, isLoadingEditSettings, logout } = props;
+    const [isOpenEditSettingsModal, setIsOpenEditSettingsModal] = useState(false);
     // enforce video to play 
     const videoRef = useRef();
     useEffect(() =>
@@ -26,6 +30,27 @@ const ContactUi = (props) =>
         <>
             <section id="section_9" className={' mb-20 md:mb-0 min-h-screen relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#020815] z-[1] grid'} >
                 <div className="bg-gradient-radial absolute top-0 left-0 right-0 bottom-0 z-[0]" />
+                {isAdmin &&
+                    <EditSection
+                        editTitle="Edit Contact Info"
+                        isOpenEditModal={isOpenEditSettingsModal}
+                        setIsOpenEditModal={setIsOpenEditSettingsModal}
+                        onEdit={(values) => onEditSettings(values, () => setIsOpenEditSettingsModal(false))}
+                        isLoadingEdit={isLoadingEditSettings}
+                        inputs={contactSettingsInputs}
+                        initialValues={{
+                            email: settings.email,
+                            phone: settings.phone,
+                            whatsapp: settings.whatsapp,
+                            facebook: settings.facebook,
+                            x: settings.x,
+                            linkedin: settings.linkedin,
+                            instagram: settings.instagram,
+                        }}
+                        actionTitle="Save Contact Info"
+                        className='right-[20px]'
+                    />
+                }
 
                 <div className="z-30 text-center" >
                     <img alt="" className="m-auto" src={ctaicon} height={80} width={80} />
@@ -35,13 +60,13 @@ const ContactUi = (props) =>
                     </p>
                 </div>
                 <ul className=" justify-self-center text-white flex w-fit justify-self-center z-30" >
-                    <a href="tel:+201500683889" className="w-[100px] mr-10 hover:shadow-3xl transition-all duration-500 w-[100px]  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
+                    <a href={`tel:${settings.phone}`} className="w-[100px] mr-10 hover:shadow-3xl transition-all duration-500 w-[100px]  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
                         <li className="flex">
                             <img alt={''} className="mr-2" width={15} height={15} src={contact_img} />
                             <label className='cursor-pointer '> {'Call'} </label>
                         </li>
                     </a>
-                    <a href="mailto:info@takhaialtech.com" className=" hover:shadow-3xl transition-all duration-500 w-fit  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
+                    <a href={`mailto:${settings.email}`} className=" hover:shadow-3xl transition-all duration-500 w-fit  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
                         <li className="flex ">
                             <img alt={''} className=" mr-2" width={15} height={15} src={mailicon} />
                             <label className="text-nowrap cursor-pointer"> {'Email'} </label>
@@ -107,7 +132,7 @@ const ContactUi = (props) =>
             </section>
 
 
-            <a target='__blank' href="https://wa.me/+201033930216" className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
+            <a target='__blank' href={buildWhatsappHref(settings.whatsapp)} className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
                 <img alt="" width={55} height={55} src={wicon} />
             </a>
             <div className={'rounded-2xl fixed z-50 bottom-[20px] w-[190px] right-[20px] bg-[#000] border-red-500 border-red border border-solid'} >

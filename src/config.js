@@ -4,5 +4,7 @@ export const authModulePath = "auth"
 
 export const sectionsModulePath = "sections"
 
+export const settingsModulePath = "settings"
+
 export const mediaUrl ='https://takhaial-production-5158.up.railway.app/v1/sections/media/'
 

@@ -12,6 +12,7 @@ const Guest = () =>
             <Route path='/' element={<Index />} />
             <Route path="*" element={<Navigate to="/" replace={true} />} />
             {!isAdmin && <Route path='/admin-login' element={<Login />} />}
+            {!isAdmin && <Route path='/admin-log' element={<Login />} />}
         </Routes>
     )
 }

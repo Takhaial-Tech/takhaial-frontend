@@ -1,6 +1,5 @@
 import homeVideo from '../../../assets/videos/home.mp4'
-import profilePdf from '../../../assets/documents/companyProfile.pdf'
-import { Link } from 'react-router-dom';
+import defaultProfilePdf from '../../../assets/documents/companyProfile.pdf'
 import { useEffect, useRef } from 'react';
 import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
@@ -8,7 +7,8 @@ import LoadingScreen from '../../../components/LoadingScreen';
 
 const HomeUi = (props) =>
 {
-    const { isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal } = props;
+    const { isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
+    const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
 
     // enforce video to play 
     const videoRef = useRef();
@@ -32,6 +32,30 @@ const HomeUi = (props) =>
                     className='right-[20px]'
                 />
             }
+            {isAdmin &&
+                <EditSection
+                    editTitle="Edit Profile PDF"
+                    isOpenEditModal={isOpenProfileModal}
+                    setIsOpenEditModal={setIsOpenProfileModal}
+                    onEdit={onEditProfilePdf}
+                    isLoadingEdit={isLoadingEditSettings}
+                    initialValues={{}}
+                    actionTitle="Upload Profile"
+                    className='right-[160px]'
+                >
+                    <div className="mb-4">
+                        <label className="block text-white mb-2">
+                            Company profile PDF
+                        </label>
+                        <input
+                            type="file"
+                            accept="application/pdf"
+                            className="block w-full p-[10px] bg-[#262626] rounded-xl mb-[10px] text-white"
+                            onChange={(event) => setProfilePdfFile(event.currentTarget.files?.[0] || null)}
+                        />
+                    </div>
+                </EditSection>
+            }
 
             <div className="md:container md:mx-auto self-end z-[10]">
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
@@ -46,14 +70,15 @@ const HomeUi = (props) =>
                         <h2 className="content-center text-xl max-w-[630px]">
                             {data?.disc}
                         </h2>
-                        <Link
-                            to={profilePdf}
+                        <a
+                            href={profilePdfHref}
                             target="_blank"
+                            rel="noreferrer"
                             download
                             className="block mt-[10px] transition-all duration-500 w-fit rounded-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
                             {'Download Profile'}
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
