@@ -4,60 +4,81 @@ import { useSelector } from 'react-redux';
 import useGetSection from '../../../hooks/use-get-section';
 import useEditItem from '../../../hooks/use-edit-item';
 import useAddItem from '../../../hooks/use-add-item';
+import { serviceContent, serviceMatchesRecord } from './serviceContent';
 
 const Products = () =>
 {
-    const [product, setProduct] = useState(false);
+    const [activeIntro, setActiveIntro] = useState(false);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-    const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const isAdmin = !!useSelector(state => state.auth.token);
     const isLoadingGetSection = useGetSection(4);
-    const record = useSelector(state => state.sections.sectionsData)[4]
+    const record = useSelector(state => state.sections.sectionsData)[4] || []
     const { isLoadingEditSection, handleEditSection } = useEditItem(4);
     const { isLoadingAddSection, handleAddSection } = useAddItem(4);
 
     const [video, setVideo] = useState(false);
-    const [isOpenEditTitleModal, setIsOpenEditTitleModal] = useState(false);
-    const onAdd = (values) =>
+    const getServiceRecords = () =>
     {
-        const onSuccess = () => { setIsOpenAddModal(false); setVideo(false);}
-        handleAddSection(values, onSuccess, { video })
+        const items = record.slice(1);
+        const usedIds = new Set();
+
+        return serviceContent.map((service, index) =>
+        {
+            let item = items.find((recordItem) => !usedIds.has(recordItem._id) && serviceMatchesRecord(service, recordItem));
+
+            if (!item)
+            {
+                item = items[index] && !usedIds.has(items[index]._id) ? items[index] : null;
+            }
+
+            if (item) usedIds.add(item._id);
+
+            return {
+                ...service,
+                record: item,
+                video: item?.video,
+                adminDescription: item?.disc,
+            }
+        })
     }
-    const onEdit = (values, productIndex) =>
+
+    const services = getServiceRecords();
+
+    const onEdit = (values, serviceIndex) =>
     {
-        const onSuccess = () => { setIsOpenEditModal(false) }
-        handleEditSection(values, record[productIndex]._id, onSuccess,{video})
+        const selectedService = services[serviceIndex];
+        const onSuccess = () => { setIsOpenEditModal(false); setVideo(false); }
+        const serviceValues = {
+            title: selectedService.title,
+            disc: values.disc || selectedService.summary,
+        }
+
+        if (selectedService.record?._id)
+        {
+            handleEditSection(serviceValues, selectedService.record._id, onSuccess, { video })
+            return;
+        }
+
+        handleAddSection(serviceValues, onSuccess, { video })
     }
 
     const onChangeVideo = (e) =>
     {
         setVideo(e.target.files[0])
     }
-    const onEditTitle = (values) =>
-    {
-        const onSuccess = () => { setIsOpenEditTitleModal(false);  }
-        handleEditSection(values, record[0]._id, onSuccess)
-    }
     return (
         <ProductsUi
-            product={product}
-            setProduct={setProduct}
-            title={record[0]?.title}
+            activeIntro={activeIntro}
+            setActiveIntro={setActiveIntro}
+            title="Services"
             onEdit={onEdit}
-            isLoadingEdit={isLoadingEditSection}
+            isLoadingEdit={isLoadingEditSection || isLoadingAddSection}
             isAdmin={isAdmin}
             isOpenEditModal={isOpenEditModal}
             setIsOpenEditModal={setIsOpenEditModal}
             isLoadingGetSection={isLoadingGetSection}
-            isOpenAddModal={isOpenAddModal}
-            setIsOpenAddModal={setIsOpenAddModal}
-            data={record}
+            services={services}
             onChangeVideo={onChangeVideo}
-            onEditTitle={onEditTitle}
-            isOpenEditTitleModal={isOpenEditTitleModal}
-            setIsOpenEditTitleModal={setIsOpenEditTitleModal}
-            isLoadingAddSection={isLoadingAddSection}
-            onAdd={onAdd}
         />
     )
 }

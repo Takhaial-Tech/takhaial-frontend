@@ -1,0 +1,93 @@
+import service1 from '../../../assets/icons/service1.svg'
+import service2 from '../../../assets/icons/service2.svg'
+import service3 from '../../../assets/icons/service3.svg'
+import ctaicon from '../../../assets/icons/ctaicon.svg'
+
+export const serviceContent = [
+    {
+        slug: 'mobile-apps',
+        title: 'Mobile Apps',
+        label: 'Digital platforms',
+        icon: service1,
+        summary: 'We design and build mobile-first platforms that connect users, content, services, payments, bookings, and operations in one controlled experience.',
+        lead: 'Mobile apps are the operational layer of a digital service. We turn ideas into usable products with clear journeys, admin control, secure APIs, and room to grow.',
+        whatWeBuild: [
+            'iOS and Android applications for customers, teams, visitors, and field operations',
+            'Admin panels, dashboards, content controls, and approval workflows',
+            'Booking, ordering, loyalty, notifications, forms, and account systems',
+            'Backend APIs and integrations with payment, CRM, maps, analytics, and existing systems',
+        ],
+        sectors: ['Retail', 'Real estate', 'Education', 'Events', 'Tourism', 'Operations'],
+        deliverables: ['UX flows', 'UI design', 'Mobile app', 'Backend API', 'Admin dashboard', 'Deployment support'],
+        proof: 'Built to support the same service logic behind Takhaial projects: interactive journeys, managed content, and measurable user actions.',
+    },
+    {
+        slug: 'vr-ar',
+        title: 'VR / AR',
+        label: 'Immersive experiences',
+        icon: service2,
+        summary: 'We create VR, AR, and MR experiences that let people explore spaces, products, training scenarios, museums, and future projects before they physically exist.',
+        lead: 'Our XR work turns complex products and environments into interactive experiences. From virtual showrooms to AR information layers, the goal is always better understanding and stronger engagement.',
+        whatWeBuild: [
+            'Virtual showrooms for automotive, real estate, retail, and destination marketing',
+            'AR product visualization, information layers, and guided real-world overlays',
+            'VR training simulators for education, safety, vocational skills, and high-risk procedures',
+            'Virtual museums, cultural storytelling, tourism journeys, and mixed reality presentations',
+        ],
+        sectors: ['Automotive', 'Real estate', 'Education', 'Tourism', 'Museums', 'Industry', 'Defense'],
+        deliverables: ['3D assets', 'VR app', 'AR app', 'MR demo', 'Interactive scenes', 'Event-ready build'],
+        proof: 'Reference material includes Lexus-style virtual showrooms, education/training VR, museums, tourism, smart city, and automotive experiences.',
+    },
+    {
+        slug: 'ai',
+        title: 'AI',
+        label: 'Intelligent systems',
+        icon: service3,
+        summary: 'We integrate AI into products and immersive experiences so they can explain, guide, analyze, personalize, predict, and respond in real time.',
+        lead: 'AI becomes powerful when it is connected to a real workflow. We use it for assistants, analytics, adaptive learning, digital twins, prediction, and smarter user journeys.',
+        whatWeBuild: [
+            'AI assistants for websites, exhibitions, museums, cities, products, and customer support',
+            'AI-powered guides inside VR/AR experiences and virtual sales environments',
+            'Data analysis, visitor analytics, recommendation flows, and lead qualification',
+            'Predictive maintenance, digital twin intelligence, and operational decision support',
+        ],
+        sectors: ['Smart cities', 'Education', 'Museums', 'Retail', 'Industry', 'Security', 'Healthcare'],
+        deliverables: ['AI workflow design', 'Assistant logic', 'Prompt system', 'Data integration', 'Analytics view', 'XR integration'],
+        proof: 'The business plan highlights XR/AI as an integrated offer for training, commercial showrooms, digital twins, visitor analytics, and command solutions.',
+    },
+    {
+        slug: 'advertising',
+        title: 'Advertising',
+        label: 'Cinematic content',
+        icon: ctaicon,
+        summary: 'We produce visual campaigns, 3D animations, CGI films, AI-assisted concept videos, and short social cuts that make products and destinations easy to understand.',
+        lead: 'Advertising is not just a nice video. It is a clear visual argument. We build cinematic content that explains the offer, shows the use case, and gives sales teams material they can actually use.',
+        whatWeBuild: [
+            '3D animation, CGI product films, architectural visualization, and cinematic project films',
+            'AI-assisted concept films for fast early-stage visualization and pitch development',
+            'Social media cutdowns, launch videos, event screens, and presentation-ready visual assets',
+            'Anamorphic, curved, double-screen, and high-impact display content for campaigns and venues',
+        ],
+        sectors: ['Real estate', 'Automotive', 'Events', 'Government', 'Tourism', 'Retail', 'Education'],
+        deliverables: ['Creative concept', 'Storyboard', '3D/AI film', 'Social cuts', 'Still renders', 'Campaign assets'],
+        proof: 'The Car City proposal references cinematic masterplans, AI films, CGI, social versions, zoning visuals, and still renders as core deliverables.',
+    },
+]
+
+const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '')
+
+export const getServiceBySlug = (slug) => serviceContent.find(service => service.slug === slug)
+
+export const serviceMatchesRecord = (service, record) =>
+{
+    const title = normalize(record?.title)
+
+    if (!title) return false
+    if (normalize(service.title) === title) return true
+    if (service.slug === 'vr-ar' && ['vr', 'ar', 'vrar', 'xr'].includes(title)) return true
+    if (service.slug === 'ai' && title === 'ai') return true
+    if (service.slug === 'advertising' && ['advertising', 'ads', '3danimation'].includes(title)) return true
+    if (service.slug === 'mobile-apps' && ['mobileapps', 'apps', 'app'].includes(title)) return true
+
+    return false
+}
