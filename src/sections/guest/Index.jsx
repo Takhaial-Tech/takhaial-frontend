@@ -9,7 +9,6 @@ const Home = React.lazy(() => import('./Home/Home'));
 const About = React.lazy(() => import('./About/About'));
 const Why = React.lazy(() => import('./Why/Why'));
 const Products = React.lazy(() => import('./Products/Products'));
-const Success = React.lazy(() => import('./Success/Success'));
 const Sectors = React.lazy(() => import('./Sectors/Sectors'));
 const Contact = React.lazy(() => import('./Contact/Contact'));
 
@@ -20,7 +19,7 @@ const Index = () =>
 
     useEffect(() =>
     {
-        if (introLoaded && step < 9)
+        if (introLoaded && step < 8)
         {
             const timer = setTimeout(() => setStep(step + 1), 1000);
             return () => clearTimeout(timer);
@@ -46,18 +45,15 @@ const Index = () =>
                 <Products />
             )}
             {step >= 5 && (
-                <Success />
-            )}
-            {step >= 6 && (
                 <Sectors />
             )}
-            {step >= 7 && (
+            {step >= 6 && (
                 <MediaCoverage />
             )}
-            {step >= 8 && (
+            {step >= 7 && (
                 <Clients />
             )}
-            {step >= 9 && (
+            {step >= 8 && (
                 <Contact />
             )}
         </>

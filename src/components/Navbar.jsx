@@ -14,7 +14,6 @@ const Navbar = (props) =>
         { name: 'About', url: 'section_2' },
         { name: 'Why', url: 'section_3' },
         { name: 'Products', url: 'section_4' },
-        { name: 'Success', url: 'section_5' },
         { name: 'Sectors', url: 'section_6' },
         { name: 'Media', url: 'section_7' },
         { name: 'Clients', url: 'section_8' },
