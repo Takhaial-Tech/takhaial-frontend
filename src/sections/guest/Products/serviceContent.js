@@ -120,7 +120,7 @@ export const mergeServiceRecord = (service, record) =>
         deliverables: hasEditableContent ? textToList(record?.deliverables, service.deliverables) : service.deliverables,
         sectors: hasEditableContent ? textToList(record?.sectors, service.sectors) : service.sectors,
         proof: hasEditableContent ? record?.proof || service.proof : service.proof,
-        video: record?.video,
+        video: hasEditableContent ? record?.video : null,
     }
 }
 

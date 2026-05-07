@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import logo from '../../../assets/icons/logo.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
@@ -26,30 +26,6 @@ const ServiceDetail = () =>
     const fallbackService = getServiceBySlug(serviceSlug);
     const service = getServiceRecords(record).find(item => item.slug === serviceSlug) || fallbackService;
     const videoSource = service?.video ? `${mediaUrl}${service.video}` : '';
-    const [isVideoAvailable, setIsVideoAvailable] = useState(false);
-
-    useEffect(() =>
-    {
-        let isMounted = true;
-        setIsVideoAvailable(false);
-
-        if (!videoSource)
-        {
-            return () => { isMounted = false; };
-        }
-
-        fetch(videoSource, { method: 'HEAD' })
-            .then((response) =>
-            {
-                if (isMounted) setIsVideoAvailable(response.ok);
-            })
-            .catch(() =>
-            {
-                if (isMounted) setIsVideoAvailable(false);
-            });
-
-        return () => { isMounted = false; };
-    }, [videoSource])
 
     if (!fallbackService)
     {
@@ -147,10 +123,10 @@ const ServiceDetail = () =>
                         </div>
                     </div>
 
-                    {(isVideoAvailable || isAdmin) &&
+                    {(service.video || isAdmin) &&
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-10">
                             <h2 className="text-2xl font-bold mb-4">Introduction Video</h2>
-                            {isVideoAvailable ? (
+                            {service.video ? (
                                 <video
                                     controls
                                     preload="metadata"
@@ -160,7 +136,7 @@ const ServiceDetail = () =>
                                 </video>
                             ) : (
                                 <p className="text-[#ccc] leading-relaxed">
-                                    No working introduction video is uploaded yet. Use Edit Service to upload one.
+                                    No introduction video is uploaded yet. Use Edit Service to upload one.
                                 </p>
                             )}
                         </section>
