@@ -9,6 +9,7 @@ import useAddItem from '../../../hooks/use-add-item'
 import EditSection from '../../../components/EditSection'
 import LoadingScreen from '../../../components/LoadingScreen'
 import { FormikControl } from '../../../components/inputs'
+import { mediaUrl } from '../../../config'
 import { getServiceBySlug, getServiceRecords, serviceToFormValues } from './serviceContent'
 import { serviceDetailInputs } from './productsInputs'
 
@@ -120,6 +121,25 @@ const ServiceDetail = () =>
                             </p>
                         </div>
                     </div>
+
+                    {(service.video || isAdmin) &&
+                        <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-10">
+                            <h2 className="text-2xl font-bold mb-4">Introduction Video</h2>
+                            {service.video ? (
+                                <video
+                                    controls
+                                    preload="metadata"
+                                    className="w-full max-h-[70vh] rounded-xl bg-[#000]"
+                                >
+                                    <source src={`${mediaUrl}${service.video}`} />
+                                </video>
+                            ) : (
+                                <p className="text-[#ccc] leading-relaxed">
+                                    No introduction video is uploaded yet. Use Edit Service to upload one.
+                                </p>
+                            )}
+                        </section>
+                    }
 
                     <div className="grid md:grid-cols-2 gap-6 mb-10">
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70">
