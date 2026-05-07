@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import useGetSection from '../../../hooks/use-get-section';
 import useEditItem from '../../../hooks/use-edit-item';
 import useAddItem from '../../../hooks/use-add-item';
-import { serviceContent, serviceMatchesRecord } from './serviceContent';
+import { getServiceRecords, serviceToFormValues } from './serviceContent';
 
 const Products = () =>
 {
@@ -17,41 +17,14 @@ const Products = () =>
     const { isLoadingAddSection, handleAddSection } = useAddItem(4);
 
     const [video, setVideo] = useState(false);
-    const getServiceRecords = () =>
-    {
-        const items = record.slice(1);
-        const usedIds = new Set();
-
-        return serviceContent.map((service, index) =>
-        {
-            let item = items.find((recordItem) => !usedIds.has(recordItem._id) && serviceMatchesRecord(service, recordItem));
-
-            if (!item)
-            {
-                item = items[index] && !usedIds.has(items[index]._id) ? items[index] : null;
-            }
-
-            if (item) usedIds.add(item._id);
-
-            const hasCurrentServiceContent = item?.title === service.title;
-
-            return {
-                ...service,
-                record: item,
-                video: item?.video,
-                adminDescription: hasCurrentServiceContent ? item?.disc : null,
-            }
-        })
-    }
-
-    const services = getServiceRecords();
+    const services = getServiceRecords(record);
 
     const onEdit = (values, serviceIndex) =>
     {
         const selectedService = services[serviceIndex];
         const onSuccess = () => { setIsOpenEditModal(false); setVideo(false); }
         const serviceValues = {
-            title: selectedService.title,
+            ...serviceToFormValues(selectedService),
             disc: values.disc || selectedService.summary,
         }
 

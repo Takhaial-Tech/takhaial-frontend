@@ -1,14 +1,14 @@
-import service1 from '../../../assets/icons/service1.svg'
-import service2 from '../../../assets/icons/service2.svg'
-import service3 from '../../../assets/icons/service3.svg'
-import ctaicon from '../../../assets/icons/ctaicon.svg'
+import mobileAppsIcon from '../../../assets/icons/mobile-apps-service.svg'
+import vrArIcon from '../../../assets/icons/vr-ar-service.svg'
+import aiIcon from '../../../assets/icons/ai-service.svg'
+import advertisingIcon from '../../../assets/icons/advertising-service.svg'
 
 export const serviceContent = [
     {
         slug: 'mobile-apps',
         title: 'Mobile Apps',
         label: 'Digital platforms',
-        icon: service1,
+        icon: mobileAppsIcon,
         summary: 'We design and build mobile-first platforms that connect users, content, services, payments, bookings, and operations in one controlled experience.',
         lead: 'Mobile apps are the operational layer of a digital service. We turn ideas into usable products with clear journeys, admin control, secure APIs, and room to grow.',
         whatWeBuild: [
@@ -25,7 +25,7 @@ export const serviceContent = [
         slug: 'vr-ar',
         title: 'VR / AR',
         label: 'Immersive experiences',
-        icon: service2,
+        icon: vrArIcon,
         summary: 'We create VR, AR, and MR experiences that let people explore spaces, products, training scenarios, museums, and future projects before they physically exist.',
         lead: 'Our XR work turns complex products and environments into interactive experiences. From virtual showrooms to AR information layers, the goal is always better understanding and stronger engagement.',
         whatWeBuild: [
@@ -42,7 +42,7 @@ export const serviceContent = [
         slug: 'ai',
         title: 'AI',
         label: 'Intelligent systems',
-        icon: service3,
+        icon: aiIcon,
         summary: 'We integrate AI into products and immersive experiences so they can explain, guide, analyze, personalize, predict, and respond in real time.',
         lead: 'AI becomes powerful when it is connected to a real workflow. We use it for assistants, analytics, adaptive learning, digital twins, prediction, and smarter user journeys.',
         whatWeBuild: [
@@ -59,7 +59,7 @@ export const serviceContent = [
         slug: 'advertising',
         title: 'Advertising',
         label: 'Cinematic content',
-        icon: ctaicon,
+        icon: advertisingIcon,
         summary: 'We produce visual campaigns, 3D animations, CGI films, AI-assisted concept videos, and short social cuts that make products and destinations easy to understand.',
         lead: 'Advertising is not just a nice video. It is a clear visual argument. We build cinematic content that explains the offer, shows the use case, and gives sales teams material they can actually use.',
         whatWeBuild: [
@@ -78,10 +78,84 @@ const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9
 
 export const getServiceBySlug = (slug) => serviceContent.find(service => service.slug === slug)
 
+export const listToText = (items) => Array.isArray(items) ? items.join('\n') : String(items || '')
+
+export const textToList = (value, fallback = []) =>
+{
+    if (Array.isArray(value)) return value;
+    if (!value) return fallback;
+
+    const items = String(value)
+        .split(/\r?\n/)
+        .map(item => item.trim())
+        .filter(Boolean);
+
+    return items.length ? items : fallback;
+}
+
+export const serviceToFormValues = (service) => ({
+    slug: service.slug,
+    title: service.title,
+    label: service.label,
+    disc: service.summary,
+    lead: service.lead,
+    whatWeBuild: listToText(service.whatWeBuild),
+    deliverables: listToText(service.deliverables),
+    sectors: listToText(service.sectors),
+    proof: service.proof,
+})
+
+export const mergeServiceRecord = (service, record) =>
+{
+    const hasEditableContent = record?.slug === service.slug || record?.title === service.title;
+
+    return {
+        ...service,
+        record,
+        title: hasEditableContent ? record?.title || service.title : service.title,
+        label: hasEditableContent ? record?.label || service.label : service.label,
+        summary: hasEditableContent ? record?.disc || service.summary : service.summary,
+        lead: hasEditableContent ? record?.lead || service.lead : service.lead,
+        whatWeBuild: hasEditableContent ? textToList(record?.whatWeBuild, service.whatWeBuild) : service.whatWeBuild,
+        deliverables: hasEditableContent ? textToList(record?.deliverables, service.deliverables) : service.deliverables,
+        sectors: hasEditableContent ? textToList(record?.sectors, service.sectors) : service.sectors,
+        proof: hasEditableContent ? record?.proof || service.proof : service.proof,
+        video: record?.video,
+    }
+}
+
+export const getServiceRecords = (record = []) =>
+{
+    const allItems = Array.isArray(record) ? record : [];
+    const firstItemIsHeader = allItems[0] && !serviceContent.some(service => serviceMatchesRecord(service, allItems[0]));
+    const items = firstItemIsHeader ? allItems.slice(1) : allItems;
+    const usedIds = new Set();
+
+    return serviceContent.map((service, index) =>
+    {
+        let item = items.find((recordItem) => !usedIds.has(recordItem._id) && recordItem?.slug === service.slug);
+
+        if (!item)
+        {
+            item = items.find((recordItem) => !usedIds.has(recordItem._id) && serviceMatchesRecord(service, recordItem));
+        }
+
+        if (!item)
+        {
+            item = items[index] && !usedIds.has(items[index]._id) ? items[index] : null;
+        }
+
+        if (item) usedIds.add(item._id);
+
+        return mergeServiceRecord(service, item);
+    })
+}
+
 export const serviceMatchesRecord = (service, record) =>
 {
     const title = normalize(record?.title)
 
+    if (record?.slug === service.slug) return true
     if (!title) return false
     if (normalize(service.title) === title) return true
     if (service.slug === 'vr-ar' && ['vr', 'ar', 'vrar', 'xr'].includes(title)) return true

@@ -1,20 +1,62 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import logo from '../../../assets/icons/logo.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
-import { getServiceBySlug } from './serviceContent'
+import useGetSection from '../../../hooks/use-get-section'
+import useEditItem from '../../../hooks/use-edit-item'
+import useAddItem from '../../../hooks/use-add-item'
+import EditSection from '../../../components/EditSection'
+import LoadingScreen from '../../../components/LoadingScreen'
+import { FormikControl } from '../../../components/inputs'
+import { getServiceBySlug, getServiceRecords, serviceToFormValues } from './serviceContent'
+import { serviceDetailInputs } from './productsInputs'
 
 const ServiceDetail = () =>
 {
     const { serviceSlug } = useParams();
-    const service = getServiceBySlug(serviceSlug);
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+    const [video, setVideo] = useState(false);
+    const isAdmin = !!useSelector(state => state.auth.token);
+    const isLoadingGetSection = useGetSection(4);
+    const record = useSelector(state => state.sections.sectionsData)[4] || [];
+    const { isLoadingEditSection, handleEditSection } = useEditItem(4);
+    const { isLoadingAddSection, handleAddSection } = useAddItem(4);
+    const fallbackService = getServiceBySlug(serviceSlug);
+    const service = getServiceRecords(record).find(item => item.slug === serviceSlug) || fallbackService;
 
-    if (!service)
+    if (!fallbackService)
     {
         return <Navigate to="/" replace={true} />
     }
 
+    const onChangeVideo = (e) =>
+    {
+        setVideo(e.target.files[0])
+    }
+
+    const onEdit = (values) =>
+    {
+        const serviceValues = {
+            ...values,
+            slug: service.slug,
+        }
+        const onSuccess = () => { setIsOpenEditModal(false); setVideo(false); }
+
+        if (service.record?._id)
+        {
+            handleEditSection(serviceValues, service.record._id, onSuccess, { video })
+            return;
+        }
+
+        handleAddSection(serviceValues, onSuccess, { video })
+    }
+
+    const isSaving = isLoadingEditSection || isLoadingAddSection;
+
     return (
         <main className="min-h-screen bg-[#000] text-white relative overflow-hidden">
+            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
             <div className="bg-gradient-radial2 absolute top-0 left-0 right-0 bottom-0 z-[0]" />
             <video
                 autoPlay
@@ -37,6 +79,31 @@ const ServiceDetail = () =>
                         Back to Services
                     </Link>
                 </header>
+                {isAdmin &&
+                    <EditSection
+                        editTitle="Edit Service"
+                        isOpenEditModal={isOpenEditModal}
+                        setIsOpenEditModal={setIsOpenEditModal}
+                        onEdit={onEdit}
+                        isLoadingEdit={isSaving}
+                        inputs={serviceDetailInputs}
+                        initialValues={serviceToFormValues(service)}
+                        className="right-[20px] top-[92px] md:right-[40px]"
+                    >
+                        <h1>Introduction Video</h1>
+                        <FormikControl
+                            disabled={isSaving}
+                            control="input"
+                            type="file"
+                            name="video"
+                            accept="video/*"
+                            placeholder="Introduction Video"
+                            className="block md:w-full w-[100%]"
+                            containerClassName="block w-full"
+                            onChange={onChangeVideo}
+                        />
+                    </EditSection>
+                }
 
                 <section className="md:container md:mx-auto">
                     <div className="grid md:grid-cols-[220px_1fr] gap-8 items-start mb-12">
@@ -45,7 +112,7 @@ const ServiceDetail = () =>
                         </div>
                         <div>
                             <p className="text-[#ef4444] font-bold mb-3">{service.label}</p>
-                            <h1 className="text-4xl md:text-7xl font-bold leading-tight glitch" data-glitch={service.title}>
+                            <h1 className="text-4xl md:text-7xl font-bold leading-tight">
                                 {service.title}
                             </h1>
                             <p className="mt-5 text-xl leading-relaxed max-w-[900px] text-[#ccc]">

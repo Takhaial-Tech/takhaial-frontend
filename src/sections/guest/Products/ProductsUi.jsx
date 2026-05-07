@@ -49,7 +49,7 @@ const ProductsUi = (props) =>
                                             isLoadingEdit={isLoadingEdit}
                                             inputs={productInputsData}
                                             index={key + 1}
-                                            initialValues={{ title: service.title, disc: service.adminDescription || service.summary }}
+                                            initialValues={{ title: service.title, disc: service.summary }}
                                         >
                                             <h1>Introduction Video</h1>
                                             <FormikControl
@@ -68,10 +68,10 @@ const ProductsUi = (props) =>
                                     <div className={'p-4 items-center min-h-[180px]'}>
                                         <img src={service.icon} alt="" className="h-[95px] m-auto mb-5" />
                                         <p className="text-[#ef4444] text-sm text-center mb-2">{service.label}</p>
-                                        <h1 className="text-center font-bold text-3xl glitch leading-tight" data-glitch={service.title}>{service.title}</h1>
+                                        <h1 className="text-center font-bold text-3xl leading-tight">{service.title}</h1>
                                     </div>
                                     <p className="p-4 pt-0 group-hover/item:text-base transition-all duration-500 text-sm leading-relaxed text-[#ccc] overflow-hidden">
-                                        {service.adminDescription || service.summary}
+                                        {service.summary}
                                     </p>
 
                                     <div className="flex mt-auto">

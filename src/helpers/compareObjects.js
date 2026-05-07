@@ -1,23 +1,34 @@
 export const compareObjects = (obj1, obj2) =>
 {
     const diffs = {};
+    const initialObject = obj1 || {};
 
     for (const key in obj2)
     {
-        if (obj1.hasOwnProperty(key))
+        if (!Object.prototype.hasOwnProperty.call(initialObject, key))
+        {
+            diffs[key] = obj2[key];
+        }
+        else
         {
             // Check for primitive types
             if (typeof obj2[key] === 'string' || typeof obj2[key] === 'number')
             {
-                if (obj1[key] !== obj2[key])
+                if (initialObject[key] !== obj2[key])
                 {
                     diffs[key] = obj2[key];
                 }
             } else if (Array.isArray(obj2[key]))
             {
                 // Custom comparison for  array of objects
-                if (obj1[key].length !== obj2[key].length) diffs[key] = obj2[key];
-                obj1[key].forEach((ele1, index1) =>
+                if (!Array.isArray(initialObject[key]))
+                {
+                    diffs[key] = obj2[key];
+                    continue;
+                }
+
+                if (initialObject[key].length !== obj2[key].length) diffs[key] = obj2[key];
+                initialObject[key].forEach((ele1, index1) =>
                 {
                     obj2[key].forEach((ele2, index2) =>
                     {
