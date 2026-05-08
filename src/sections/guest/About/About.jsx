@@ -19,9 +19,10 @@ const About = () =>
     const record = useSelector(state => state.sections.sectionsData)[2] || []
     const { isLoadingEditSection, handleEditSection } = useEditItem(2);
     const { isLoadingAddSection, handleAddSection } = useAddItem(2);
+    const legacyRecord = record.filter(recordItem => !recordItem?.slug);
     const aboutData = ABOUT_BLOCKS.map((block) =>
     {
-        const item = record.find((recordItem) => recordItem?.slug === block.slug) || record[block.legacyIndex] || {};
+        const item = record.find((recordItem) => recordItem?.slug === block.slug) || legacyRecord[block.legacyIndex] || {};
         return { ...item, slug: block.slug };
     })
 
