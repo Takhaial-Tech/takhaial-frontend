@@ -39,7 +39,7 @@ const WhyUi = (props) =>
                             <img src={takhaialLogo} alt="" height={100} width={155} className="mt-[5px] ml-[-10px]" />
                         </div>
 
-                        {data?.disc.split('.').map((a, k) =>
+                        {(data?.disc || '').split('.').filter(Boolean).map((a, k) =>
                             <p key={k} className={"leading-relaxed content-end text-sm "} >{a}.</p>
                         )}
 
