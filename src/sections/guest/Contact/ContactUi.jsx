@@ -117,7 +117,7 @@ const ContactUi = (props) =>
                         </a>
                     )}
                 </ul>
-                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > © {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> All rights reserved. developed by <a href="https://digi-sail.com/" target="_black">DIGI-SAIL</a> </p>
+                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> All rights reserved. </p>
                 {<video
                     ref={videoRef}
                     webkit-playsinline="true"

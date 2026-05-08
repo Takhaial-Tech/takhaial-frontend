@@ -54,7 +54,7 @@ const Sector = (props) =>
                         />
                     </EditSection>
                 }
-                {ser?.image && <img className="min-h-[80px]" alt="" width={50} height={50} src={mediaUrl + ser?.image} />}
+                {ser?.image && <img className="max-h-[80px] max-w-full w-auto h-auto object-contain" alt="" src={mediaUrl + ser?.image} />}
                 <h1 className="font-bold text-larg glitch" data-glitch={ser.title}>{ser.title}</h1>
                 <p className={` transition-all duration-500 text-xs opacity-0  mb-[-100%] overflow-hidden  ${isVisible ? 'opacity-[1] my-[10px] mb-[0]' : ''}`}>
                     {ser.disc}

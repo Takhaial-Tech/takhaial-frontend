@@ -94,7 +94,8 @@ const SectorsUi = (props) =>
                             <source src={mediaUrl + ser.video} />
                         </video>}
                         <div className="min-h-[250px] border border-solid border-[red] p-5 rounded-xl transition-all duration-500 grid relative content-end bg-[#000] group/item">
-                            {ser?.image && <img alt="" width={50} height={50} src={mediaUrl + ser?.image} />}                            <h1 className="font-bold text-larg mt-[10px] glitch" data-glitch={ser.title}>{ser.title}</h1>
+                            {ser?.image && <img className="max-h-[80px] max-w-full w-auto h-auto object-contain" alt="" src={mediaUrl + ser?.image} />}
+                            <h1 className="font-bold text-larg mt-[10px] glitch" data-glitch={ser.title}>{ser.title}</h1>
                             <p className="m-0 transition-all duration-500 text-lg my-[10px] group/edit group-hover:item:h-[100%]">
                                 {ser.disc}
                             </p>
