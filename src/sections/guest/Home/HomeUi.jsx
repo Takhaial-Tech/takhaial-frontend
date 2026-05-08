@@ -4,11 +4,16 @@ import { useEffect, useRef } from 'react';
 import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
 import LoadingScreen from '../../../components/LoadingScreen';
+import { useLanguage } from '../../../i18n/LanguageContext';
+import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 
 const HomeUi = (props) =>
 {
     const { isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
+    const { language, isArabic, t } = useLanguage();
     const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
+    const title = getLocalizedField(data, 'title', language);
+    const desc = getLocalizedField(data, 'disc', language);
 
     // enforce video to play 
     const videoRef = useRef();
@@ -28,7 +33,7 @@ const HomeUi = (props) =>
                     onEdit={onEdit}
                     isLoadingEdit={isLoadingEdit}
                     inputs={homeInputsData}
-                    initialValues={{ title: data?.title, disc: data?.disc }}
+                    initialValues={getBilingualInitialValues(data, ['title', 'disc'])}
                     className='right-[20px]'
                 />
             }
@@ -45,7 +50,7 @@ const HomeUi = (props) =>
                 >
                     <div className="mb-4">
                         <label className="block text-white mb-2">
-                            Company profile PDF
+                            {t('Company profile PDF')}
                         </label>
                         <input
                             type="file"
@@ -59,8 +64,8 @@ const HomeUi = (props) =>
 
             <div className="md:container md:mx-auto self-end z-[10]">
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
-                    <h1 className="grid-cols-1 text-right leading-7 text-4xl font-bold justify-self-right">
-                        {data?.title.split(' ').map((a, k) =>
+                    <h1 className={`grid-cols-1 leading-7 text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
+                        {(title || '').split(' ').map((a, k) =>
                             <span key={k} className="glitch-wrapper ">
                                 <span className="glitch-trans block" data-glitch={a}>{a}</span> <br />
                             </span>
@@ -68,7 +73,7 @@ const HomeUi = (props) =>
                     </h1>
                     <div className="col-span-3">
                         <h2 className="content-center text-xl max-w-[630px]">
-                            {data?.disc}
+                            {desc}
                         </h2>
                         <a
                             href={profilePdfHref}
@@ -77,7 +82,7 @@ const HomeUi = (props) =>
                             download
                             className="block mt-[10px] transition-all duration-500 w-fit rounded-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
-                            {'Download Profile'}
+                            {t('Download Profile')}
                         </a>
                     </div>
                 </div>

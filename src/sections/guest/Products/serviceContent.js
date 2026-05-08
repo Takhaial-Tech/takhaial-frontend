@@ -2,8 +2,9 @@ import mobileAppsIcon from '../../../assets/icons/mobile-apps-service.svg'
 import vrArIcon from '../../../assets/icons/vr-ar-service.svg'
 import aiIcon from '../../../assets/icons/ai-service.svg'
 import advertisingIcon from '../../../assets/icons/advertising-service.svg'
+import { LANGUAGES, translateText } from '../../../i18n/translations'
 
-export const serviceContent = [
+const baseServiceContent = [
     {
         slug: 'mobile-apps',
         title: 'Mobile Apps',
@@ -74,6 +75,82 @@ export const serviceContent = [
     },
 ]
 
+const serviceArabicContent = {
+    'mobile-apps': {
+        titleAr: 'تطبيقات الموبايل',
+        labelAr: 'منصات رقمية',
+        summaryAr: 'نصمم ونطور منصات موبايل تربط المستخدمين والمحتوى والخدمات والمدفوعات والحجوزات والعمليات في تجربة واحدة قابلة للإدارة.',
+        leadAr: 'تطبيقات الموبايل هي طبقة التشغيل للخدمة الرقمية. نحول الأفكار إلى منتجات قابلة للاستخدام برحلات واضحة ولوحات تحكم وواجهات API آمنة وقابلية للنمو.',
+        whatWeBuildAr: [
+            'تطبيقات iOS وAndroid للعملاء والفرق والزوار وعمليات الميدان',
+            'لوحات إدارة ولوحات بيانات وتحكم في المحتوى ومسارات موافقات',
+            'أنظمة حجز وطلب وولاء وإشعارات ونماذج وحسابات مستخدمين',
+            'واجهات API وتكاملات مع الدفع وCRM والخرائط والتحليلات والأنظمة الحالية',
+        ],
+        sectorsAr: ['التجزئة', 'العقارات', 'التعليم', 'الفعاليات', 'السياحة', 'العمليات'],
+        deliverablesAr: ['رحلات UX', 'تصميم UI', 'تطبيق موبايل', 'Backend API', 'لوحة إدارة', 'دعم الإطلاق'],
+        proofAr: 'مبنية لدعم نفس منطق الخدمة في مشاريع تخيل: رحلات تفاعلية ومحتوى مدار وإجراءات مستخدم قابلة للقياس.',
+    },
+    'vr-ar': {
+        titleAr: 'الواقع الافتراضي / المعزز',
+        labelAr: 'تجارب غامرة',
+        summaryAr: 'ننشئ تجارب VR وAR وMR تتيح للناس استكشاف المساحات والمنتجات والتدريب والمتاحف والمشروعات المستقبلية قبل وجودها فعليا.',
+        leadAr: 'عملنا في XR يحول المنتجات والبيئات المعقدة إلى تجارب تفاعلية. من المعارض الافتراضية إلى طبقات المعلومات بالواقع المعزز، الهدف دائما فهم أفضل وتفاعل أقوى.',
+        whatWeBuildAr: [
+            'معارض افتراضية للسيارات والعقارات والتجزئة وتسويق الوجهات',
+            'تصور منتجات بالواقع المعزز وطبقات معلومات وإرشاد فوق الواقع',
+            'محاكيات تدريب VR للتعليم والسلامة والمهارات المهنية والإجراءات عالية الخطورة',
+            'متاحف افتراضية وسرد ثقافي ورحلات سياحية وعروض واقع مختلط',
+        ],
+        sectorsAr: ['السيارات', 'العقارات', 'التعليم', 'السياحة', 'المتاحف', 'الصناعة', 'الدفاع'],
+        deliverablesAr: ['أصول ثلاثية الأبعاد', 'تطبيق VR', 'تطبيق AR', 'عرض MR', 'مشاهد تفاعلية', 'نسخة جاهزة للفعاليات'],
+        proofAr: 'المواد المرجعية تشمل معارض سيارات افتراضية وتدريب VR ومتاحف وسياحة ومدن ذكية وتجارب سيارات.',
+    },
+    ai: {
+        titleAr: 'الذكاء الاصطناعي',
+        labelAr: 'أنظمة ذكية',
+        summaryAr: 'ندمج الذكاء الاصطناعي داخل المنتجات والتجارب الغامرة حتى تشرح وترشد وتحلل وتخصص وتتنبأ وتتفاعل في الوقت الحقيقي.',
+        leadAr: 'يصبح الذكاء الاصطناعي قويا عندما يرتبط بسير عمل حقيقي. نستخدمه للمساعدين والتحليلات والتعلم التكيفي والتوائم الرقمية والتنبؤ ورحلات المستخدم الذكية.',
+        whatWeBuildAr: [
+            'مساعدون أذكياء للمواقع والمعارض والمتاحف والمدن والمنتجات ودعم العملاء',
+            'مرشدون بالذكاء الاصطناعي داخل تجارب VR/AR وبيئات البيع الافتراضية',
+            'تحليل بيانات وتحليلات زوار وتوصيات وتأهيل عملاء محتملين',
+            'صيانة تنبؤية وذكاء للتوائم الرقمية ودعم قرارات التشغيل',
+        ],
+        sectorsAr: ['المدن الذكية', 'التعليم', 'المتاحف', 'التجزئة', 'الصناعة', 'الأمن', 'الصحة'],
+        deliverablesAr: ['تصميم سير عمل AI', 'منطق المساعد', 'نظام Prompt', 'تكامل بيانات', 'عرض تحليلات', 'تكامل XR'],
+        proofAr: 'خطة العمل تبرز XR/AI كعرض متكامل للتدريب والمعارض التجارية والتوائم الرقمية وتحليلات الزوار وحلول القيادة.',
+    },
+    advertising: {
+        titleAr: 'الإعلانات',
+        labelAr: 'محتوى سينمائي',
+        summaryAr: 'ننتج حملات بصرية وأنيميشن ثلاثي الأبعاد وأفلام CGI وفيديوهات مفاهيم مدعومة بالذكاء الاصطناعي ونسخ قصيرة للسوشيال توضح المنتجات والوجهات بسرعة.',
+        leadAr: 'الإعلان ليس مجرد فيديو جميل. هو حجة بصرية واضحة. نبني محتوى سينمائي يشرح العرض ويعرض حالة الاستخدام ويمنح فرق المبيعات مواد قابلة للاستخدام فعلا.',
+        whatWeBuildAr: [
+            'أنيميشن ثلاثي الأبعاد وأفلام CGI للمنتجات وتصوير معماري وأفلام مشاريع سينمائية',
+            'أفلام مفاهيم مدعومة بالذكاء الاصطناعي للتصور السريع وتطوير العروض',
+            'نسخ قصيرة للسوشيال وفيديوهات إطلاق وشاشات فعاليات وأصول جاهزة للعروض',
+            'محتوى للشاشات الأنمورفية والمنحنية والمزدوجة والعروض عالية التأثير',
+        ],
+        sectorsAr: ['العقارات', 'السيارات', 'الفعاليات', 'الحكومة', 'السياحة', 'التجزئة', 'التعليم'],
+        deliverablesAr: ['فكرة إبداعية', 'Storyboard', 'فيلم 3D/AI', 'نسخ سوشيال', 'صور ثابتة', 'أصول حملة'],
+        proofAr: 'مقترح Car City يشير إلى مخططات سينمائية وأفلام AI وCGI ونسخ اجتماعية ومرئيات مناطق وصور ثابتة كمخرجات أساسية.',
+    },
+}
+
+export const serviceContent = baseServiceContent.map((service) => ({
+    ...service,
+    ...serviceArabicContent[service.slug],
+}))
+
+export const servicesSectionHeader = {
+    slug: 'services-header',
+    title: 'Services',
+    titleAr: 'الخدمات',
+    disc: 'We build digital services across mobile, immersive technology, AI, and advertising content.',
+    discAr: 'نبني خدمات رقمية في تطبيقات الموبايل والتقنيات الغامرة والذكاء الاصطناعي والمحتوى الإعلاني.',
+}
+
 const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '')
 
 export const getServiceBySlug = (slug) => serviceContent.find(service => service.slug === slug)
@@ -96,39 +173,78 @@ export const textToList = (value, fallback = []) =>
 export const serviceToFormValues = (service) => ({
     slug: service.slug,
     title: service.title,
+    titleAr: service.titleAr || translateText(service.title, LANGUAGES.ar.code),
     label: service.label,
+    labelAr: service.labelAr || translateText(service.label, LANGUAGES.ar.code),
     disc: service.summary,
+    discAr: service.summaryAr || translateText(service.summary, LANGUAGES.ar.code),
     lead: service.lead,
+    leadAr: service.leadAr || translateText(service.lead, LANGUAGES.ar.code),
     whatWeBuild: listToText(service.whatWeBuild),
+    whatWeBuildAr: listToText(service.whatWeBuildAr || service.whatWeBuild.map((item) => translateText(item, LANGUAGES.ar.code))),
     deliverables: listToText(service.deliverables),
+    deliverablesAr: listToText(service.deliverablesAr || service.deliverables.map((item) => translateText(item, LANGUAGES.ar.code))),
     sectors: listToText(service.sectors),
+    sectorsAr: listToText(service.sectorsAr || service.sectors.map((item) => translateText(item, LANGUAGES.ar.code))),
     proof: service.proof,
+    proofAr: service.proofAr || translateText(service.proof, LANGUAGES.ar.code),
 })
 
 export const mergeServiceRecord = (service, record) =>
 {
     const hasEditableContent = record?.slug === service.slug || record?.title === service.title;
+    const englishSummary = hasEditableContent ? record?.disc || service.summary : service.summary;
+    const englishLead = hasEditableContent ? record?.lead || service.lead : service.lead;
+    const englishProof = hasEditableContent ? record?.proof || service.proof : service.proof;
+    const englishWhatWeBuild = hasEditableContent ? textToList(record?.whatWeBuild, service.whatWeBuild) : service.whatWeBuild;
+    const englishDeliverables = hasEditableContent ? textToList(record?.deliverables, service.deliverables) : service.deliverables;
+    const englishSectors = hasEditableContent ? textToList(record?.sectors, service.sectors) : service.sectors;
 
     return {
         ...service,
         record,
         title: hasEditableContent ? record?.title || service.title : service.title,
+        titleAr: hasEditableContent ? record?.titleAr || service.titleAr || translateText(record?.title || service.title, LANGUAGES.ar.code) : service.titleAr,
         label: hasEditableContent ? record?.label || service.label : service.label,
-        summary: hasEditableContent ? record?.disc || service.summary : service.summary,
-        lead: hasEditableContent ? record?.lead || service.lead : service.lead,
-        whatWeBuild: hasEditableContent ? textToList(record?.whatWeBuild, service.whatWeBuild) : service.whatWeBuild,
-        deliverables: hasEditableContent ? textToList(record?.deliverables, service.deliverables) : service.deliverables,
-        sectors: hasEditableContent ? textToList(record?.sectors, service.sectors) : service.sectors,
-        proof: hasEditableContent ? record?.proof || service.proof : service.proof,
+        labelAr: hasEditableContent ? record?.labelAr || service.labelAr || translateText(record?.label || service.label, LANGUAGES.ar.code) : service.labelAr,
+        summary: englishSummary,
+        summaryAr: hasEditableContent ? record?.discAr || service.summaryAr || translateText(englishSummary, LANGUAGES.ar.code) : service.summaryAr,
+        lead: englishLead,
+        leadAr: hasEditableContent ? record?.leadAr || service.leadAr || translateText(englishLead, LANGUAGES.ar.code) : service.leadAr,
+        whatWeBuild: englishWhatWeBuild,
+        whatWeBuildAr: hasEditableContent ? textToList(record?.whatWeBuildAr, service.whatWeBuildAr || englishWhatWeBuild.map((item) => translateText(item, LANGUAGES.ar.code))) : service.whatWeBuildAr,
+        deliverables: englishDeliverables,
+        deliverablesAr: hasEditableContent ? textToList(record?.deliverablesAr, service.deliverablesAr || englishDeliverables.map((item) => translateText(item, LANGUAGES.ar.code))) : service.deliverablesAr,
+        sectors: englishSectors,
+        sectorsAr: hasEditableContent ? textToList(record?.sectorsAr, service.sectorsAr || englishSectors.map((item) => translateText(item, LANGUAGES.ar.code))) : service.sectorsAr,
+        proof: englishProof,
+        proofAr: hasEditableContent ? record?.proofAr || service.proofAr || translateText(englishProof, LANGUAGES.ar.code) : service.proofAr,
         video: hasEditableContent ? record?.video : null,
+    }
+}
+
+export const localizeService = (service, language) =>
+{
+    if (!service || language !== LANGUAGES.ar.code) return service;
+
+    return {
+        ...service,
+        title: service.titleAr || translateText(service.title, language),
+        label: service.labelAr || translateText(service.label, language),
+        summary: service.summaryAr || translateText(service.summary, language),
+        lead: service.leadAr || translateText(service.lead, language),
+        whatWeBuild: service.whatWeBuildAr?.length ? service.whatWeBuildAr : service.whatWeBuild.map((item) => translateText(item, language)),
+        deliverables: service.deliverablesAr?.length ? service.deliverablesAr : service.deliverables.map((item) => translateText(item, language)),
+        sectors: service.sectorsAr?.length ? service.sectorsAr : service.sectors.map((item) => translateText(item, language)),
+        proof: service.proofAr || translateText(service.proof, language),
     }
 }
 
 export const getServiceRecords = (record = []) =>
 {
     const allItems = Array.isArray(record) ? record : [];
-    const firstItemIsHeader = allItems[0] && !serviceContent.some(service => serviceMatchesRecord(service, allItems[0]));
-    const items = firstItemIsHeader ? allItems.slice(1) : allItems;
+    const withoutHeaders = allItems.filter((item, index) => item?.slug !== 'services-header' && !(index === 0 && !serviceContent.some(service => serviceMatchesRecord(service, item))));
+    const items = withoutHeaders;
     const usedIds = new Set();
 
     return serviceContent.map((service, index) =>

@@ -7,10 +7,14 @@ import AddSection from '../../../components/AddSection';
 import { mediaUrl } from '../../../config';
 import DeleteItem from '../../../components/DeleteItem';
 import LoadingScreen from '../../../components/LoadingScreen';
+import { useLanguage } from '../../../i18n/LanguageContext';
+import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 
 const MediaCoverageUi = (props) =>
 {
-    const { list, title, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, isAdmin, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
+    const { list, header, title, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, isAdmin, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
+    const { language, t } = useLanguage();
+    const localizedTitle = getLocalizedField(header || { title }, 'title', language);
 
     // enforce video to play 
     const videoRef = useRef();
@@ -36,12 +40,12 @@ const MediaCoverageUi = (props) =>
                     onEdit={onEditTitle}
                     isLoadingEdit={isLoadingEdit}
                     inputs={mediaTitleInput}
-                    initialValues={{ title }}
+                    initialValues={getBilingualInitialValues(header || { title }, ['title'])}
                     className='right-[20px] top-[20px]'
                 />
             }
 
-            <h1 className="font-bold justify-self-center text-2xl mb-6 glitch-trans" data-glitch={title}>{title}</h1>
+            <h1 className="font-bold justify-self-center text-2xl mb-6 glitch-trans" data-glitch={localizedTitle}>{localizedTitle}</h1>
             {isAdmin &&
                 <div className={`relative w-full min-w-[125px] h-[70px] button:right-[0px] add-media `}  >
                     <AddSection
@@ -54,14 +58,14 @@ const MediaCoverageUi = (props) =>
                         inputs={mediaItemInputsData}
                         initialValues={{ title: "" }}
                     >
-                        <h1>Media Image</h1>
+                        <h1>{t('Media Image')}</h1>
                         <FormikControl
                             disabled={isLoadingAddSection}
                             control="input"
                             type="file"
                             name="image"
                             accept="image/*"
-                            placeholder="Sector Icon"
+                            placeholder="Media Image"
                             className="block md:w-full w-[100%]"
                             containerClassName="block w-full"
                             onChange={onChangeImage} // Necessary to update Formik state with the selected file
@@ -86,14 +90,14 @@ const MediaCoverageUi = (props) =>
                                     inputs={mediaItemInputsData}
                                     initialValues={{ title: item.title }}
                                 >
-                                    <h1>Media Image</h1>
+                                    <h1>{t('Media Image')}</h1>
                                     <FormikControl
                                         disabled={isLoadingAddSection}
                                         control="input"
                                         type="file"
                                         name="image"
                                         accept="image/*"
-                                        placeholder="Sector Icon"
+                                        placeholder="Media Image"
                                         className="block md:w-full w-[100%]"
                                         containerClassName="block w-full"
                                         onChange={onChangeImage} // Necessary to update Formik state with the selected file

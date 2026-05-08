@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import CustomModal from './CustomModal';
 import Btn from './Btn';
 import useDelete from '../hooks/use-delete';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const DeleteItem = (props) =>
 {
     const { className, sectionNumber, itemId } = props;
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
     const { isLoadingDeleteItem, handleDeleteItem } = useDelete();
+    const { t, isArabic } = useLanguage();
     const closeModal = () => {
         setConfirmModalOpen(false)
         
@@ -20,7 +22,7 @@ const DeleteItem = (props) =>
                 className={`mt-5 text-right delete flex justify-end ${className}`}
             >
                 <button
-                    title='Delete item'
+                    title={t('Delete item')}
                     type='button'
                     className='w-[20px]'
                     onClick={() => setConfirmModalOpen(true)}
@@ -35,21 +37,21 @@ const DeleteItem = (props) =>
             >
                 <div 
                 >
-                    <h1 className='m-1 mb-5'>Are you sure you want to delete the item? </h1>
+                    <h1 className='m-1 mb-5'>{t('Are you sure you want to delete the item?')} </h1>
                     <div className='w-full flex flex-wrap justify-center items-center'>
                         <Btn
-                            className='mr-5 h-[50px]'
+                            className={`${isArabic ? 'ml-5' : 'mr-5'} h-[50px]`}
                             onClick={() => setConfirmModalOpen(false)}
                             disabled={isLoadingDeleteItem}
                         >
-                            Cancel
+                            {t('Cancel')}
                         </Btn>
                         <Btn
                             onClick={() => handleDeleteItem(sectionNumber, itemId, closeModal)}
                             isLoading={isLoadingDeleteItem}
                             className='w-[102px]  h-[50px]'
                         >
-                            Confirm
+                            {t('Confirm')}
                         </Btn>
                     </div>
 

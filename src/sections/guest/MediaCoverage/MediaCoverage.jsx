@@ -41,6 +41,7 @@ const MediaCoverage = () =>
     return (
         <MediaCoverageUi 
             list={record}
+            header={record[0]}
             title={record[0]?.title}
             sectors={record}
             onEdit={onEdit}

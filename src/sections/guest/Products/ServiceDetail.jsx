@@ -10,8 +10,10 @@ import EditSection from '../../../components/EditSection'
 import LoadingScreen from '../../../components/LoadingScreen'
 import { FormikControl } from '../../../components/inputs'
 import { mediaUrl } from '../../../config'
-import { getServiceBySlug, getServiceRecords, serviceToFormValues } from './serviceContent'
+import { getServiceBySlug, getServiceRecords, localizeService, serviceToFormValues } from './serviceContent'
 import { serviceDetailInputs } from './productsInputs'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import LanguageSwitcher from '../../../components/LanguageSwitcher'
 
 const ServiceDetail = () =>
 {
@@ -23,8 +25,10 @@ const ServiceDetail = () =>
     const record = useSelector(state => state.sections.sectionsData)[4] || [];
     const { isLoadingEditSection, handleEditSection } = useEditItem(4);
     const { isLoadingAddSection, handleAddSection } = useAddItem(4);
+    const { language, t } = useLanguage();
     const fallbackService = getServiceBySlug(serviceSlug);
     const service = getServiceRecords(record).find(item => item.slug === serviceSlug) || fallbackService;
+    const localizedService = localizeService(service, language);
     const videoSource = service?.video ? `${mediaUrl}${service.video}` : '';
 
     if (!fallbackService)
@@ -74,12 +78,15 @@ const ServiceDetail = () =>
                     <Link to="/#section_1">
                         <img src={logo} alt="Takhaial" width={190} height={40} />
                     </Link>
-                    <Link
-                        to="/#section_4"
-                        className="transition-all duration-500 rounded-xl px-[18px] py-[9px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
-                    >
-                        Back to Services
-                    </Link>
+                    <div className="flex items-center gap-3">
+                        <Link
+                            to="/#section_4"
+                            className="transition-all duration-500 rounded-xl px-[18px] py-[9px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
+                        >
+                            {t('Back to Services')}
+                        </Link>
+                        <LanguageSwitcher />
+                    </div>
                 </header>
                 {isAdmin &&
                     <EditSection
@@ -92,7 +99,7 @@ const ServiceDetail = () =>
                         initialValues={serviceToFormValues(service)}
                         className="right-[20px] top-[92px] md:right-[40px]"
                     >
-                        <h1>Introduction Video</h1>
+                        <h1>{t('Introduction Video')}</h1>
                         <FormikControl
                             disabled={isSaving}
                             control="input"
@@ -113,19 +120,19 @@ const ServiceDetail = () =>
                             <img src={service.icon} alt="" className="max-h-[180px] m-auto" />
                         </div>
                         <div>
-                            <p className="text-[#ef4444] font-bold mb-3">{service.label}</p>
+                            <p className="text-[#ef4444] font-bold mb-3">{localizedService.label}</p>
                             <h1 className="text-4xl md:text-7xl font-bold leading-tight">
-                                {service.title}
+                                {localizedService.title}
                             </h1>
                             <p className="mt-5 text-xl leading-relaxed max-w-[900px] text-[#ccc]">
-                                {service.lead}
+                                {localizedService.lead}
                             </p>
                         </div>
                     </div>
 
                     {(service.video || isAdmin) &&
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-10">
-                            <h2 className="text-2xl font-bold mb-4">Introduction Video</h2>
+                            <h2 className="text-2xl font-bold mb-4">{t('Introduction Video')}</h2>
                             {service.video ? (
                                 <video
                                     controls
@@ -136,7 +143,7 @@ const ServiceDetail = () =>
                                 </video>
                             ) : (
                                 <p className="text-[#ccc] leading-relaxed">
-                                    No introduction video is uploaded yet. Use Edit Service to upload one.
+                                    {t('No introduction video is uploaded yet. Use Edit Service to upload one.')}
                                 </p>
                             )}
                         </section>
@@ -144,26 +151,26 @@ const ServiceDetail = () =>
 
                     <div className="grid md:grid-cols-2 gap-6 mb-10">
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70">
-                            <h2 className="text-2xl font-bold mb-4">What we build</h2>
+                            <h2 className="text-2xl font-bold mb-4">{t('What we build')}</h2>
                             <ul className="grid gap-3 text-[#ddd] leading-relaxed">
-                                {service.whatWeBuild.map((item) => (
+                                {localizedService.whatWeBuild.map((item) => (
                                     <li key={item} className="border-b border-solid border-[#262626] pb-3">{item}</li>
                                 ))}
                             </ul>
                         </section>
 
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70">
-                            <h2 className="text-2xl font-bold mb-4">Deliverables</h2>
+                            <h2 className="text-2xl font-bold mb-4">{t('Deliverables')}</h2>
                             <div className="flex flex-wrap gap-3">
-                                {service.deliverables.map((item) => (
+                                {localizedService.deliverables.map((item) => (
                                     <span key={item} className="rounded-xl px-[14px] py-[8px] bg-[#262626] text-[#ef4444]">
                                         {item}
                                     </span>
                                 ))}
                             </div>
-                            <h2 className="text-2xl font-bold mt-8 mb-4">Sectors</h2>
+                            <h2 className="text-2xl font-bold mt-8 mb-4">{t('Sectors')}</h2>
                             <div className="grid sm:grid-cols-2 gap-3 text-[#ddd]">
-                                {service.sectors.map((item) => (
+                                {localizedService.sectors.map((item) => (
                                     <span key={item} className="border border-solid border-[#262626] rounded-xl p-3">
                                         {item}
                                     </span>
@@ -173,12 +180,12 @@ const ServiceDetail = () =>
                     </div>
 
                     <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-12">
-                        <h2 className="text-2xl font-bold mb-3">How Takhaial approaches it</h2>
+                        <h2 className="text-2xl font-bold mb-3">{t('How Takhaial approaches it')}</h2>
                         <p className="text-[#ddd] leading-relaxed mb-5">
-                            We start by understanding the business goal, audience, content, and success metric. Then we shape the user journey, build the visual or technical prototype, test the experience, and prepare a production-ready version for web, mobile, events, headsets, or campaign channels.
+                            {t('We start by understanding the business goal, audience, content, and success metric. Then we shape the user journey, build the visual or technical prototype, test the experience, and prepare a production-ready version for web, mobile, events, headsets, or campaign channels.')}
                         </p>
                         <p className="text-[#ccc] leading-relaxed">
-                            {service.proof}
+                            {localizedService.proof}
                         </p>
                     </section>
 
@@ -187,13 +194,13 @@ const ServiceDetail = () =>
                             to={`/services/${service.slug}/request-quote`}
                             className="transition-all duration-500 rounded-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
-                            Request a Quote
+                            {t('Request a Quote')}
                         </Link>
                         <Link
                             to="/#section_4"
                             className="transition-all duration-500 rounded-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#000]"
                         >
-                            View All Services
+                            {t('View All Services')}
                         </Link>
                     </div>
                 </section>

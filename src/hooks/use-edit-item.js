@@ -4,6 +4,7 @@ import { sectionsActions } from "../store/sections-slice";
 import { compareObjects } from "../helpers/compareObjects";
 import { sectionsModulePath } from "../config";
 import { useSnackbar } from "notistack";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const useEditItem = (sectionNumber) =>
 {
@@ -12,6 +13,7 @@ const useEditItem = (sectionNumber) =>
     sendRequest: editSection
   } = useHttp();
   const { enqueueSnackbar: popMessage } = useSnackbar();
+  const { t } = useLanguage();
 
   const dispatch = useDispatch();
   const sectionData = useSelector(state => state.sections.sectionsData)[sectionNumber]
@@ -44,7 +46,7 @@ const useEditItem = (sectionNumber) =>
         return new File([blob], filename, { type: mimeType });
       } catch (error)
       {
-        popMessage(error.message || "Something went wrong", { variant: "error" })
+        popMessage(t(error.message || "Something went wrong"), { variant: "error" })
       }
     }
 
@@ -76,7 +78,7 @@ const useEditItem = (sectionNumber) =>
       if (success)
       {
         dispatch(sectionsActions.updateSectionItemData(record));
-        popMessage("Edited successfully", { variant: "success" });
+        popMessage(t("Edited successfully"), { variant: "success" });
         onSuccess();
       }
     };

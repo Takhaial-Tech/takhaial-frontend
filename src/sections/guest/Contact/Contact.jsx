@@ -5,6 +5,7 @@ import { authActions } from '../../../store/auth-slice'
 import { useSnackbar } from 'notistack'
 import useSiteSettings from '../../../hooks/use-site-settings'
 import { buildChannels } from '../../../site-settings'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 const Contact = () =>
 {
@@ -13,11 +14,18 @@ const Contact = () =>
     const { enqueueSnackbar: popMessage } = useSnackbar();
     const { isSavingSettings, settings, updateSiteSettings } = useSiteSettings();
     const channels = buildChannels(settings);
-    const logout = () => { dispatch(authActions.logout()); popMessage("Logout successfully", { variant: "success" }) };
+    const { t } = useLanguage();
+    const logout = () => { dispatch(authActions.logout()); popMessage(t("Logout successfully"), { variant: "success" }) };
 
     const onSendMessage = (values) =>
     {
-        const emailDraft = `mailto:${settings.email}?subject=Email from ${values.name}&body=Phone: ${encodeURIComponent(values.phone)}%0D%0AEmail: ${encodeURIComponent(values.email)}%0D%0AMessage: ${encodeURIComponent(values.message)}`;
+        const subject = `${t('Email from')} ${values.name}`;
+        const body = [
+            `${t('Phone')}: ${values.phone}`,
+            `${t('Email')}: ${values.email}`,
+            `${t('Message')}: ${values.message}`,
+        ].join('\r\n');
+        const emailDraft = `mailto:${settings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.open(emailDraft, '_blank');
     }
 
@@ -30,8 +38,6 @@ const Contact = () =>
         <ContactUi
             isAdmin={isAdmin}
             isLoadingEditSettings={isSavingSettings}
-            title="Contact Us"
-            desc="We look forward to learning more about you and how we can help you achieve your goals!"
             channels={channels}
             settings={settings}
             onEditSettings={onEditSettings}

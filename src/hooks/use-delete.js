@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import useHttp from './use-http';
 import { sectionsModulePath } from '../config';
 import { sectionsActions } from '../store/sections-slice';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const useDelete = () =>
 {
@@ -12,6 +13,7 @@ const useDelete = () =>
         sendRequest: deleteItem
     } = useHttp();
     const { enqueueSnackbar: popMessage } = useSnackbar();
+    const { t } = useLanguage();
 
     const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ const useDelete = () =>
             if (!!success)
             {
                 dispatch(sectionsActions.deleteSectionItemData({sectionNumber, itemId}))
-                popMessage("Deleted successfully", { variant: "success" });
+                popMessage(t("Deleted successfully"), { variant: "success" });
                 closeModal()
                 document.body.style.overflow = 'auto';
             }

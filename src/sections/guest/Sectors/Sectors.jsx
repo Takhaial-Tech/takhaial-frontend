@@ -44,6 +44,7 @@ const Sectors = () =>
 
     return (
         <SectorsUi
+            header={record[0]}
             title={record[0]?.title}
             sectors={record}
             modal={modal}

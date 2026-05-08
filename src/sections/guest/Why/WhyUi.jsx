@@ -3,13 +3,18 @@ import takhaialLogo from '../../../assets/icons/logoname.svg'
 import EditSection from '../../../components/EditSection';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { whyInputsData } from './whyInputsData';
+import { useLanguage } from '../../../i18n/LanguageContext';
+import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 
 const WhyUi = (props) =>
 {
     const { isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal } = props;
+    const { language } = useLanguage();
+    const title = getLocalizedField(data, 'title', language);
+    const disc = getLocalizedField(data, 'disc', language);
 
     return (
-        <section dir={'ltr'} id="section_3" className={'min-h-[100vh] relative text-white flex flex-wrap justify-center items-center pt-[2rem] bg-[#000] z-[1]  py-[60px] overflow-hidden '} >
+        <section id="section_3" className={'min-h-[100vh] relative text-white flex flex-wrap justify-center items-center pt-[2rem] bg-[#000] z-[1]  py-[60px] overflow-hidden '} >
             {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             {isAdmin &&
@@ -21,7 +26,7 @@ const WhyUi = (props) =>
                         onEdit={onEdit}
                         isLoadingEdit={isLoadingEdit}
                         inputs={whyInputsData}
-                        initialValues={{ title: data?.title || "", disc: data?.disc || "" }}
+                        initialValues={getBilingualInitialValues(data, ['title', 'disc'])}
                         className="top-[-20px] right-[20px]"
                     />
                 </div>
@@ -34,12 +39,12 @@ const WhyUi = (props) =>
                     <div className="" >
                     </div>
                     <div className="col-span-3">
-                        <div className='flex items-start'>
-                            <h1 className={'font-bold text-white text-2xl mb-5 flex glitch-trans'} data-glitch={data?.title}>{data?.title}  </h1>
-                            <img src={takhaialLogo} alt="" height={100} width={155} className="mt-[5px] ml-[-10px]" />
+                        <div className='flex flex-wrap items-start gap-2'>
+                            <h1 className={'font-bold text-white text-2xl mb-5 flex glitch-trans'} data-glitch={title}>{title}  </h1>
+                            <img src={takhaialLogo} alt="" height={100} width={155} className="mt-[5px]" />
                         </div>
 
-                        {(data?.disc || '').split('.').filter(Boolean).map((a, k) =>
+                        {(disc || '').split('.').filter(Boolean).map((a, k) =>
                             <p key={k} className={"leading-relaxed content-end text-sm "} >{a}.</p>
                         )}
 

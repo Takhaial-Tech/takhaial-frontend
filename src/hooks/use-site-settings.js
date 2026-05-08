@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { backendUrl, settingsModulePath } from '../config';
 import { defaultSiteSettings } from '../site-settings';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const normalizeSettings = (record = {}) =>
 {
@@ -26,6 +27,7 @@ const useSiteSettings = () =>
     const [isSavingSettings, setIsSavingSettings] = useState(false);
     const token = useSelector((state) => state.auth.token);
     const { enqueueSnackbar: popMessage } = useSnackbar();
+    const { t } = useLanguage();
 
     const getSiteSettings = useCallback(async () =>
     {
@@ -38,7 +40,7 @@ const useSiteSettings = () =>
 
             if (!response.ok || !data.success)
             {
-                throw new Error(data.message || 'Unable to load site settings');
+                throw new Error(data.message || t('Unable to load site settings'));
             }
 
             setSettings(normalizeSettings(data.record));
@@ -48,7 +50,7 @@ const useSiteSettings = () =>
         }
 
         setIsLoadingSettings(false);
-    }, []);
+    }, [t]);
 
     const updateSiteSettings = useCallback(async (values = {}, media = {}, onSuccess) =>
     {
@@ -79,20 +81,20 @@ const useSiteSettings = () =>
 
             if (!response.ok || !data.success)
             {
-                throw new Error(data.message || 'Unable to update site settings');
+                throw new Error(data.message || t('Unable to update site settings'));
             }
 
             const nextSettings = normalizeSettings(data.record);
             setSettings(nextSettings);
-            popMessage('Settings updated successfully', { variant: 'success' });
+            popMessage(t('Settings updated successfully'), { variant: 'success' });
             if (onSuccess) onSuccess(nextSettings);
         } catch (error)
         {
-            popMessage(error.message || 'Something went wrong', { variant: 'error' });
+            popMessage(t(error.message || 'Something went wrong'), { variant: 'error' });
         }
 
         setIsSavingSettings(false);
-    }, [popMessage, token]);
+    }, [popMessage, t, token]);
 
     useEffect(() =>
     {

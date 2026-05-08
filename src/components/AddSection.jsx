@@ -1,10 +1,12 @@
 import Btn from './Btn';
 import CustomModal from './CustomModal';
 import { FormikContainer, LoopOnInputs } from './inputs';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const AddSection = (props) =>
 {
     const { children, addTitle, isOpenAddModal, setIsOpenAddModal, initialValues, onAdd, isLoadingAdd, validationSchema, inputs, actionTitle, className } = props;
+    const { t } = useLanguage();
 
     return (
         <>
@@ -15,13 +17,13 @@ const AddSection = (props) =>
                     className={`absolute right-[10px] top-20 z-[11] block mt-[10px] ${className}`}
                     onClick={() => setIsOpenAddModal(true)}
                 >
-                    {addTitle ||"Add Section"  }
+                    {t(addTitle ||"Add Section"  )}
                 </Btn>
 
                 <CustomModal
                     isOpen={isOpenAddModal}
                     onClose={() => { setIsOpenAddModal(false) }}
-                    contentLabel="Add page"
+                    contentLabel={t("Add page")}
                 >
                     <div className=' w-[500px] max-w-[100%] mt-1 p-1 '>
 
@@ -38,7 +40,7 @@ const AddSection = (props) =>
                                 className="w-full mt-8"
                                 isLoading={isLoadingAdd}
                             >
-                                {actionTitle || "Confirm Add"}
+                                {t(actionTitle || "Confirm Add")}
                             </Btn>
                         </FormikContainer>
                     </div>

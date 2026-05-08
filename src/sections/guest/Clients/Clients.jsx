@@ -42,6 +42,7 @@ const Clients = () =>
     return (
         <ClientsUi 
             list={record}
+            header={record[0]}
             title={record[0]?.title}
             sectors={record}
             onEdit={onEdit}

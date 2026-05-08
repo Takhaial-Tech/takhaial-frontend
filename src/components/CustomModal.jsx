@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Modal from 'react-modal';
+import { useLanguage } from '../i18n/LanguageContext';
 
 
 // Make sure to set the app element to avoid accessibility issues
@@ -8,6 +9,7 @@ Modal.setAppElement('#root');
 const CustomModal = (props) =>
 {
     const { children, isOpen, onClose, contentLabel } = props;
+    const { direction } = useLanguage();
 
     useEffect(() =>
     {
@@ -36,7 +38,7 @@ const CustomModal = (props) =>
         >
             <div>
                 {/* close btn */}
-                <div className='w-full text-right'>
+                <div className='w-full text-right' dir="ltr">
                     <button
                         onClick={onClose}
                         className="border-[#ef4444] border border-solid hover:bg-white/5 active:bg-white/10 z-[9] bg-[#000]  rounded-none text-[2rem] rounded-tr-lg rounded-bl-lg"                    >
@@ -47,6 +49,7 @@ const CustomModal = (props) =>
                 {/* content */}
                 <div
                     className='modal-content'
+                    dir={direction}
                 >
                     {children}
                 </div>

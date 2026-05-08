@@ -14,10 +14,15 @@ import Btn from '../../../components/Btn'
 import EditSection from '../../../components/EditSection'
 import { contactSettingsInputs } from './contactSettingsInputs'
 import { buildWhatsappHref } from '../../../site-settings'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import { getLocalizedField } from '../../../i18n/localizedContent'
 
 const ContactUi = (props) =>
 {
-    const { title, desc, channels, settings, onEditSettings, onSendMessage, isAdmin, isLoadingEditSettings, logout } = props;
+    const { channels, settings, onEditSettings, onSendMessage, isAdmin, isLoadingEditSettings, logout } = props;
+    const { language, t } = useLanguage();
+    const title = getLocalizedField(settings, 'contactTitle', language);
+    const desc = getLocalizedField(settings, 'contactDesc', language);
     const [isOpenEditSettingsModal, setIsOpenEditSettingsModal] = useState(false);
     // enforce video to play 
     const videoRef = useRef();
@@ -39,6 +44,10 @@ const ContactUi = (props) =>
                         isLoadingEdit={isLoadingEditSettings}
                         inputs={contactSettingsInputs}
                         initialValues={{
+                            contactTitle: settings.contactTitle,
+                            contactTitleAr: settings.contactTitleAr,
+                            contactDesc: settings.contactDesc,
+                            contactDescAr: settings.contactDescAr,
                             email: settings.email,
                             phone: settings.phone,
                             whatsapp: settings.whatsapp,
@@ -59,17 +68,17 @@ const ContactUi = (props) =>
                         {desc}
                     </p>
                 </div>
-                <ul className=" justify-self-center text-white flex w-fit justify-self-center z-30" >
-                    <a href={`tel:${settings.phone}`} className="w-[100px] mr-10 hover:shadow-3xl transition-all duration-500 w-[100px]  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
-                        <li className="flex">
-                            <img alt={''} className="mr-2" width={15} height={15} src={contact_img} />
-                            <label className='cursor-pointer '> {'Call'} </label>
+                <ul className=" justify-self-center text-white flex w-fit justify-self-center z-30 gap-4" >
+                    <a href={`tel:${settings.phone}`} className="w-[100px] hover:shadow-3xl transition-all duration-500 pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
+                        <li className="flex items-center justify-center gap-2">
+                            <img alt={''} width={15} height={15} src={contact_img} />
+                            <label className='cursor-pointer '> {t('Call')} </label>
                         </li>
                     </a>
                     <a href={`mailto:${settings.email}`} className=" hover:shadow-3xl transition-all duration-500 w-fit  pr-[10px] pl-[10px] pt-[10px] pb-[10px] content-center bg-[#262626] rounded-2xl " >
-                        <li className="flex ">
-                            <img alt={''} className=" mr-2" width={15} height={15} src={mailicon} />
-                            <label className="text-nowrap cursor-pointer"> {'Email'} </label>
+                        <li className="flex items-center justify-center gap-2">
+                            <img alt={''} width={15} height={15} src={mailicon} />
+                            <label className="text-nowrap cursor-pointer"> {t('Email')} </label>
                         </li>
                     </a>
                 </ul>
@@ -82,42 +91,42 @@ const ContactUi = (props) =>
                         <div className={'grid-cols-3 '} >
                             <Input
                                 type="text"
-                                placeholder={"Name"}
+                                placeholder={t("Name")}
                                 name={"name"}
                                 className='mr-[10px]'
                             />
                             <Input
                                 type="text"
                                 name={"phone"}
-                                placeholder={"Phone"}
+                                placeholder={t("Phone")}
                                 className='mr-[10px]'
                             />
                             <Input
                                 type="email"
                                 name="email"
-                                placeholder={"Email"}
+                                placeholder={t("Email")}
                             />
                         </div>
                         <Textarea
                             name='message'
-                            placeholder={"Message"}
+                            placeholder={t("Message")}
                             rows="3"
                         />
                         <button type="submit" className="transition-all duration-500 w-fit rounded-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]">
-                            {'Send'}
+                            {t('Send')}
                         </button>
                     </FormikContainer>
                 </div>
-                <ul className=" z-30 mb-3 justify-self-center text-white flex width-fit" >
+                <ul className=" z-30 mb-3 justify-self-center text-white flex width-fit gap-3" >
                     {channels.map((a, k) =>
-                        <a target='__blank' key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] " + (k < channels.length - 1 && 'mr-[10px]')} href={a.href}>
+                        <a target='__blank' key={k} className={"hover:border-[#ef4444] hover:text-[#ef4444] transition-all duration-500 pt-[8px] pb-[5px] pr-[15px] pl-[15px] content-center bg-[#262626] rounded-full border border-[#000] "} href={a.href}>
                             <li>
                                 <img width={15} height={15} alt="" src={a.img} />
                             </li>
                         </a>
                     )}
                 </ul>
-                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center" > &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> All rights reserved. </p>
+                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center gap-1" > &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> {t('All rights reserved.')} </p>
                 {<video
                     ref={videoRef}
                     webkit-playsinline="true"
@@ -136,9 +145,9 @@ const ContactUi = (props) =>
                 <img alt="" width={55} height={55} src={wicon} />
             </a>
             <div className={'rounded-2xl fixed z-50 bottom-[20px] w-[190px] right-[20px] bg-[#000] border-red-500 border-red border border-solid'} >
-                <h2 className="text-white my-[5px] mx-[10px]">{'Quick action'}</h2>
+                <h2 className="text-white my-[5px] mx-[10px]">{t('Quick action')}</h2>
 
-                {isAdmin ? <Btn className={"w-full "} type="button" onClick={logout}>Logout</Btn> : <QuickActions />}
+                {isAdmin ? <Btn className={"w-full "} type="button" onClick={logout}>{t('Logout')}</Btn> : <QuickActions />}
             </div>
         </>
     )

@@ -1,10 +1,12 @@
 import Btn from './Btn';
 import CustomModal from './CustomModal';
 import { FormikContainer, LoopOnInputs } from './inputs';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const EditSection = (props) =>
 {
     const { children, editTitle, isOpenEditModal, setIsOpenEditModal, initialValues, onEdit, isLoadingEdit, validationSchema, inputs, actionTitle, className, isItem, itemId } = props;
+    const { t } = useLanguage();
 
     return (
         <>
@@ -15,13 +17,13 @@ const EditSection = (props) =>
                     className={`absolute right-[10px] top-20 z-[11] block mt-[10px] ${className}`}
                     onClick={() => isItem ? setIsOpenEditModal(itemId): setIsOpenEditModal(true) }
                 >
-                    {editTitle || "Edit Section"}
+                    {t(editTitle || "Edit Section")}
                 </Btn>
 
                 <CustomModal
                     isOpen={isOpenEditModal}
                     onClose={() => { setIsOpenEditModal(false) }}
-                    contentLabel="Edit page"
+                    contentLabel={t("Edit page")}
                 >
                     <div className=' w-[500px] max-w-[100%] mt-1 p-1 '>
 
@@ -38,7 +40,7 @@ const EditSection = (props) =>
                                 className="w-full mt-8"
                                 isLoading={isLoadingEdit}
                             >
-                                {actionTitle || "Confirm Edit"}
+                                {t(actionTitle || "Confirm Edit")}
                             </Btn>
                         </FormikContainer>
                     </div>

@@ -3,6 +3,7 @@ import useHttp from "./use-http";
 import { sectionsActions } from "../store/sections-slice";
 import { sectionsModulePath } from "../config";
 import { useSnackbar } from "notistack";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const useAddItem = (sectionNumber) =>
 {
@@ -11,6 +12,7 @@ const useAddItem = (sectionNumber) =>
     sendRequest: addSection
   } = useHttp();
   const { enqueueSnackbar: popMessage } = useSnackbar();
+  const { t } = useLanguage();
 
   const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ const useAddItem = (sectionNumber) =>
       if (!!success)
       {
         dispatch(sectionsActions.addSectionItemData(record))
-        popMessage("Added successfully", { variant: "success" });
+        popMessage(t("Added successfully"), { variant: "success" });
         onSuccess()
       }
     };

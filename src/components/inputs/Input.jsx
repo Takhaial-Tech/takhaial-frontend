@@ -51,6 +51,7 @@ export const Input = (props) =>
                             id={name}
                             type={type}
                             label={label}
+                            dir={dir}
                             {...field}
                             {...rest}
                             className={`md:w-auto w-full p-[10px] bg-[#262626] rounded-xl mb-[10px] backdrop-blur-md bg-[#262626] ${className}`}

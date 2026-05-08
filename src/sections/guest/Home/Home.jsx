@@ -5,6 +5,7 @@ import useGetSection from '../../../hooks/use-get-section';
 import useEditItem from '../../../hooks/use-edit-item';
 import useSiteSettings from '../../../hooks/use-site-settings';
 import { useSnackbar } from 'notistack';
+import { useLanguage } from '../../../i18n/LanguageContext';
 
 const Home = () =>
 {
@@ -17,6 +18,7 @@ const Home = () =>
     const { isLoadingEditSection,handleEditSection } = useEditItem(1);
     const { enqueueSnackbar: popMessage } = useSnackbar();
     const { isSavingSettings, settings, updateSiteSettings } = useSiteSettings();
+    const { t } = useLanguage();
 
     const onEdit = (values) =>
     {
@@ -28,7 +30,7 @@ const Home = () =>
     {
         if (!profilePdfFile)
         {
-            popMessage("Choose a PDF file first", { variant: "error" });
+            popMessage(t("Choose a PDF file first"), { variant: "error" });
             return;
         }
 

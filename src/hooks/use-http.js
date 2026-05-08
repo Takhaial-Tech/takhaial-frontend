@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { backendUrl } from "../config";
 import usePreventClose from "./use-prevent-close";
 import { authActions } from "../store/auth-slice";
+import { useLanguage } from "../i18n/LanguageContext";
 const useHttp = () =>
 {
     const [isLoading, setIsLoading] = useState(false);
     const { enqueueSnackbar: popMessage } = useSnackbar();
     const token = useSelector((state) => state.auth.token)
+    const { t } = useLanguage();
 
     // stop from reload or close until isLoading ended
     usePreventClose(isLoading)
@@ -65,13 +67,13 @@ const useHttp = () =>
             {
                 dispatch(authActions.logout());
                 error.message+=" ,Logged out...";
-                popMessage("Login again to can edit.")
+                popMessage(t("Login again to can edit."))
                 window.location.reload();
             }
-            popMessage(error.message || "Something went wrong", { variant: "error" })
+            popMessage(t(error.message || "Something went wrong"), { variant: "error" })
         }
         setIsLoading(false)
-    }, [dispatch, popMessage, token])
+    }, [dispatch, popMessage, t, token])
 
     return {
         isLoading,

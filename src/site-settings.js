@@ -4,6 +4,10 @@ import inicon from './assets/icons/inicon.svg'
 import tagicon from './assets/icons/tagicon.svg'
 
 export const defaultSiteSettings = {
+    contactTitle: 'Contact Us',
+    contactTitleAr: 'تواصل معنا',
+    contactDesc: 'We look forward to learning more about you and how we can help you achieve your goals!',
+    contactDescAr: 'نتطلع لمعرفة المزيد عنك وكيف يمكننا مساعدتك في تحقيق أهدافك.',
     email: 'info@takhaialtech.com',
     phone: '+201500683889',
     whatsapp: '+201033930216',

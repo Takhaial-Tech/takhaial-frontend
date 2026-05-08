@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" role="img" aria-label="Arab League flag">
+  <rect width="60" height="40" rx="3" fill="#007A3D"/>
+  <circle cx="30" cy="20" r="10" fill="none" stroke="#fff" stroke-width="3"/>
+  <path fill="#fff" d="M30 9l2.1 6.4h6.7l-5.4 3.9 2.1 6.4L30 21.8l-5.5 3.9 2.1-6.4-5.4-3.9h6.7z"/>
+  <path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M17 29c7-3 19-3 26 0M17 11c7 3 19 3 26 0"/>
+</svg>

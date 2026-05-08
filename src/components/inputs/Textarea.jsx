@@ -5,7 +5,7 @@ import classesError from './styles/InputError.module.css'
 
 function Textarea(props)
 {
-    const { label, name, disable, size, className, disabled, ...rest } = props;
+    const { label, name, disable, size, className, disabled, dir, ...rest } = props;
     return (
         
 
@@ -32,6 +32,7 @@ function Textarea(props)
                                 name={name}
                                 id={name}
                                 label={label}
+                                dir={dir}
                                 {...field}
                                 {...rest}
                                 className={`w-full p-[10px] bg-[#262626] rounded-xl mr-[10px] mb-[10px] backdrop-blur-md bg-[#262626] ${className}`}
