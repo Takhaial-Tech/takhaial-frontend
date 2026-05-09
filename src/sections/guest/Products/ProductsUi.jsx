@@ -59,7 +59,7 @@ const ProductsUi = (props) =>
 
                             return (
                             <div key={key} className={'relative md:mb-0 mb-5 '}>
-                                <div className="h-full hover:scale-105 grid items-start border border-solid border-[red] rounded-xl hover:shadow-3xl transition-all duration-500 relative content-end hover:bg-[#000] hover:shadow-3xl group/item bg-[#000]/60" key={key} >
+                                <div className="flex h-full flex-col border border-solid border-[red] rounded-xl bg-[#000]/60 transition-all duration-500 hover:scale-105 hover:bg-[#000] hover:shadow-3xl group/item" key={key} >
                                     {isAdmin &&
                                         <EditSection
                                             isItem={true}
@@ -88,10 +88,14 @@ const ProductsUi = (props) =>
                                             />
                                         </EditSection>
                                     }
-                                    <div className={'p-4 items-center min-h-[180px]'}>
-                                        <img src={service.icon} alt="" className="h-[95px] m-auto mb-5" />
-                                        <p className="text-[#ef4444] text-sm text-center mb-2">{localizedService.label}</p>
-                                        <h1 className="text-center font-bold text-3xl leading-tight">{localizedService.title}</h1>
+                                    <div className="flex min-h-[210px] flex-col items-center p-4 text-center">
+                                        <div className="flex h-[100px] w-full items-center justify-center">
+                                            <img src={service.icon} alt="" className="h-[95px] max-w-[120px] object-contain" />
+                                        </div>
+                                        <p className="mt-4 flex min-h-[22px] items-center justify-center text-sm text-[#ef4444]">{localizedService.label}</p>
+                                        <h1 className="mt-2 flex min-h-[44px] items-center justify-center whitespace-nowrap text-center text-2xl font-bold leading-tight xl:text-[28px]">
+                                            {localizedService.title}
+                                        </h1>
                                     </div>
                                     <p className="p-4 pt-0 group-hover/item:text-base transition-all duration-500 text-sm leading-relaxed text-[#ccc] overflow-hidden">
                                         {localizedService.summary}
