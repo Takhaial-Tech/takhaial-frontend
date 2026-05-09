@@ -1,5 +1,6 @@
 import mobileAppsIcon from '../../../assets/icons/mobile-apps-service.svg'
-import vrArIcon from '../../../assets/icons/vr-ar-service.svg'
+import vrIcon from '../../../assets/icons/vr-ar-service.svg'
+import arIcon from '../../../assets/icons/ar-service.svg'
 import aiIcon from '../../../assets/icons/ai-service.svg'
 import advertisingIcon from '../../../assets/icons/advertising-service.svg'
 import { LANGUAGES, translateText } from '../../../i18n/translations'
@@ -23,21 +24,38 @@ const baseServiceContent = [
         proof: 'Built to support the same service logic behind Takhaial projects: interactive journeys, managed content, and measurable user actions.',
     },
     {
-        slug: 'vr-ar',
-        title: 'VR / AR',
-        label: 'Immersive experiences',
-        icon: vrArIcon,
-        summary: 'We create VR, AR, and MR experiences that let people explore spaces, products, training scenarios, museums, and future projects before they physically exist.',
-        lead: 'Our XR work turns complex products and environments into interactive experiences. From virtual showrooms to AR information layers, the goal is always better understanding and stronger engagement.',
+        slug: 'vr',
+        title: 'Virtual Reality',
+        label: 'Immersive simulations',
+        icon: vrIcon,
+        summary: 'We create VR environments for training, showrooms, museums, events, and future spaces that users can enter, explore, and understand before they exist physically.',
+        lead: 'Virtual Reality is strongest when the user needs to feel scale, process, movement, or risk. We build interactive VR experiences for headsets, events, training rooms, and sales environments.',
         whatWeBuild: [
             'Virtual showrooms for automotive, real estate, retail, and destination marketing',
-            'AR product visualization, information layers, and guided real-world overlays',
             'VR training simulators for education, safety, vocational skills, and high-risk procedures',
-            'Virtual museums, cultural storytelling, tourism journeys, and mixed reality presentations',
+            'Virtual museums, cultural storytelling, tourism journeys, and guided exhibition experiences',
+            'Interactive environments for product demos, future projects, city planning, and internal training',
         ],
         sectors: ['Automotive', 'Real estate', 'Education', 'Tourism', 'Museums', 'Industry', 'Defense'],
-        deliverables: ['3D assets', 'VR app', 'AR app', 'MR demo', 'Interactive scenes', 'Event-ready build'],
-        proof: 'Reference material includes Lexus-style virtual showrooms, education/training VR, museums, tourism, smart city, and automotive experiences.',
+        deliverables: ['3D assets', 'VR app', 'Interactive scenes', 'Headset build', 'Event-ready build', 'Training flow'],
+        proof: 'Reference material includes Lexus-style virtual showrooms, education and training VR, museums, tourism, smart city, and automotive experiences.',
+    },
+    {
+        slug: 'ar',
+        title: 'Augmented Reality',
+        label: 'Real-world overlays',
+        icon: arIcon,
+        summary: 'We build AR experiences that place products, instructions, stories, data, and visual layers directly into the real world through mobile devices, tablets, and displays.',
+        lead: 'Augmented Reality helps people understand what is in front of them without leaving the real environment. We use it for product visualization, guided journeys, education, exhibitions, and sales tools.',
+        whatWeBuild: [
+            'AR product visualization for furniture, vehicles, architecture, retail, and industrial equipment',
+            'Real-world information layers, wayfinding, interactive labels, and guided visitor journeys',
+            'AR filters, launch activations, event screens, and campaign experiences for social and on-ground use',
+            'Mobile AR tools for training, maintenance support, storytelling, and interactive sales presentations',
+        ],
+        sectors: ['Retail', 'Real estate', 'Automotive', 'Museums', 'Events', 'Tourism', 'Industry'],
+        deliverables: ['AR app', '3D models', 'Marker or markerless tracking', 'Interactive overlays', 'Campaign assets', 'Analytics hooks'],
+        proof: 'Takhaial uses AR to turn static products, places, and stories into guided interactive layers that are easy to demonstrate and easy to update.',
     },
     {
         slug: 'ai',
@@ -48,13 +66,13 @@ const baseServiceContent = [
         lead: 'AI becomes powerful when it is connected to a real workflow. We use it for assistants, analytics, adaptive learning, digital twins, prediction, and smarter user journeys.',
         whatWeBuild: [
             'AI assistants for websites, exhibitions, museums, cities, products, and customer support',
-            'AI-powered guides inside VR/AR experiences and virtual sales environments',
+            'AI-powered guides inside VR and AR experiences and virtual sales environments',
             'Data analysis, visitor analytics, recommendation flows, and lead qualification',
             'Predictive maintenance, digital twin intelligence, and operational decision support',
         ],
         sectors: ['Smart cities', 'Education', 'Museums', 'Retail', 'Industry', 'Security', 'Healthcare'],
         deliverables: ['AI workflow design', 'Assistant logic', 'Prompt system', 'Data integration', 'Analytics view', 'XR integration'],
-        proof: 'The business plan highlights XR/AI as an integrated offer for training, commercial showrooms, digital twins, visitor analytics, and command solutions.',
+        proof: 'The business plan highlights XR and AI as an integrated offer for training, commercial showrooms, digital twins, visitor analytics, and command solutions.',
     },
     {
         slug: 'advertising',
@@ -91,20 +109,35 @@ const serviceArabicContent = {
         deliverablesAr: ['رحلات UX', 'تصميم UI', 'تطبيق موبايل', 'Backend API', 'لوحة إدارة', 'دعم الإطلاق'],
         proofAr: 'مبنية لدعم نفس منطق الخدمة في مشاريع تخيل: رحلات تفاعلية ومحتوى مدار وإجراءات مستخدم قابلة للقياس.',
     },
-    'vr-ar': {
-        titleAr: 'الواقع الافتراضي / المعزز',
-        labelAr: 'تجارب غامرة',
-        summaryAr: 'ننشئ تجارب VR وAR وMR تتيح للناس استكشاف المساحات والمنتجات والتدريب والمتاحف والمشروعات المستقبلية قبل وجودها فعليا.',
-        leadAr: 'عملنا في XR يحول المنتجات والبيئات المعقدة إلى تجارب تفاعلية. من المعارض الافتراضية إلى طبقات المعلومات بالواقع المعزز، الهدف دائما فهم أفضل وتفاعل أقوى.',
+    vr: {
+        titleAr: 'الواقع الافتراضي',
+        labelAr: 'محاكاة غامرة',
+        summaryAr: 'ننشيء بيئات واقع افتراضي للتدريب والمعارض والمتاحف والفعاليات والمساحات المستقبلية، بحيث يدخلها المستخدم ويستكشفها ويفهمها قبل وجودها فعليا.',
+        leadAr: 'الواقع الافتراضي يكون أقوى عندما يحتاج المستخدم أن يشعر بالحجم أو الحركة أو الخطوات أو المخاطر. نبني تجارب VR تفاعلية للنظارات والفعاليات وغرف التدريب وبيئات البيع.',
         whatWeBuildAr: [
             'معارض افتراضية للسيارات والعقارات والتجزئة وتسويق الوجهات',
-            'تصور منتجات بالواقع المعزز وطبقات معلومات وإرشاد فوق الواقع',
             'محاكيات تدريب VR للتعليم والسلامة والمهارات المهنية والإجراءات عالية الخطورة',
-            'متاحف افتراضية وسرد ثقافي ورحلات سياحية وعروض واقع مختلط',
+            'متاحف افتراضية وسرد ثقافي ورحلات سياحية وتجارب معارض إرشادية',
+            'بيئات تفاعلية لعروض المنتجات والمشاريع المستقبلية وتخطيط المدن والتدريب الداخلي',
         ],
         sectorsAr: ['السيارات', 'العقارات', 'التعليم', 'السياحة', 'المتاحف', 'الصناعة', 'الدفاع'],
-        deliverablesAr: ['أصول ثلاثية الأبعاد', 'تطبيق VR', 'تطبيق AR', 'عرض MR', 'مشاهد تفاعلية', 'نسخة جاهزة للفعاليات'],
+        deliverablesAr: ['أصول ثلاثية الأبعاد', 'تطبيق VR', 'مشاهد تفاعلية', 'نسخة للنظارات', 'نسخة جاهزة للفعاليات', 'مسار تدريب'],
         proofAr: 'المواد المرجعية تشمل معارض سيارات افتراضية وتدريب VR ومتاحف وسياحة ومدن ذكية وتجارب سيارات.',
+    },
+    ar: {
+        titleAr: 'الواقع المعزز',
+        labelAr: 'طبقات فوق الواقع',
+        summaryAr: 'نبني تجارب واقع معزز تضيف المنتجات والتعليمات والقصص والبيانات والطبقات البصرية مباشرة فوق العالم الحقيقي عبر الموبايل والتابلت والشاشات.',
+        leadAr: 'الواقع المعزز يساعد الناس على فهم ما أمامهم بدون ترك البيئة الحقيقية. نستخدمه لتصور المنتجات والرحلات الإرشادية والتعليم والمعارض وأدوات البيع.',
+        whatWeBuildAr: [
+            'تصور منتجات بالواقع المعزز للأثاث والسيارات والعمارة والتجزئة والمعدات الصناعية',
+            'طبقات معلومات فوق الواقع وإرشاد مكاني وتسميات تفاعلية ورحلات زوار موجهة',
+            'فلاتر AR وتفعيل حملات الإطلاق وشاشات فعاليات وتجارب للسوشيال والاستخدام على الأرض',
+            'أدوات AR للموبايل للتدريب ودعم الصيانة والسرد التفاعلي وعروض البيع',
+        ],
+        sectorsAr: ['التجزئة', 'العقارات', 'السيارات', 'المتاحف', 'الفعاليات', 'السياحة', 'الصناعة'],
+        deliverablesAr: ['تطبيق AR', 'نماذج ثلاثية الأبعاد', 'تتبع بعلامات أو بدون علامات', 'طبقات تفاعلية', 'أصول حملة', 'ربط تحليلات'],
+        proofAr: 'تستخدم تخيل الواقع المعزز لتحويل المنتجات والأماكن والقصص الثابتة إلى طبقات تفاعلية موجهة سهلة العرض والتحديث.',
     },
     ai: {
         titleAr: 'الذكاء الاصطناعي',
@@ -113,13 +146,13 @@ const serviceArabicContent = {
         leadAr: 'يصبح الذكاء الاصطناعي قويا عندما يرتبط بسير عمل حقيقي. نستخدمه للمساعدين والتحليلات والتعلم التكيفي والتوائم الرقمية والتنبؤ ورحلات المستخدم الذكية.',
         whatWeBuildAr: [
             'مساعدون أذكياء للمواقع والمعارض والمتاحف والمدن والمنتجات ودعم العملاء',
-            'مرشدون بالذكاء الاصطناعي داخل تجارب VR/AR وبيئات البيع الافتراضية',
+            'مرشدون بالذكاء الاصطناعي داخل تجارب VR وAR وبيئات البيع الافتراضية',
             'تحليل بيانات وتحليلات زوار وتوصيات وتأهيل عملاء محتملين',
             'صيانة تنبؤية وذكاء للتوائم الرقمية ودعم قرارات التشغيل',
         ],
         sectorsAr: ['المدن الذكية', 'التعليم', 'المتاحف', 'التجزئة', 'الصناعة', 'الأمن', 'الصحة'],
         deliverablesAr: ['تصميم سير عمل AI', 'منطق المساعد', 'نظام Prompt', 'تكامل بيانات', 'عرض تحليلات', 'تكامل XR'],
-        proofAr: 'خطة العمل تبرز XR/AI كعرض متكامل للتدريب والمعارض التجارية والتوائم الرقمية وتحليلات الزوار وحلول القيادة.',
+        proofAr: 'خطة العمل تبرز XR وAI كعرض متكامل للتدريب والمعارض التجارية والتوائم الرقمية وتحليلات الزوار وحلول القيادة.',
     },
     advertising: {
         titleAr: 'الإعلانات',
@@ -147,8 +180,8 @@ export const servicesSectionHeader = {
     slug: 'services-header',
     title: 'Services',
     titleAr: 'الخدمات',
-    disc: 'We build digital services across mobile, immersive technology, AI, and advertising content.',
-    discAr: 'نبني خدمات رقمية في تطبيقات الموبايل والتقنيات الغامرة والذكاء الاصطناعي والمحتوى الإعلاني.',
+    disc: 'We build digital services across mobile apps, virtual reality, augmented reality, AI, and advertising content.',
+    discAr: 'نبني خدمات رقمية عبر تطبيقات الموبايل والواقع الافتراضي والواقع المعزز والذكاء الاصطناعي والمحتوى الإعلاني.',
 }
 
 const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '')
@@ -192,7 +225,7 @@ export const serviceToFormValues = (service) => ({
 
 export const mergeServiceRecord = (service, record) =>
 {
-    const hasEditableContent = record?.slug === service.slug || record?.title === service.title;
+    const hasEditableContent = record?.slug === service.slug || normalize(record?.title) === normalize(service.title);
     const englishSummary = hasEditableContent ? record?.disc || service.summary : service.summary;
     const englishLead = hasEditableContent ? record?.lead || service.lead : service.lead;
     const englishProof = hasEditableContent ? record?.proof || service.proof : service.proof;
@@ -202,7 +235,7 @@ export const mergeServiceRecord = (service, record) =>
 
     return {
         ...service,
-        record,
+        record: hasEditableContent ? record : null,
         title: hasEditableContent ? record?.title || service.title : service.title,
         titleAr: hasEditableContent ? record?.titleAr || service.titleAr || translateText(record?.title || service.title, LANGUAGES.ar.code) : service.titleAr,
         label: hasEditableContent ? record?.label || service.label : service.label,
@@ -246,6 +279,7 @@ export const getServiceRecords = (record = []) =>
     const withoutHeaders = allItems.filter((item, index) => item?.slug !== 'services-header' && !(index === 0 && !serviceContent.some(service => serviceMatchesRecord(service, item))));
     const items = withoutHeaders;
     const usedIds = new Set();
+    const canUseIndexFallback = items.length === serviceContent.length;
 
     return serviceContent.map((service, index) =>
     {
@@ -256,7 +290,7 @@ export const getServiceRecords = (record = []) =>
             item = items.find((recordItem) => !usedIds.has(recordItem._id) && serviceMatchesRecord(service, recordItem));
         }
 
-        if (!item)
+        if (!item && canUseIndexFallback)
         {
             item = items[index] && !usedIds.has(items[index]._id) ? items[index] : null;
         }
@@ -274,8 +308,9 @@ export const serviceMatchesRecord = (service, record) =>
     if (record?.slug === service.slug) return true
     if (!title) return false
     if (normalize(service.title) === title) return true
-    if (service.slug === 'vr-ar' && ['vr', 'ar', 'vrar', 'xr'].includes(title)) return true
-    if (service.slug === 'ai' && title === 'ai') return true
+    if (service.slug === 'vr' && ['vr', 'virtualreality', 'virtualrealityservice'].includes(title)) return true
+    if (service.slug === 'ar' && ['ar', 'abre', 'augmentedreality', 'augmentedrealityservice'].includes(title)) return true
+    if (service.slug === 'ai' && ['ai', 'artificialintelligence'].includes(title)) return true
     if (service.slug === 'advertising' && ['advertising', 'ads', '3danimation'].includes(title)) return true
     if (service.slug === 'mobile-apps' && ['mobileapps', 'apps', 'app'].includes(title)) return true
 

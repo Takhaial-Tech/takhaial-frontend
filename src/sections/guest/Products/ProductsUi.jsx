@@ -51,8 +51,8 @@ const ProductsUi = (props) =>
                         {localizedDesc}
                     </p>
                 </div>
-                <div className="md:container  px-10 md:mx-auto">
-                    <div className="relative w-full grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="md:container px-6 md:px-10 md:mx-auto">
+                    <div className="relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                         {services.map((service, key) =>
                         {
                             const localizedService = localizeService(service, language);

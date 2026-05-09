@@ -46,6 +46,7 @@ export const arabicTranslations = {
     'Save Contact Info': 'حفظ بيانات التواصل',
     'All rights reserved.': 'جميع الحقوق محفوظة.',
     'We build digital services across mobile, immersive technology, AI, and advertising content.': 'نبني خدمات رقمية في تطبيقات الموبايل والتقنيات الغامرة والذكاء الاصطناعي والمحتوى الإعلاني.',
+    'We build digital services across mobile apps, virtual reality, augmented reality, AI, and advertising content.': 'نبني خدمات رقمية عبر تطبيقات الموبايل والواقع الافتراضي والواقع المعزز والذكاء الاصطناعي والمحتوى الإعلاني.',
     'Read More': 'اقرأ المزيد',
     Introduction: 'الفيديو التعريفي',
     'Introduction Video': 'الفيديو التعريفي',
@@ -194,6 +195,9 @@ export const arabicTranslations = {
     AbRe: 'الواقع المعزز',
     'test product': 'اختبار المنتج',
     VR: 'الواقع الافتراضي',
+    'Virtual Reality': 'الواقع الافتراضي',
+    AR: 'الواقع المعزز',
+    'Augmented Reality': 'الواقع المعزز',
     'tes vr2': 'اختبار واقع افتراضي 2',
     AI: 'الذكاء الاصطناعي',
 };

@@ -28,10 +28,9 @@ const AboutUi = (props) =>
             {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
 
             <div className="bg-gradient-radial absolute top-[-4px] left-0 right-0 bottom-[-4px] z-[0]" />
-            <div className="w-full  md:grid md:grid-cols-2 gap-6 z-[10]">
-                <div />
-                <div>
-                    <div className='relative '>
+            <div className="w-full max-w-[1180px] mx-auto z-[10] text-center">
+                <div className="grid gap-12">
+                    <div className='relative max-w-[1080px] mx-auto'>
                         {isAdmin &&
                             <EditSection
                             className="top-[0px] right-[1px]"
@@ -43,10 +42,10 @@ const AboutUi = (props) =>
                                 initialValues={getBilingualInitialValues(data[0], ['title', 'disc'])}
                             />
                         }
-                        <h1 className={`font-bold text-white text-3xl  glitch ${isAdmin ? 'mb-8' : 'mb-5'}`} data-glitch={missionTitle}>{missionTitle}</h1>
-                        <h2 className={"leading-relaxed content-end text-sm"}> {missionDisc} </h2>
+                        <h1 className={`font-bold text-white text-3xl ${isAdmin ? 'mb-8' : 'mb-5'}`}>{missionTitle}</h1>
+                        <h2 className={"leading-relaxed text-sm md:text-base max-w-[1040px] mx-auto"}> {missionDisc} </h2>
                     </div>
-                    <div className='relative'>
+                    <div className='relative max-w-[1080px] mx-auto'>
                         {isAdmin &&
                             <EditSection
                             className="top-[0px] right-[1px]"
@@ -58,8 +57,8 @@ const AboutUi = (props) =>
                                 initialValues={getBilingualInitialValues(data[1], ['title', 'disc'])}
                             />
                         }
-                        <h1 className={`ont-bold text-white text-3xl mt-10 glitch ${isAdmin ? 'mb-8' : 'mb-5'}`} data-glitch={visionTitle}  > {visionTitle}</h1>
-                        <h2 className={"leading-relaxed content-end text-sm"}> {visionDisc} </h2>
+                        <h1 className={`font-bold text-white text-3xl mt-10 ${isAdmin ? 'mb-8' : 'mb-5'}`}>{visionTitle}</h1>
+                        <h2 className={"leading-relaxed text-sm md:text-base max-w-[1040px] mx-auto"}> {visionDisc} </h2>
                     </div>
                 </div>
             </div>
