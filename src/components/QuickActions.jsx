@@ -4,19 +4,23 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 const QuickActions = () =>
 {
-    const { t } = useLanguage();
+    const { direction, t } = useLanguage();
 
     return (
-        <ul className="w-full justify-self-center text-white flex w-fit bg-[#262626] rounded-2xl" >
-            <a href="tel:+96599743375" className="z-[1] cursor-pointer hover:shadow-3xl transition-all duration-500 w-[100px] rounded-l pl-[10px] py-[5px] content-center  rounded-s-2xl " style={{ marginRight: "10px" }}>
-                <li className="flex items-center gap-2"> <img alt={''} width={15} height={15} src={callicon} /> <label className="text-nowrap cursor-pointer"> {t('Call')} </label> </li>
+        <div className="mx-auto flex w-full max-w-[180px] justify-center gap-2 rounded-2xl bg-[#262626] px-2 py-1 text-white" dir={direction}>
+            <a href="tel:+96599743375" className="z-[1] flex min-w-0 flex-1 cursor-pointer items-center justify-center rounded-xl px-2 py-[6px] transition-all duration-500 hover:shadow-3xl">
+                <span className="flex min-w-0 items-center justify-center gap-1.5">
+                    <img alt={''} width={15} height={15} src={callicon} className="flex-shrink-0" />
+                    <label className="cursor-pointer whitespace-nowrap text-xs leading-none">{t('Call')}</label>
+                </span>
             </a>
-            <a href="#section_9" className="z-[1] cursor-pointer hover:shadow-3xl transition-all duration-500 w-[100px] rounded-l pl-[10px] py-[5px] content-center  rounded-e-2xl rounded-s-none " >
-                <li className="flex items-center gap-2"
-                //  onClick={() => setQuote(true)}
-                > <img alt={''} width={15} height={15} src={qouticon} /> <label className="text-nowrap cursor-pointer"> {t('Quote')} </label> </li>
+            <a href="#section_9" className="z-[1] flex min-w-0 flex-1 cursor-pointer items-center justify-center rounded-xl px-2 py-[6px] transition-all duration-500 hover:shadow-3xl">
+                <span className="flex min-w-0 items-center justify-center gap-1.5">
+                    <img alt={''} width={15} height={15} src={qouticon} className="flex-shrink-0" />
+                    <label className="cursor-pointer whitespace-nowrap text-xs leading-none">{t('Quote')}</label>
+                </span>
             </a>
-        </ul>
+        </div>
     )
 }
 

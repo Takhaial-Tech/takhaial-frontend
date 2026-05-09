@@ -28,6 +28,7 @@ const LanguageSwitcher = ({ className = '' }) =>
 {
     const { language, setLanguage, t } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
+    const [menuAlign, setMenuAlign] = useState('right');
     const containerRef = useRef(null);
     const activeOption = languageOptions.find((option) => option.code === language) || languageOptions[0];
 
@@ -45,6 +46,27 @@ const LanguageSwitcher = ({ className = '' }) =>
         return () => document.removeEventListener('mousedown', closeOnOutsideClick);
     }, []);
 
+    useEffect(() =>
+    {
+        if (!isOpen || !containerRef.current) return;
+
+        const updateMenuAlign = () =>
+        {
+            const rect = containerRef.current.getBoundingClientRect();
+            const dropdownWidth = 170;
+            const viewportPadding = 12;
+            const wouldOverflowLeft = rect.right - dropdownWidth < viewportPadding;
+
+            setMenuAlign(wouldOverflowLeft ? 'left' : 'right');
+        };
+
+        updateMenuAlign();
+        window.addEventListener('resize', updateMenuAlign);
+        return () => window.removeEventListener('resize', updateMenuAlign);
+    }, [isOpen]);
+
+    const menuPositionClass = menuAlign === 'left' ? 'left-0 right-auto' : 'right-0 left-auto';
+
     return (
         <div ref={containerRef} className={`relative z-[60] ${className}`} dir="ltr">
             <button
@@ -58,7 +80,7 @@ const LanguageSwitcher = ({ className = '' }) =>
             </button>
 
             {isOpen &&
-                <div className="absolute right-0 mt-2 w-[170px] overflow-hidden rounded-xl border border-solid border-[#ef4444] bg-[#050505] shadow-3xl">
+                <div className={`absolute ${menuPositionClass} mt-2 w-[170px] overflow-hidden rounded-xl border border-solid border-[#ef4444] bg-[#050505] shadow-3xl`}>
                     {languageOptions.map((option) => (
                         <button
                             key={option.code}

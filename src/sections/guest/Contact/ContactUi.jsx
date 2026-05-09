@@ -144,8 +144,8 @@ const ContactUi = (props) =>
             <a target='__blank' href={buildWhatsappHref(settings.whatsapp)} className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
                 <img alt="" width={55} height={55} src={wicon} />
             </a>
-            <div className={'rounded-2xl fixed z-50 bottom-[20px] w-[190px] right-[20px] bg-[#000] border-red-500 border-red border border-solid'} >
-                <h2 className="text-white my-[5px] mx-[10px]">{t('Quick action')}</h2>
+            <div className={'rounded-2xl fixed z-50 bottom-[20px] right-[20px] w-[210px] max-w-[calc(100vw-40px)] bg-[#000] border-red-500 border-red border border-solid p-2'} >
+                <h2 className="text-white mb-2 px-1">{t('Quick action')}</h2>
 
                 {isAdmin ? <Btn className={"w-full "} type="button" onClick={logout}>{t('Logout')}</Btn> : <QuickActions />}
             </div>
