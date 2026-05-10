@@ -120,6 +120,8 @@ export const arabicTranslations = {
     'Project details cannot exceed 1500 characters': 'تفاصيل المشروع لا يمكن أن تتجاوز 1500 حرف',
     'Unable to load site settings': 'تعذر تحميل إعدادات الموقع',
     'Unable to update site settings': 'تعذر تحديث إعدادات الموقع',
+    'Unable to upload media': 'تعذر رفع الملف',
+    'File is too large. Max upload size is 500MB': 'الملف كبير جدًا. الحد الأقصى للرفع 500MB',
     'Home Header': 'عنوان الرئيسية',
     'Home Header (Arabic)': 'عنوان الرئيسية بالعربية',
     'Home Description': 'وصف الرئيسية',

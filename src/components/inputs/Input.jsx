@@ -31,6 +31,8 @@ export const Input = (props) =>
             {
                 const inputError = !!error && touched;
                 const { handleBlur, setFieldValue } = form;
+                const isFileInput = type === "file";
+                const fieldProps = isFileInput ? { name: field.name } : field;
 
                 return (
                     <div
@@ -52,7 +54,7 @@ export const Input = (props) =>
                             type={type}
                             label={label}
                             dir={dir}
-                            {...field}
+                            {...fieldProps}
                             {...rest}
                             className={`md:w-auto w-full p-[10px] bg-[#262626] rounded-xl mb-[10px] backdrop-blur-md bg-[#262626] ${className}`}
                             onBlur={(e) =>
@@ -62,7 +64,14 @@ export const Input = (props) =>
                             }}
                             onChange={(e) =>
                             {
-                                setFieldValue(name, e.target.value)
+                                if (isFileInput)
+                                {
+                                    setFieldValue(name, e.currentTarget.files?.[0] || null)
+                                } else
+                                {
+                                    setFieldValue(name, e.target.value)
+                                }
+
                                 if (onChange) onChange(e);
                             }}
                             disabled={disabled}
