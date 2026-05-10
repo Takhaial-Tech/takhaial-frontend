@@ -304,11 +304,14 @@ export const getServiceRecords = (record = []) =>
 export const serviceMatchesRecord = (service, record) =>
 {
     const title = normalize(record?.title)
+    const slug = normalize(record?.slug)
 
     if (record?.slug === service.slug) return true
+    if (service.slug === 'vr' && ['vr', 'vrar'].includes(slug)) return true
+    if (service.slug === 'ar' && ['ar', 'abre', 'augmentedreality'].includes(slug)) return true
     if (!title) return false
     if (normalize(service.title) === title) return true
-    if (service.slug === 'vr' && ['vr', 'virtualreality', 'virtualrealityservice'].includes(title)) return true
+    if (service.slug === 'vr' && ['vr', 'vrar', 'virtualreality', 'virtualrealityservice'].includes(title)) return true
     if (service.slug === 'ar' && ['ar', 'abre', 'augmentedreality', 'augmentedrealityservice'].includes(title)) return true
     if (service.slug === 'ai' && ['ai', 'artificialintelligence'].includes(title)) return true
     if (service.slug === 'advertising' && ['advertising', 'ads', '3danimation'].includes(title)) return true

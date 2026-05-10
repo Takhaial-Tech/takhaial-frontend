@@ -46,12 +46,14 @@ const useHttp = () =>
                         backendUrl}${requestConfig.url}`,
                     requestData);
 
-            const data = await response.json();
-            applyData(data);
+            const contentType = response.headers.get("content-type") || "";
+            const data = contentType.includes("application/json")
+                ? await response.json()
+                : { message: await response.text() };
 
-            if (!response.ok)
+            if (!response.ok || data?.success === false)
             {
-                throw new Error(data.message)
+                throw new Error(data.message || "Something went wrong")
             }
 
             let message = data.message;
@@ -60,6 +62,8 @@ const useHttp = () =>
                 message = message.toLowerCase();
                 if (!message.includes("success")) { throw new Error(data.message) }
             }
+
+            applyData(data);
         } catch (error)
         {
             setIsLoading(false)
