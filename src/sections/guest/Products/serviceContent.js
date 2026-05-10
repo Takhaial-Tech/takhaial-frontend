@@ -203,6 +203,14 @@ export const textToList = (value, fallback = []) =>
     return items.length ? items : fallback;
 }
 
+export const getLocalizedServiceVideo = (service, language) =>
+{
+    if (!service) return '';
+    if (language === LANGUAGES.ar.code) return service.videoAr || service.video || '';
+
+    return service.video || service.videoAr || '';
+}
+
 export const serviceToFormValues = (service) => ({
     slug: service.slug,
     title: service.title,
@@ -225,7 +233,7 @@ export const serviceToFormValues = (service) => ({
 
 export const mergeServiceRecord = (service, record) =>
 {
-    const hasEditableContent = record?.slug === service.slug || normalize(record?.title) === normalize(service.title);
+    const hasEditableContent = serviceMatchesRecord(service, record);
     const englishSummary = hasEditableContent ? record?.disc || service.summary : service.summary;
     const englishLead = hasEditableContent ? record?.lead || service.lead : service.lead;
     const englishProof = hasEditableContent ? record?.proof || service.proof : service.proof;
@@ -253,6 +261,7 @@ export const mergeServiceRecord = (service, record) =>
         proof: englishProof,
         proofAr: hasEditableContent ? record?.proofAr || service.proofAr || translateText(englishProof, LANGUAGES.ar.code) : service.proofAr,
         video: hasEditableContent ? record?.video : null,
+        videoAr: hasEditableContent ? record?.videoAr : null,
     }
 }
 

@@ -18,6 +18,7 @@ const Products = () =>
     const { isLoadingAddSection, handleAddSection } = useAddItem(4);
 
     const [video, setVideo] = useState(false);
+    const [videoAr, setVideoAr] = useState(false);
     const services = getServiceRecords(record);
     const headerRecord = record.find((item) => item?.slug === servicesSectionHeader.slug);
     const header = headerRecord || servicesSectionHeader;
@@ -25,7 +26,12 @@ const Products = () =>
     const onEdit = (values, serviceIndex) =>
     {
         const selectedService = services[serviceIndex];
-        const onSuccess = () => { setIsOpenEditModal(false); setVideo(false); }
+        const onSuccess = () =>
+        {
+            setIsOpenEditModal(false);
+            setVideo(false);
+            setVideoAr(false);
+        }
         const serviceValues = {
             ...serviceToFormValues(selectedService),
             ...values,
@@ -36,16 +42,21 @@ const Products = () =>
 
         if (selectedService.record?._id)
         {
-            handleEditSection(serviceValues, selectedService.record._id, onSuccess, { video })
+            handleEditSection(serviceValues, selectedService.record._id, onSuccess, { video, videoAr })
             return;
         }
 
-        handleAddSection(serviceValues, onSuccess, { video })
+        handleAddSection(serviceValues, onSuccess, { video, videoAr })
     }
 
     const onChangeVideo = (e) =>
     {
         setVideo(e.target.files[0])
+    }
+
+    const onChangeVideoAr = (e) =>
+    {
+        setVideoAr(e.target.files[0])
     }
 
     const onEditTitle = (values) =>
@@ -78,6 +89,7 @@ const Products = () =>
             isLoadingGetSection={isLoadingGetSection}
             services={services}
             onChangeVideo={onChangeVideo}
+            onChangeVideoAr={onChangeVideoAr}
         />
     )
 }

@@ -10,7 +10,7 @@ import EditSection from '../../../components/EditSection'
 import LoadingScreen from '../../../components/LoadingScreen'
 import { FormikControl } from '../../../components/inputs'
 import { mediaUrl } from '../../../config'
-import { getServiceBySlug, getServiceRecords, localizeService, serviceToFormValues } from './serviceContent'
+import { getLocalizedServiceVideo, getServiceBySlug, getServiceRecords, localizeService, serviceToFormValues } from './serviceContent'
 import { serviceDetailInputs } from './productsInputs'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import LanguageSwitcher from '../../../components/LanguageSwitcher'
@@ -20,6 +20,7 @@ const ServiceDetail = () =>
     const { serviceSlug } = useParams();
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
     const [video, setVideo] = useState(false);
+    const [videoAr, setVideoAr] = useState(false);
     const isAdmin = !!useSelector(state => state.auth.token);
     const isLoadingGetSection = useGetSection(4);
     const record = useSelector(state => state.sections.sectionsData)[4] || [];
@@ -29,7 +30,8 @@ const ServiceDetail = () =>
     const fallbackService = getServiceBySlug(serviceSlug);
     const service = getServiceRecords(record).find(item => item.slug === serviceSlug) || fallbackService;
     const localizedService = localizeService(service, language);
-    const videoSource = service?.video ? `${mediaUrl}${service.video}` : '';
+    const selectedVideo = getLocalizedServiceVideo(service, language);
+    const videoSource = selectedVideo ? `${mediaUrl}${selectedVideo}` : '';
 
     if (!fallbackService)
     {
@@ -41,21 +43,31 @@ const ServiceDetail = () =>
         setVideo(e.target.files[0])
     }
 
+    const onChangeVideoAr = (e) =>
+    {
+        setVideoAr(e.target.files[0])
+    }
+
     const onEdit = (values) =>
     {
         const serviceValues = {
             ...values,
             slug: service.slug,
         }
-        const onSuccess = () => { setIsOpenEditModal(false); setVideo(false); }
+        const onSuccess = () =>
+        {
+            setIsOpenEditModal(false);
+            setVideo(false);
+            setVideoAr(false);
+        }
 
         if (service.record?._id)
         {
-            handleEditSection(serviceValues, service.record._id, onSuccess, { video })
+            handleEditSection(serviceValues, service.record._id, onSuccess, { video, videoAr })
             return;
         }
 
-        handleAddSection(serviceValues, onSuccess, { video })
+        handleAddSection(serviceValues, onSuccess, { video, videoAr })
     }
 
     const isSaving = isLoadingEditSection || isLoadingAddSection;
@@ -99,17 +111,29 @@ const ServiceDetail = () =>
                         initialValues={serviceToFormValues(service)}
                         className="right-[20px] top-[92px] md:right-[40px]"
                     >
-                        <h1>{t('Introduction Video')}</h1>
+                        <h1>{t('English Introduction Video')}</h1>
                         <FormikControl
                             disabled={isSaving}
                             control="input"
                             type="file"
                             name="video"
                             accept="video/*"
-                            placeholder="Introduction Video"
+                            placeholder="English Introduction Video"
                             className="block md:w-full w-[100%]"
                             containerClassName="block w-full"
                             onChange={onChangeVideo}
+                        />
+                        <h1>{t('Arabic Introduction Video')}</h1>
+                        <FormikControl
+                            disabled={isSaving}
+                            control="input"
+                            type="file"
+                            name="videoAr"
+                            accept="video/*"
+                            placeholder="Arabic Introduction Video"
+                            className="block md:w-full w-[100%]"
+                            containerClassName="block w-full"
+                            onChange={onChangeVideoAr}
                         />
                     </EditSection>
                 }
@@ -130,11 +154,12 @@ const ServiceDetail = () =>
                         </div>
                     </div>
 
-                    {(service.video || isAdmin) &&
+                    {(selectedVideo || isAdmin) &&
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-10">
                             <h2 className="text-2xl font-bold mb-4">{t('Introduction Video')}</h2>
-                            {service.video ? (
+                            {selectedVideo ? (
                                 <video
+                                    key={selectedVideo}
                                     controls
                                     preload="metadata"
                                     className="w-full max-h-[70vh] rounded-xl bg-[#000]"

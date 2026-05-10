@@ -50,6 +50,8 @@ export const arabicTranslations = {
     'Read More': 'اقرأ المزيد',
     Introduction: 'الفيديو التعريفي',
     'Introduction Video': 'الفيديو التعريفي',
+    'English Introduction Video': 'الفيديو التعريفي بالإنجليزية',
+    'Arabic Introduction Video': 'الفيديو التعريفي بالعربية',
     'No introduction video is uploaded yet. You can add one from the admin edit button for this service.': 'لم يتم رفع فيديو تعريفي بعد. يمكنك إضافته من زر تعديل هذه الخدمة في لوحة التحكم.',
     'No introduction video is uploaded yet. Use Edit Service to upload one.': 'لم يتم رفع فيديو تعريفي بعد. استخدم تعديل الخدمة لرفع فيديو.',
     'Back to Services': 'العودة إلى الخدمات',

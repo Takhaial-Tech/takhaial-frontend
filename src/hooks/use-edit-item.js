@@ -32,6 +32,7 @@ const useEditItem = (sectionNumber) =>
 
     // Append video if present
     if (media?.video) submitData.append('video', media.video);
+    if (media?.videoAr) submitData.append('videoAr', media.videoAr);
 
     // Append image if present
     if (media?.image) submitData.append('image', media.image);

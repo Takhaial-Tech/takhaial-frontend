@@ -11,15 +11,16 @@ import { mediaUrl } from '../../../config';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
-import { localizeService, servicesSectionHeader } from './serviceContent';
+import { getLocalizedServiceVideo, localizeService, servicesSectionHeader } from './serviceContent';
 
 const ProductsUi = (props) =>
 {
-    const { onChangeVideo, header, onEditTitle, setActiveIntro, activeIntro, isLoadingGetSection, services, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenEditTitleModal, setIsOpenEditTitleModal } = props;
+    const { onChangeVideo, onChangeVideoAr, header, onEditTitle, setActiveIntro, activeIntro, isLoadingGetSection, services, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenEditTitleModal, setIsOpenEditTitleModal } = props;
     const { language, t } = useLanguage();
     const localizedTitle = getLocalizedField(header, 'title', language, servicesSectionHeader.title);
     const localizedDesc = getLocalizedField(header, 'disc', language, servicesSectionHeader.disc);
     const localizedActiveIntro = localizeService(activeIntro, language);
+    const activeIntroVideo = getLocalizedServiceVideo(activeIntro, language);
     // enforce video to play 
     const videoRef = useRef();
     useEffect(() =>
@@ -74,17 +75,29 @@ const ProductsUi = (props) =>
                                             index={key + 1}
                                             initialValues={{ disc: service.summary, discAr: service.summaryAr }}
                                         >
-                                            <h1>{t('Introduction Video')}</h1>
+                                            <h1>{t('English Introduction Video')}</h1>
                                             <FormikControl
                                                 disabled={isLoadingEdit}
                                                 control="input"
                                                 type="file"
                                                 name="video"
                                                 accept="video/*"
-                                                placeholder="Introduction Video"
+                                                placeholder="English Introduction Video"
                                                 className="block md:w-full w-[100%]"
                                                 containerClassName="block w-full"
                                                 onChange={onChangeVideo} // Necessary to update Formik state with the selected file
+                                            />
+                                            <h1>{t('Arabic Introduction Video')}</h1>
+                                            <FormikControl
+                                                disabled={isLoadingEdit}
+                                                control="input"
+                                                type="file"
+                                                name="videoAr"
+                                                accept="video/*"
+                                                placeholder="Arabic Introduction Video"
+                                                className="block md:w-full w-[100%]"
+                                                containerClassName="block w-full"
+                                                onChange={onChangeVideoAr}
                                             />
                                         </EditSection>
                                     }
@@ -138,13 +151,14 @@ const ProductsUi = (props) =>
                 onClose={() => { setActiveIntro(false) }}
                 contentLabel={t("Introduction video")}
             >
-                {activeIntro?.video ? (
+                {activeIntroVideo ? (
                     <video
+                        key={activeIntroVideo}
                         autoPlay
                         controls
                         style={{ width: '100%', height: 'calc(100vh - 200px)' }}
                     >
-                        <source src={`${mediaUrl}${activeIntro.video}`} />
+                        <source src={`${mediaUrl}${activeIntroVideo}`} />
                     </video>
                 ) : (
                     <div className="p-6 text-white bg-[#000]">
