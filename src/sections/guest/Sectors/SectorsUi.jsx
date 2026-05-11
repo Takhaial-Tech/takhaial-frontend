@@ -14,10 +14,9 @@ import { getSectorIcon } from './sectorIcons';
 
 const SectorsUi = (props) =>
 {
-    const { header, title, desc, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, onChangeVideo, isAdmin, sectors, modal, setModal, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
+    const { header, title, isOpenEditTitleModal, setIsOpenEditTitleModal, onEditTitle, isLoadingAddSection, onAdd, isOpenAddModal, setIsOpenAddModal, isLoadingGetSection, onChangeImage, onChangeVideo, isAdmin, sectors, modal, setModal, isOpenEditModal, setIsOpenEditModal, onEdit, isLoadingEdit } = props;
     const { language, t } = useLanguage();
     const localizedTitle = getLocalizedField(header || { title }, 'title', language);
-    const localizedDesc = getLocalizedField(header || { disc: desc }, 'disc', language);
 
     return (
         <>
@@ -38,7 +37,6 @@ const SectorsUi = (props) =>
                     />
                 }
                 <h1 className={`${isAdmin ? "mt-[5rem] mb-[6rem]" : ""} mb-[3rem] font-bold justify-self-center text-2xl mb-4 glitch-trans`} data-glitch={localizedTitle}>{localizedTitle}</h1>
-                {localizedDesc && <p className="mt-[30px] justify-self-center">{localizedDesc}</p>}
                 <div className="relative min-w-[134px] w-full px-[20px] md:grid md:grid-cols-3 md:auto-rows-fr gap-10 items-stretch">
                     {sectors.slice(1).map((ser, key) =>
                         <Sector
