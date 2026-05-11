@@ -123,7 +123,7 @@ const ProductsUi = (props) =>
                                         <button
                                             onClick={() => setActiveIntro(service)}
                                             className="flex w-full transition-all duration-500  rounded-br-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2">
-                                            {t('Introduction')}  <img alt={''} width={15} height={15} src={watchIcon} />
+                                            {t('Watch Demo')}  <img alt={''} width={15} height={15} src={watchIcon} />
                                         </button>
                                     </div>
 

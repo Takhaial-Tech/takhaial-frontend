@@ -72,7 +72,7 @@ const Sector = (props) =>
                     {disc}
                 </p>
                 <button onClick={() => setModal(ser)} className={`mt-auto w-fit rounded-xl border border-solid border-[#ef4444] bg-[#262626] px-[20px] py-[10px] text-[#ef4444] transition-all duration-500 ${isVisible ? 'opacity-[1]' : 'opacity-0'}`}>
-                    {t('Introduction')}
+                    {t('Watch Demo')}
                 </button>
                 {isAdmin && <DeleteItem className="absolute bottom-[18px] right-[20px] mt-0" sectionNumber={6} itemId={ser?._id} />}
             </div>

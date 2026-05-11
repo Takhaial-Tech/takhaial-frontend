@@ -48,6 +48,7 @@ export const arabicTranslations = {
     'We build digital services across mobile, immersive technology, AI, and advertising content.': 'نبني خدمات رقمية في تطبيقات الموبايل والتقنيات الغامرة والذكاء الاصطناعي والمحتوى الإعلاني.',
     'We build digital services across mobile apps, virtual reality, augmented reality, AI, and advertising content.': 'نبني خدمات رقمية عبر تطبيقات الموبايل والواقع الافتراضي والواقع المعزز والذكاء الاصطناعي والمحتوى الإعلاني.',
     'Read More': 'اقرأ المزيد',
+    'Watch Demo': 'شاهد العرض',
     Introduction: 'الفيديو التعريفي',
     'Introduction Video': 'الفيديو التعريفي',
     'English Introduction Video': 'الفيديو التعريفي بالإنجليزية',
