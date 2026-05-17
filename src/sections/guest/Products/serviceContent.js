@@ -11,6 +11,7 @@ const baseServiceContent = [
         title: 'Mobile Apps',
         label: 'Digital platforms',
         icon: mobileAppsIcon,
+        hasDemoVideo: false,
         summary: 'We design and build mobile-first platforms that connect users, content, services, payments, bookings, and operations in one controlled experience.',
         lead: 'Mobile apps are the operational layer of a digital service. We turn ideas into usable products with clear journeys, admin control, secure APIs, and room to grow.',
         whatWeBuild: [
@@ -79,6 +80,7 @@ const baseServiceContent = [
         title: 'Advertising',
         label: 'Cinematic content',
         icon: advertisingIcon,
+        hasDemoVideo: false,
         summary: 'We produce visual campaigns, 3D animations, CGI films, AI-assisted concept videos, and short social cuts that make products and destinations easy to understand.',
         lead: 'Advertising is not just a nice video. It is a clear visual argument. We build cinematic content that explains the offer, shows the use case, and gives sales teams material they can actually use.',
         whatWeBuild: [
@@ -203,9 +205,12 @@ export const textToList = (value, fallback = []) =>
     return items.length ? items : fallback;
 }
 
+export const serviceHasDemoVideo = (service) => service?.hasDemoVideo !== false
+
 export const getLocalizedServiceVideo = (service, language) =>
 {
     if (!service) return '';
+    if (!serviceHasDemoVideo(service)) return '';
     if (language === LANGUAGES.ar.code) return service.videoAr || service.video || '';
 
     return service.video || service.videoAr || '';

@@ -11,7 +11,7 @@ import { mediaUrl } from '../../../config';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
-import { getLocalizedServiceVideo, localizeService, servicesSectionHeader } from './serviceContent';
+import { getLocalizedServiceVideo, localizeService, serviceHasDemoVideo, servicesSectionHeader } from './serviceContent';
 
 const ProductsUi = (props) =>
 {
@@ -52,11 +52,12 @@ const ProductsUi = (props) =>
                         {localizedDesc}
                     </p>
                 </div>
-                <div className="md:container px-6 md:px-10 md:mx-auto">
-                    <div className="relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                <div className="mx-auto w-full max-w-[1840px] px-4 sm:px-6 lg:px-8">
+                    <div className="relative w-full grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-7">
                         {services.map((service, key) =>
                         {
                             const localizedService = localizeService(service, language);
+                            const hasDemoVideo = serviceHasDemoVideo(service);
 
                             return (
                             <div key={key} className={'relative md:mb-0 mb-5 '}>
@@ -75,30 +76,34 @@ const ProductsUi = (props) =>
                                             index={key + 1}
                                             initialValues={{ disc: service.summary, discAr: service.summaryAr }}
                                         >
-                                            <h1>{t('English Introduction Video')}</h1>
-                                            <FormikControl
-                                                disabled={isLoadingEdit}
-                                                control="input"
-                                                type="file"
-                                                name="video"
-                                                accept="video/*"
-                                                placeholder="English Introduction Video"
-                                                className="block md:w-full w-[100%]"
-                                                containerClassName="block w-full"
-                                                onChange={onChangeVideo} // Necessary to update Formik state with the selected file
-                                            />
-                                            <h1>{t('Arabic Introduction Video')}</h1>
-                                            <FormikControl
-                                                disabled={isLoadingEdit}
-                                                control="input"
-                                                type="file"
-                                                name="videoAr"
-                                                accept="video/*"
-                                                placeholder="Arabic Introduction Video"
-                                                className="block md:w-full w-[100%]"
-                                                containerClassName="block w-full"
-                                                onChange={onChangeVideoAr}
-                                            />
+                                            {hasDemoVideo &&
+                                                <>
+                                                    <h1>{t('English Introduction Video')}</h1>
+                                                    <FormikControl
+                                                        disabled={isLoadingEdit}
+                                                        control="input"
+                                                        type="file"
+                                                        name="video"
+                                                        accept="video/*"
+                                                        placeholder="English Introduction Video"
+                                                        className="block md:w-full w-[100%]"
+                                                        containerClassName="block w-full"
+                                                        onChange={onChangeVideo} // Necessary to update Formik state with the selected file
+                                                    />
+                                                    <h1>{t('Arabic Introduction Video')}</h1>
+                                                    <FormikControl
+                                                        disabled={isLoadingEdit}
+                                                        control="input"
+                                                        type="file"
+                                                        name="videoAr"
+                                                        accept="video/*"
+                                                        placeholder="Arabic Introduction Video"
+                                                        className="block md:w-full w-[100%]"
+                                                        containerClassName="block w-full"
+                                                        onChange={onChangeVideoAr}
+                                                    />
+                                                </>
+                                            }
                                         </EditSection>
                                     }
                                     <div className="flex min-h-[210px] flex-col items-center p-4 text-center">
@@ -117,14 +122,16 @@ const ProductsUi = (props) =>
                                     <div className="flex mt-auto">
                                         <Link
                                             to={`/services/${service.slug}`}
-                                            className="flex w-full transition-all duration-500  rounded-bl-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2">
+                                            className={`flex w-full transition-all duration-500 ${hasDemoVideo ? 'rounded-bl-xl' : 'rounded-b-xl'} px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2 whitespace-nowrap`}>
                                             {t('Read More')}  <img alt={''} width={15} height={15} src={quoteIcon} />
                                         </Link>
-                                        <button
-                                            onClick={() => setActiveIntro(service)}
-                                            className="flex w-full transition-all duration-500  rounded-br-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2">
-                                            {t('Watch Demo')}  <img alt={''} width={15} height={15} src={watchIcon} />
-                                        </button>
+                                        {hasDemoVideo &&
+                                            <button
+                                                onClick={() => setActiveIntro(service)}
+                                                className="flex w-full transition-all duration-500 rounded-br-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2 whitespace-nowrap">
+                                                {t('Watch Demo')}  <img alt={''} width={15} height={15} src={watchIcon} />
+                                            </button>
+                                        }
                                     </div>
 
                                 </div>
