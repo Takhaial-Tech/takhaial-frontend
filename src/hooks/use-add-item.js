@@ -22,10 +22,12 @@ const useAddItem = (sectionNumber) =>
     const submitData = new FormData();
     for (const key in values)
     {
-      if (key !== 'video' && key !== 'videoAr' && key !== 'image') submitData.append(key, values[key]);
+      if (!['video', 'videoAr', 'videos', 'videosAr', 'image'].includes(key)) submitData.append(key, values[key]);
     }
     if (media?.video) submitData.append('video', media.video);
     if (media?.videoAr) submitData.append('videoAr', media.videoAr);
+    media?.videos?.forEach((videoFile) => submitData.append('videos', videoFile));
+    media?.videosAr?.forEach((videoFile) => submitData.append('videosAr', videoFile));
     if (media?.image) submitData.append('image', media.image);
     submitData.append('section', sectionNumber)
 

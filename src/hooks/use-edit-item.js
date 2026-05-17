@@ -27,12 +27,25 @@ const useEditItem = (sectionNumber) =>
     // Append updated data
     for (const key in updatedData)
     {
-      submitData.append(key, updatedData[key]);
+      if (!['video', 'videoAr', 'videos', 'videosAr', 'image'].includes(key))
+      {
+        submitData.append(key, updatedData[key]);
+      }
     }
 
     // Append video if present
     if (media?.video) submitData.append('video', media.video);
     if (media?.videoAr) submitData.append('videoAr', media.videoAr);
+    if (media?.videos?.length)
+    {
+      media.keepVideos?.forEach((videoName) => submitData.append('videos', videoName));
+      media.videos.forEach((videoFile) => submitData.append('videos', videoFile));
+    }
+    if (media?.videosAr?.length)
+    {
+      media.keepVideosAr?.forEach((videoName) => submitData.append('videosAr', videoName));
+      media.videosAr.forEach((videoFile) => submitData.append('videosAr', videoFile));
+    }
 
     // Append image if present
     if (media?.image) submitData.append('image', media.image);

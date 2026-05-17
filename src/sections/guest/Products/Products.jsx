@@ -17,8 +17,8 @@ const Products = () =>
     const { isLoadingEditSection, handleEditSection } = useEditItem(4);
     const { isLoadingAddSection, handleAddSection } = useAddItem(4);
 
-    const [video, setVideo] = useState(false);
-    const [videoAr, setVideoAr] = useState(false);
+    const [videos, setVideos] = useState([]);
+    const [videosAr, setVideosAr] = useState([]);
     const services = getServiceRecords(record);
     const headerRecord = record.find((item) => item?.slug === servicesSectionHeader.slug);
     const header = headerRecord || servicesSectionHeader;
@@ -29,8 +29,8 @@ const Products = () =>
         const onSuccess = () =>
         {
             setIsOpenEditModal(false);
-            setVideo(false);
-            setVideoAr(false);
+            setVideos([]);
+            setVideosAr([]);
         }
         const serviceValues = {
             ...serviceToFormValues(selectedService),
@@ -42,21 +42,26 @@ const Products = () =>
 
         if (selectedService.record?._id)
         {
-            handleEditSection(serviceValues, selectedService.record._id, onSuccess, { video, videoAr })
+            handleEditSection(serviceValues, selectedService.record._id, onSuccess, {
+                videos,
+                videosAr,
+                keepVideos: selectedService.videos,
+                keepVideosAr: selectedService.videosAr,
+            })
             return;
         }
 
-        handleAddSection(serviceValues, onSuccess, { video, videoAr })
+        handleAddSection(serviceValues, onSuccess, { videos, videosAr })
     }
 
-    const onChangeVideo = (e) =>
+    const onChangeVideos = (e) =>
     {
-        setVideo(e.target.files[0])
+        setVideos(Array.from(e.target.files || []))
     }
 
-    const onChangeVideoAr = (e) =>
+    const onChangeVideosAr = (e) =>
     {
-        setVideoAr(e.target.files[0])
+        setVideosAr(Array.from(e.target.files || []))
     }
 
     const onEditTitle = (values) =>
@@ -88,8 +93,8 @@ const Products = () =>
             setIsOpenEditTitleModal={setIsOpenEditTitleModal}
             isLoadingGetSection={isLoadingGetSection}
             services={services}
-            onChangeVideo={onChangeVideo}
-            onChangeVideoAr={onChangeVideoAr}
+            onChangeVideos={onChangeVideos}
+            onChangeVideosAr={onChangeVideosAr}
         />
     )
 }

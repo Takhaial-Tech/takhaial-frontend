@@ -10,7 +10,7 @@ import EditSection from '../../../components/EditSection'
 import LoadingScreen from '../../../components/LoadingScreen'
 import { FormikControl } from '../../../components/inputs'
 import { mediaUrl } from '../../../config'
-import { getLocalizedServiceVideo, getServiceBySlug, getServiceRecords, localizeService, serviceHasDemoVideo, serviceToFormValues } from './serviceContent'
+import { getLocalizedServiceVideos, getServiceBySlug, getServiceRecords, localizeService, serviceHasDemoVideo, serviceToFormValues } from './serviceContent'
 import { serviceDetailInputs } from './productsInputs'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import LanguageSwitcher from '../../../components/LanguageSwitcher'
@@ -19,8 +19,8 @@ const ServiceDetail = () =>
 {
     const { serviceSlug } = useParams();
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-    const [video, setVideo] = useState(false);
-    const [videoAr, setVideoAr] = useState(false);
+    const [videos, setVideos] = useState([]);
+    const [videosAr, setVideosAr] = useState([]);
     const isAdmin = !!useSelector(state => state.auth.token);
     const isLoadingGetSection = useGetSection(4);
     const record = useSelector(state => state.sections.sectionsData)[4] || [];
@@ -31,22 +31,21 @@ const ServiceDetail = () =>
     const service = getServiceRecords(record).find(item => item.slug === serviceSlug) || fallbackService;
     const localizedService = localizeService(service, language);
     const hasDemoVideo = serviceHasDemoVideo(service);
-    const selectedVideo = getLocalizedServiceVideo(service, language);
-    const videoSource = selectedVideo ? `${mediaUrl}${selectedVideo}` : '';
+    const selectedVideos = getLocalizedServiceVideos(service, language);
 
     if (!fallbackService)
     {
         return <Navigate to="/" replace={true} />
     }
 
-    const onChangeVideo = (e) =>
+    const onChangeVideos = (e) =>
     {
-        setVideo(e.target.files[0])
+        setVideos(Array.from(e.target.files || []))
     }
 
-    const onChangeVideoAr = (e) =>
+    const onChangeVideosAr = (e) =>
     {
-        setVideoAr(e.target.files[0])
+        setVideosAr(Array.from(e.target.files || []))
     }
 
     const onEdit = (values) =>
@@ -58,17 +57,22 @@ const ServiceDetail = () =>
         const onSuccess = () =>
         {
             setIsOpenEditModal(false);
-            setVideo(false);
-            setVideoAr(false);
+            setVideos([]);
+            setVideosAr([]);
         }
 
         if (service.record?._id)
         {
-            handleEditSection(serviceValues, service.record._id, onSuccess, { video, videoAr })
+            handleEditSection(serviceValues, service.record._id, onSuccess, {
+                videos,
+                videosAr,
+                keepVideos: service.videos,
+                keepVideosAr: service.videosAr,
+            })
             return;
         }
 
-        handleAddSection(serviceValues, onSuccess, { video, videoAr })
+        handleAddSection(serviceValues, onSuccess, { videos, videosAr })
     }
 
     const isSaving = isLoadingEditSection || isLoadingAddSection;
@@ -114,29 +118,31 @@ const ServiceDetail = () =>
                     >
                         {hasDemoVideo &&
                             <>
-                                <h1>{t('English Introduction Video')}</h1>
+                                <h1>{t('English Demo Videos')}</h1>
                                 <FormikControl
                                     disabled={isSaving}
                                     control="input"
                                     type="file"
-                                    name="video"
+                                    name="videos"
                                     accept="video/*"
-                                    placeholder="English Introduction Video"
+                                    multiple={true}
+                                    placeholder="English Demo Videos"
                                     className="block md:w-full w-[100%]"
                                     containerClassName="block w-full"
-                                    onChange={onChangeVideo}
+                                    onChange={onChangeVideos}
                                 />
-                                <h1>{t('Arabic Introduction Video')}</h1>
+                                <h1>{t('Arabic Demo Videos')}</h1>
                                 <FormikControl
                                     disabled={isSaving}
                                     control="input"
                                     type="file"
-                                    name="videoAr"
+                                    name="videosAr"
                                     accept="video/*"
-                                    placeholder="Arabic Introduction Video"
+                                    multiple={true}
+                                    placeholder="Arabic Demo Videos"
                                     className="block md:w-full w-[100%]"
                                     containerClassName="block w-full"
-                                    onChange={onChangeVideoAr}
+                                    onChange={onChangeVideosAr}
                                 />
                             </>
                         }
@@ -159,18 +165,26 @@ const ServiceDetail = () =>
                         </div>
                     </div>
 
-                    {hasDemoVideo && (selectedVideo || isAdmin) &&
+                    {hasDemoVideo && (selectedVideos.length || isAdmin) &&
                         <section className="border border-solid border-[#ef4444] rounded-xl p-6 bg-[#000]/70 mb-10">
-                            <h2 className="text-2xl font-bold mb-4">{t('Introduction Video')}</h2>
-                            {selectedVideo ? (
-                                <video
-                                    key={selectedVideo}
-                                    controls
-                                    preload="metadata"
-                                    className="w-full max-h-[70vh] rounded-xl bg-[#000]"
-                                >
-                                    <source src={videoSource} />
-                                </video>
+                            <h2 className="text-2xl font-bold mb-4">{t('Demo Videos')}</h2>
+                            {selectedVideos.length ? (
+                                <div className="grid gap-5">
+                                    {selectedVideos.map((demoVideo, index) => (
+                                        <article key={`${demoVideo}-${index}`} className="rounded-xl border border-solid border-[#262626] bg-[#000]/70 p-4">
+                                            <h3 className="mb-3 text-lg font-bold text-[#ef4444]">
+                                                {t('Demo Project')} {index + 1}
+                                            </h3>
+                                            <video
+                                                controls
+                                                preload="metadata"
+                                                className="w-full max-h-[70vh] rounded-xl bg-[#000]"
+                                            >
+                                                <source src={`${mediaUrl}${demoVideo}`} />
+                                            </video>
+                                        </article>
+                                    ))}
+                                </div>
                             ) : (
                                 <p className="text-[#ccc] leading-relaxed">
                                     {t('No introduction video is uploaded yet. Use Edit Service to upload one.')}

@@ -192,6 +192,17 @@ export const getServiceBySlug = (slug) => serviceContent.find(service => service
 
 export const listToText = (items) => Array.isArray(items) ? items.join('\n') : String(items || '')
 
+const mediaList = (...values) => values
+    .flatMap((value) =>
+    {
+        if (!value) return [];
+        if (Array.isArray(value)) return value;
+
+        return [value];
+    })
+    .filter(Boolean)
+    .filter((value, index, list) => list.indexOf(value) === index)
+
 export const textToList = (value, fallback = []) =>
 {
     if (Array.isArray(value)) return value;
@@ -207,13 +218,21 @@ export const textToList = (value, fallback = []) =>
 
 export const serviceHasDemoVideo = (service) => service?.hasDemoVideo !== false
 
+export const getLocalizedServiceVideos = (service, language) =>
+{
+    if (!service || !serviceHasDemoVideo(service)) return [];
+
+    const englishVideos = mediaList(service.videos, service.video);
+    const arabicVideos = mediaList(service.videosAr, service.videoAr);
+
+    if (language === LANGUAGES.ar.code) return arabicVideos.length ? arabicVideos : englishVideos;
+
+    return englishVideos.length ? englishVideos : arabicVideos;
+}
+
 export const getLocalizedServiceVideo = (service, language) =>
 {
-    if (!service) return '';
-    if (!serviceHasDemoVideo(service)) return '';
-    if (language === LANGUAGES.ar.code) return service.videoAr || service.video || '';
-
-    return service.video || service.videoAr || '';
+    return getLocalizedServiceVideos(service, language)[0] || '';
 }
 
 export const serviceToFormValues = (service) => ({
@@ -267,6 +286,8 @@ export const mergeServiceRecord = (service, record) =>
         proofAr: hasEditableContent ? record?.proofAr || service.proofAr || translateText(englishProof, LANGUAGES.ar.code) : service.proofAr,
         video: hasEditableContent ? record?.video : null,
         videoAr: hasEditableContent ? record?.videoAr : null,
+        videos: hasEditableContent ? mediaList(record?.videos, record?.video) : [],
+        videosAr: hasEditableContent ? mediaList(record?.videosAr, record?.videoAr) : [],
     }
 }
 
