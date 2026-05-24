@@ -62,7 +62,9 @@ const HomeUi = (props) =>
             }
 
             <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col items-center justify-end gap-8">
-                <FutureChatbot />
+                <div className="future-chatbot-anchor">
+                    <FutureChatbot />
+                </div>
 
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
                     <h1 className={`grid-cols-1 leading-7 text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>

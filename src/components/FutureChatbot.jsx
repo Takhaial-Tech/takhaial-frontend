@@ -1,64 +1,102 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { backendUrl } from '../config';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const chatCopy = {
     en: {
+        skip: 'Skip',
+        boot: 'Booting Takhaial agent',
+        greet: 'Welcome to Takhaial',
+        brand: 'Takhaial Tech',
+        tagline: 'We turn your imagination into reality.',
+        pillars: ['Artificial Intelligence', 'AR & VR', 'Mobile Apps', 'Cinematic Ads'],
         agentLabel: 'Takhaial AI Agent',
-        welcome: 'Welcome to the future',
-        initialMessage: 'Welcome to Takhaial Tech.\nTell us what is in your imagination, and we will turn it into reality.',
-        placeholder: 'Tell us what you imagine...',
+        initialMessage: 'I am ready. Tell me what is in your imagination and I will help shape it.',
+        placeholder: 'Describe what you imagine...',
         send: 'Send',
         thinking: 'Thinking',
         fallback: 'I could not reach the assistant right now. Please try again in a moment.',
         status: 'Online',
     },
     ar: {
-        agentLabel: '\u0648\u0643\u064a\u0644 \u062a\u062e\u064a\u0644 \u0627\u0644\u0630\u0643\u064a',
-        welcome: '\u0627\u0647\u0644\u0627 \u0628\u0643 \u0641\u064a \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644',
-        initialMessage: '\u0627\u0647\u0644\u0627 \u0628\u064a\u0643 \u0641\u064a \u062a\u062e\u064a\u0644 \u062a\u0643\n\u0642\u0648\u0644\u0646\u0627 \u0627\u064a\u0647 \u0627\u0644\u0644\u064a \u0641\u064a \u062e\u064a\u0627\u0644\u0643 \u0648\u0627\u062d\u0646\u0627 \u0647\u0646\u062d\u0648\u0644\u0647 \u0644\u062d\u0642\u064a\u0642\u0629',
-        placeholder: '\u0627\u0643\u062a\u0628 \u0627\u0644\u0644\u064a \u0641\u064a \u062e\u064a\u0627\u0644\u0643...',
-        send: '\u0627\u0631\u0633\u0644',
-        thinking: '\u0628\u064a\u0641\u0643\u0631',
-        fallback: '\u0645\u0634 \u0642\u0627\u062f\u0631 \u0623\u0648\u0635\u0644 \u0644\u0644\u0645\u0633\u0627\u0639\u062f \u062d\u0627\u0644\u064a\u0627. \u062c\u0631\u0628 \u062a\u0627\u0646\u064a \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a.',
-        status: '\u0645\u062a\u0627\u062d',
+        skip: 'تخطي',
+        boot: 'جاري تشغيل وكيل تخيل',
+        greet: 'اهلاً بك في تخيل',
+        brand: 'تخيل تك',
+        tagline: 'بنحوّل خيالك إلى حقيقة.',
+        pillars: [
+            'ذكاء اصطناعي',
+            'واقع افتراضي ومعزز',
+            'تطبيقات موبايل',
+            'إعلانات سينمائية',
+        ],
+        agentLabel: 'وكيل تخيل الذكي',
+        initialMessage:
+            'أنا جاهز. قوللي اللي في خيالك وأنا هساعدك تحققه.',
+        placeholder: 'اكتب اللي في خيالك...',
+        send: 'إرسال',
+        thinking: 'بيفكر',
+        fallback:
+            'مش قادر أوصل للمساعد حاليا. جرّب تاني بعد لحظات.',
+        status: 'متاح',
     },
 };
 
-const createInitialMessage = (language) => ({
-    role: 'assistant',
-    content: chatCopy[language === 'ar' ? 'ar' : 'en'].initialMessage,
-});
+const PHASE_TIMINGS = {
+    greet: 1100,
+    intro: 2900,
+    ready: 5500,
+};
 
 const FutureChatbot = () =>
 {
     const { direction, language } = useLanguage();
     const copy = chatCopy[language === 'ar' ? 'ar' : 'en'];
+    const [phase, setPhase] = useState('boot');
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [hasUserMessages, setHasUserMessages] = useState(false);
     const listRef = useRef(null);
 
+    const goToReady = useCallback(() =>
+    {
+        setPhase('ready');
+        setMessages((current) =>
+            current.length
+                ? current
+                : [{
+                    role: 'assistant',
+                    content: chatCopy[language === 'ar' ? 'ar' : 'en'].initialMessage,
+                }]
+        );
+    }, [language]);
+
     useEffect(() =>
     {
-        if (hasUserMessages) return undefined;
-
-        setMessages([]);
-        const timer = setTimeout(() =>
+        if (hasUserMessages)
         {
-            setMessages([createInitialMessage(language)]);
-        }, 2300);
+            setPhase('ready');
+            return undefined;
+        }
 
-        return () => clearTimeout(timer);
-    }, [hasUserMessages, language]);
+        setPhase('boot');
+        setMessages([]);
+
+        const timers = [
+            setTimeout(() => setPhase('greet'), PHASE_TIMINGS.greet),
+            setTimeout(() => setPhase('intro'), PHASE_TIMINGS.intro),
+            setTimeout(() => goToReady(), PHASE_TIMINGS.ready),
+        ];
+
+        return () => timers.forEach(clearTimeout);
+    }, [language, hasUserMessages, goToReady]);
 
     useEffect(() =>
     {
         if (!listRef.current) return;
-
         listRef.current.scrollTop = listRef.current.scrollHeight;
-    }, [isSending, messages]);
+    }, [isSending, messages, phase]);
 
     const apiMessages = useMemo(() =>
     {
@@ -74,7 +112,6 @@ const FutureChatbot = () =>
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
-
         const content = input.trim();
         if (!content || isSending) return;
 
@@ -83,14 +120,13 @@ const FutureChatbot = () =>
         setInput('');
         setIsSending(true);
         setHasUserMessages(true);
+        setPhase('ready');
 
         try
         {
             const response = await fetch(`${backendUrl}chat`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     language,
                     messages: [...apiMessages, { role: 'user', content }],
@@ -118,58 +154,94 @@ const FutureChatbot = () =>
         }
     };
 
+    const showSkip = phase !== 'ready';
+
     return (
-        <div className="future-chatbot-shell" dir={direction}>
-            <div className="future-chatbot-welcome glitch" data-glitch={copy.welcome}>
-                {copy.welcome}
-            </div>
-
+        <div className="future-chatbot-shell" data-phase={phase} dir={direction}>
             <div className="future-chatbot-panel">
-                <div className="future-chatbot-frame" />
-                <div className="future-chatbot-header">
-                    <div>
-                        <span className="future-chatbot-kicker">{copy.status}</span>
-                        <h2>{copy.agentLabel}</h2>
-                    </div>
-                    <div className="future-chatbot-core" aria-hidden="true">
-                        <span />
-                        <span />
-                        <span />
-                    </div>
-                </div>
+                <div className="future-chatbot-grid" aria-hidden="true" />
+                <div className="future-chatbot-frame" aria-hidden="true" />
 
-                <div ref={listRef} className="future-chatbot-messages">
-                    {messages.map((message, index) => (
-                        <div
-                            key={`${message.role}-${index}`}
-                            className={`future-chatbot-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
-                        >
-                            {message.content.split('\n').map((line, lineIndex) => (
-                                <span key={lineIndex}>{line}</span>
-                            ))}
-                        </div>
-                    ))}
-                    {isSending &&
-                        <div className="future-chatbot-message is-assistant is-loading">
-                            <span>{copy.thinking}</span>
-                            <i />
-                            <i />
-                            <i />
-                        </div>
-                    }
-                </div>
-
-                <form className="future-chatbot-input" onSubmit={handleSubmit}>
-                    <input
-                        value={input}
-                        onChange={(event) => setInput(event.target.value)}
-                        placeholder={copy.placeholder}
-                        aria-label={copy.placeholder}
-                    />
-                    <button type="submit" disabled={isSending || !input.trim()}>
-                        {copy.send}
+                {showSkip && (
+                    <button
+                        type="button"
+                        className="future-chatbot-skip"
+                        onClick={goToReady}
+                    >
+                        {copy.skip}
                     </button>
-                </form>
+                )}
+
+                <div className="future-chatbot-orb" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                    <i />
+                </div>
+
+                <div className="future-chatbot-stage" data-stage="boot">
+                    <span className="future-chatbot-boot-line" />
+                    <span className="future-chatbot-boot-line" />
+                    <span className="future-chatbot-boot-line" />
+                    <span className="future-chatbot-boot-text">{copy.boot}</span>
+                </div>
+
+                <div className="future-chatbot-stage" data-stage="greet">
+                    <h2 className="future-chatbot-greet">{copy.greet}</h2>
+                </div>
+
+                <div className="future-chatbot-stage" data-stage="intro">
+                    <span className="future-chatbot-brand">{copy.brand}</span>
+                    <p className="future-chatbot-tagline">{copy.tagline}</p>
+                    <ul className="future-chatbot-pillars">
+                        {copy.pillars.map((pillar) => (
+                            <li key={pillar}>{pillar}</li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="future-chatbot-stage" data-stage="ready">
+                    <div className="future-chatbot-header">
+                        <div>
+                            <span className="future-chatbot-kicker">{copy.status}</span>
+                            <h2>{copy.agentLabel}</h2>
+                        </div>
+                    </div>
+
+                    <div ref={listRef} className="future-chatbot-messages">
+                        {messages.map((message, index) => (
+                            <div
+                                key={`${message.role}-${index}`}
+                                className={`future-chatbot-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
+                            >
+                                {message.content.split('\n').map((line, lineIndex) => (
+                                    <span key={lineIndex}>{line}</span>
+                                ))}
+                            </div>
+                        ))}
+                        {isSending && (
+                            <div className="future-chatbot-message is-assistant is-loading">
+                                <span>{copy.thinking}</span>
+                                <i />
+                                <i />
+                                <i />
+                            </div>
+                        )}
+                    </div>
+
+                    <form className="future-chatbot-input" onSubmit={handleSubmit}>
+                        <input
+                            value={input}
+                            onChange={(event) => setInput(event.target.value)}
+                            placeholder={copy.placeholder}
+                            aria-label={copy.placeholder}
+                            onFocus={goToReady}
+                        />
+                        <button type="submit" disabled={isSending || !input.trim()}>
+                            {copy.send}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
