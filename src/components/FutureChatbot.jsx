@@ -5,13 +5,11 @@ import { useLanguage } from '../i18n/LanguageContext';
 const chatCopy = {
     en: {
         skip: 'Skip',
-        boot: 'Booting Takhaial agent',
         greet: 'Welcome to Takhaial',
         brand: 'Takhaial Tech',
-        tagline: 'We turn your imagination into reality.',
-        pillars: ['Artificial Intelligence', 'AR & VR', 'Mobile Apps', 'Cinematic Ads'],
         agentLabel: 'Takhaial AI Agent',
-        initialMessage: 'I am ready. Tell me what is in your imagination and I will help shape it.',
+        initialMessage:
+            'I am ready. Tell me what is in your imagination and I will help shape it.',
         placeholder: 'Describe what you imagine...',
         send: 'Send',
         thinking: 'Thinking',
@@ -20,40 +18,34 @@ const chatCopy = {
     },
     ar: {
         skip: 'تخطي',
-        boot: 'جاري تشغيل وكيل تخيل',
         greet: 'اهلاً بك في تخيل',
         brand: 'تخيل تك',
-        tagline: 'بنحوّل خيالك إلى حقيقة.',
-        pillars: [
-            'ذكاء اصطناعي',
-            'واقع افتراضي ومعزز',
-            'تطبيقات موبايل',
-            'إعلانات سينمائية',
-        ],
         agentLabel: 'وكيل تخيل الذكي',
-        initialMessage:
-            'أنا جاهز. قوللي اللي في خيالك وأنا هساعدك تحققه.',
+        initialMessage: 'أنا جاهز. قوللي اللي في خيالك وأنا هساعدك تحققه.',
         placeholder: 'اكتب اللي في خيالك...',
         send: 'إرسال',
         thinking: 'بيفكر',
-        fallback:
-            'مش قادر أوصل للمساعد حاليا. جرّب تاني بعد لحظات.',
+        fallback: 'مش قادر أوصل للمساعد حاليا. جرّب تاني بعد لحظات.',
         status: 'متاح',
     },
 };
 
 const PHASE_TIMINGS = {
     greet: 1100,
-    intro: 2900,
-    ready: 5500,
+    inputCenter: 2700,
+    inputDescend: 3500,
+    typing: 4400,
 };
+
+const TYPE_SPEED_MS = 28;
 
 const FutureChatbot = () =>
 {
     const { direction, language } = useLanguage();
     const copy = chatCopy[language === 'ar' ? 'ar' : 'en'];
-    const [phase, setPhase] = useState('boot');
+    const [phase, setPhase] = useState('assemble');
     const [messages, setMessages] = useState([]);
+    const [typedDraft, setTypedDraft] = useState('');
     const [input, setInput] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [hasUserMessages, setHasUserMessages] = useState(false);
@@ -61,6 +53,7 @@ const FutureChatbot = () =>
 
     const goToReady = useCallback(() =>
     {
+        setTypedDraft('');
         setPhase('ready');
         setMessages((current) =>
             current.length
@@ -80,23 +73,53 @@ const FutureChatbot = () =>
             return undefined;
         }
 
-        setPhase('boot');
+        setPhase('assemble');
         setMessages([]);
+        setTypedDraft('');
 
         const timers = [
             setTimeout(() => setPhase('greet'), PHASE_TIMINGS.greet),
-            setTimeout(() => setPhase('intro'), PHASE_TIMINGS.intro),
-            setTimeout(() => goToReady(), PHASE_TIMINGS.ready),
+            setTimeout(() => setPhase('inputCenter'), PHASE_TIMINGS.inputCenter),
+            setTimeout(() => setPhase('inputDescend'), PHASE_TIMINGS.inputDescend),
+            setTimeout(() => setPhase('typing'), PHASE_TIMINGS.typing),
         ];
 
         return () => timers.forEach(clearTimeout);
-    }, [language, hasUserMessages, goToReady]);
+    }, [language, hasUserMessages]);
+
+    useEffect(() =>
+    {
+        if (phase !== 'typing') return undefined;
+
+        const fullText = copy.initialMessage;
+        let index = 0;
+        setTypedDraft('');
+
+        const interval = setInterval(() =>
+        {
+            index += 1;
+            setTypedDraft(fullText.slice(0, index));
+
+            if (index >= fullText.length)
+            {
+                clearInterval(interval);
+                setTimeout(() =>
+                {
+                    setMessages([{ role: 'assistant', content: fullText }]);
+                    setTypedDraft('');
+                    setPhase('ready');
+                }, 350);
+            }
+        }, TYPE_SPEED_MS);
+
+        return () => clearInterval(interval);
+    }, [phase, copy.initialMessage]);
 
     useEffect(() =>
     {
         if (!listRef.current) return;
         listRef.current.scrollTop = listRef.current.scrollHeight;
-    }, [isSending, messages, phase]);
+    }, [isSending, messages, typedDraft, phase]);
 
     const apiMessages = useMemo(() =>
     {
@@ -160,7 +183,21 @@ const FutureChatbot = () =>
         <div className="future-chatbot-shell" data-phase={phase} dir={direction}>
             <div className="future-chatbot-panel">
                 <div className="future-chatbot-grid" aria-hidden="true" />
-                <div className="future-chatbot-frame" aria-hidden="true" />
+                <div className="future-chatbot-glow" aria-hidden="true" />
+
+                <span className="future-chatbot-corner future-chatbot-corner--tl" aria-hidden="true" />
+                <span className="future-chatbot-corner future-chatbot-corner--tr" aria-hidden="true" />
+                <span className="future-chatbot-corner future-chatbot-corner--bl" aria-hidden="true" />
+                <span className="future-chatbot-corner future-chatbot-corner--br" aria-hidden="true" />
+
+                <svg
+                    className="future-chatbot-frame-svg"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <rect x="0.5" y="0.5" width="99" height="99" rx="2" ry="2" />
+                </svg>
 
                 {showSkip && (
                     <button
@@ -173,75 +210,66 @@ const FutureChatbot = () =>
                 )}
 
                 <div className="future-chatbot-orb" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                    <i />
+                    <span className="future-chatbot-orb-particle future-chatbot-orb-particle--1" />
+                    <span className="future-chatbot-orb-particle future-chatbot-orb-particle--2" />
+                    <span className="future-chatbot-orb-particle future-chatbot-orb-particle--3" />
+                    <span className="future-chatbot-orb-ring" />
+                    <span className="future-chatbot-orb-ring" />
+                    <span className="future-chatbot-orb-ring" />
+                    <i className="future-chatbot-orb-core" />
                 </div>
 
-                <div className="future-chatbot-stage" data-stage="boot">
-                    <span className="future-chatbot-boot-line" />
-                    <span className="future-chatbot-boot-line" />
-                    <span className="future-chatbot-boot-line" />
-                    <span className="future-chatbot-boot-text">{copy.boot}</span>
+                <div className="future-chatbot-header">
+                    <span className="future-chatbot-kicker">{copy.status}</span>
+                    <h2>{copy.agentLabel}</h2>
                 </div>
 
-                <div className="future-chatbot-stage" data-stage="greet">
-                    <h2 className="future-chatbot-greet">{copy.greet}</h2>
+                <div className="future-chatbot-greeting" aria-hidden={phase !== 'greet'}>
+                    <h2 className="future-chatbot-greet-text">{copy.greet}</h2>
+                    <span className="future-chatbot-greet-brand">{copy.brand}</span>
                 </div>
 
-                <div className="future-chatbot-stage" data-stage="intro">
-                    <span className="future-chatbot-brand">{copy.brand}</span>
-                    <p className="future-chatbot-tagline">{copy.tagline}</p>
-                    <ul className="future-chatbot-pillars">
-                        {copy.pillars.map((pillar) => (
-                            <li key={pillar}>{pillar}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="future-chatbot-stage" data-stage="ready">
-                    <div className="future-chatbot-header">
-                        <div>
-                            <span className="future-chatbot-kicker">{copy.status}</span>
-                            <h2>{copy.agentLabel}</h2>
+                <div ref={listRef} className="future-chatbot-messages">
+                    {phase === 'typing' && (
+                        <div className="future-chatbot-message is-assistant is-typing">
+                            <span>
+                                {typedDraft}
+                                <i className="future-chatbot-typing-caret" />
+                            </span>
                         </div>
-                    </div>
-
-                    <div ref={listRef} className="future-chatbot-messages">
-                        {messages.map((message, index) => (
-                            <div
-                                key={`${message.role}-${index}`}
-                                className={`future-chatbot-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
-                            >
-                                {message.content.split('\n').map((line, lineIndex) => (
-                                    <span key={lineIndex}>{line}</span>
-                                ))}
-                            </div>
-                        ))}
-                        {isSending && (
-                            <div className="future-chatbot-message is-assistant is-loading">
-                                <span>{copy.thinking}</span>
-                                <i />
-                                <i />
-                                <i />
-                            </div>
-                        )}
-                    </div>
-
-                    <form className="future-chatbot-input" onSubmit={handleSubmit}>
-                        <input
-                            value={input}
-                            onChange={(event) => setInput(event.target.value)}
-                            placeholder={copy.placeholder}
-                            aria-label={copy.placeholder}
-                            onFocus={goToReady}
-                        />
-                        <button type="submit" disabled={isSending || !input.trim()}>
-                            {copy.send}
-                        </button>
-                    </form>
+                    )}
+                    {phase !== 'typing' && messages.map((message, index) => (
+                        <div
+                            key={`${message.role}-${index}`}
+                            className={`future-chatbot-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
+                        >
+                            {message.content.split('\n').map((line, lineIndex) => (
+                                <span key={lineIndex}>{line}</span>
+                            ))}
+                        </div>
+                    ))}
+                    {isSending && (
+                        <div className="future-chatbot-message is-assistant is-loading">
+                            <span>{copy.thinking}</span>
+                            <i />
+                            <i />
+                            <i />
+                        </div>
+                    )}
                 </div>
+
+                <form className="future-chatbot-input" onSubmit={handleSubmit}>
+                    <input
+                        value={input}
+                        onChange={(event) => setInput(event.target.value)}
+                        placeholder={copy.placeholder}
+                        aria-label={copy.placeholder}
+                        onFocus={goToReady}
+                    />
+                    <button type="submit" disabled={isSending || !input.trim()}>
+                        {copy.send}
+                    </button>
+                </form>
             </div>
         </div>
     );
