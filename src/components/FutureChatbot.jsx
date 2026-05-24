@@ -5,39 +5,41 @@ import { useLanguage } from '../i18n/LanguageContext';
 const chatCopy = {
     en: {
         skip: 'Skip',
-        greet: 'Welcome to Takhaial',
+        greet: 'Welcome to Takhaial Tech',
         brand: 'Takhaial Tech',
         agentLabel: 'Takhaial AI Agent',
         initialMessage:
-            'I am ready. Tell me what is in your imagination and I will help shape it.',
-        placeholder: 'Describe what you imagine...',
+            'Welcome to Takhaial Tech. Tell me what is in your imagination, and I will help turn it into a real project.',
+        placeholder: 'Tell me what you want to build...',
         send: 'Send',
         thinking: 'Thinking',
         fallback: 'I could not reach the assistant right now. Please try again in a moment.',
         status: 'Online',
     },
     ar: {
-        skip: 'تخطي',
-        greet: 'اهلاً بك في تخيل',
-        brand: 'تخيل تك',
-        agentLabel: 'وكيل تخيل الذكي',
-        initialMessage: 'أنا جاهز. قوللي اللي في خيالك وأنا هساعدك تحققه.',
-        placeholder: 'اكتب اللي في خيالك...',
-        send: 'إرسال',
-        thinking: 'بيفكر',
-        fallback: 'مش قادر أوصل للمساعد حاليا. جرّب تاني بعد لحظات.',
-        status: 'متاح',
+        skip: '\u062a\u062e\u0637\u064a',
+        greet: '\u0623\u0647\u0644\u0627\u064b \u0628\u0643 \u0641\u064a \u062a\u062e\u064a\u0644 \u062a\u0643',
+        brand: '\u062a\u062e\u064a\u0644 \u062a\u0643',
+        agentLabel: '\u0648\u0643\u064a\u0644 \u062a\u062e\u064a\u0644 \u0627\u0644\u0630\u0643\u064a',
+        initialMessage:
+            '\u0627\u0647\u0644\u0627 \u0628\u064a\u0643 \u0641\u064a \u062a\u062e\u064a\u0644 \u062a\u0643. \u0642\u0648\u0644\u0646\u0627 \u0627\u064a\u0647 \u0627\u0644\u0644\u064a \u0641\u064a \u062e\u064a\u0627\u0644\u0643 \u0648\u0627\u062d\u0646\u0627 \u0647\u0646\u0633\u0627\u0639\u062f\u0643 \u0646\u062d\u0648\u0644\u0647 \u0644\u0645\u0634\u0631\u0648\u0639 \u062d\u0642\u064a\u0642\u064a.',
+        placeholder: '\u0642\u0648\u0644\u0646\u0627 \u0639\u0627\u064a\u0632 \u062a\u0628\u0646\u064a \u0627\u064a\u0647...',
+        send: '\u0625\u0631\u0633\u0627\u0644',
+        thinking: '\u0628\u064a\u0641\u0643\u0631',
+        fallback:
+            '\u0645\u0634 \u0642\u0627\u062f\u0631 \u0623\u0648\u0635\u0644 \u0644\u0644\u0645\u0633\u0627\u0639\u062f \u062d\u0627\u0644\u064a\u0627. \u062c\u0631\u0628 \u062a\u0627\u0646\u064a \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a.',
+        status: '\u0645\u062a\u0627\u062d',
     },
 };
 
 const PHASE_TIMINGS = {
-    greet: 1100,
-    inputCenter: 2700,
-    inputDescend: 3500,
-    typing: 4400,
+    greet: 850,
+    inputCenter: 1950,
+    inputDescend: 2600,
+    typing: 3300,
 };
 
-const TYPE_SPEED_MS = 28;
+const TYPE_SPEED_MS = 22;
 
 const FutureChatbot = () =>
 {
@@ -108,7 +110,7 @@ const FutureChatbot = () =>
                     setMessages([{ role: 'assistant', content: fullText }]);
                     setTypedDraft('');
                     setPhase('ready');
-                }, 350);
+                }, 260);
             }
         }, TYPE_SPEED_MS);
 
@@ -138,8 +140,7 @@ const FutureChatbot = () =>
         const content = input.trim();
         if (!content || isSending) return;
 
-        const nextMessages = [...messages, { role: 'user', content }];
-        setMessages(nextMessages);
+        setMessages((currentMessages) => [...currentMessages, { role: 'user', content }]);
         setInput('');
         setIsSending(true);
         setHasUserMessages(true);
