@@ -71,7 +71,7 @@ const Navbar = (props) =>
             <div className="w-full h-[75px] fixed top-0 shadow-lg shadow-[#000]/50 backdrop-blur-md z-50 " dir="ltr">
                 <div className={'w-full h-full relative flex flex-row items-center justify-between m-auto px-[16px] md:px-[24px] '} dir="ltr">
                     <a href="#section_1" className="flex flex-shrink-0 items-center">
-                        <img src={logo} alt="Takhaial" width={200} height={40} className="cursor-pointer hover:animate-slowspin max-w-[150px] md:max-w-[200px]" />
+                        <img src={logo} alt="Takhaial" width={170} height={44} className="cursor-pointer hover:animate-slowspin max-w-[125px] md:max-w-[170px]" />
                     </a>
 
 
@@ -107,7 +107,7 @@ const Navbar = (props) =>
             <CustomModal isOpen={!!menu} onClose={() => setMenu(false)} onOpenChange={() => setMenu(false)} >
                 <div style={{ padding: "15px 20px" }}>
                     <a href="#section_1" className="m-2" onClick={() => setMenu(false)}>
-                        <img src={logo} alt="Takhaial" width={120} height={20} className="cursor-pointer hover:animate-slowspin" />
+                        <img src={logo} alt="Takhaial" width={105} height={28} className="cursor-pointer hover:animate-slowspin" />
                     </a>
 
                     <ul className={'m-0 w-full grid'} >

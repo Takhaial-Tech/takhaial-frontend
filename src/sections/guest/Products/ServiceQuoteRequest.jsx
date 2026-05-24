@@ -72,7 +72,7 @@ const ServiceQuoteRequest = () =>
             <div className="relative z-10 px-[20px] py-[28px] md:px-10">
                 <header className="flex items-center justify-between gap-4 mb-10">
                     <Link to="/#section_1">
-                        <img src={logo} alt="Takhaial" width={190} height={40} />
+                        <img src={logo} alt="Takhaial" width={170} height={44} />
                     </Link>
                     <div className="flex items-center gap-3">
                         <Link
