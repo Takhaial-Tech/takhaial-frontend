@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { backendUrl } from '../config';
 import { useLanguage } from '../i18n/LanguageContext';
 
+const MAX_CHAT_INPUT_LENGTH = 700;
+
 const chatCopy = {
     en: {
         skip: 'Skip',
@@ -14,6 +16,7 @@ const chatCopy = {
         send: 'Send',
         thinking: 'Thinking',
         fallback: 'I could not reach the assistant right now. Please try again in a moment.',
+        inputTooLong: `Please keep each message under ${MAX_CHAT_INPUT_LENGTH} characters.`,
         status: 'Online',
     },
     ar: {
@@ -28,6 +31,7 @@ const chatCopy = {
         thinking: '\u0628\u064a\u0641\u0643\u0631',
         fallback:
             '\u0645\u0634 \u0642\u0627\u062f\u0631 \u0623\u0648\u0635\u0644 \u0644\u0644\u0645\u0633\u0627\u0639\u062f \u062d\u0627\u0644\u064a\u0627. \u062c\u0631\u0628 \u062a\u0627\u0646\u064a \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a.',
+        inputTooLong: `\u0645\u0646 \u0641\u0636\u0644\u0643 \u062e\u0644\u064a \u0643\u0644 \u0631\u0633\u0627\u0644\u0629 \u0623\u0642\u0644 \u0645\u0646 ${MAX_CHAT_INPUT_LENGTH} \u062d\u0631\u0641.`,
         status: '\u0645\u062a\u0627\u062d',
     },
 };
@@ -139,6 +143,17 @@ const FutureChatbot = () =>
         event.preventDefault();
         const content = input.trim();
         if (!content || isSending) return;
+
+        if (content.length > MAX_CHAT_INPUT_LENGTH)
+        {
+            setHasUserMessages(true);
+            setPhase('ready');
+            setMessages((currentMessages) => [
+                ...currentMessages,
+                { role: 'assistant', content: copy.inputTooLong },
+            ]);
+            return;
+        }
 
         setMessages((currentMessages) => [...currentMessages, { role: 'user', content }]);
         setInput('');
@@ -265,6 +280,7 @@ const FutureChatbot = () =>
                         onChange={(event) => setInput(event.target.value)}
                         placeholder={copy.placeholder}
                         aria-label={copy.placeholder}
+                        maxLength={MAX_CHAT_INPUT_LENGTH}
                         onFocus={goToReady}
                     />
                     <button type="submit" disabled={isSending || !input.trim()}>
