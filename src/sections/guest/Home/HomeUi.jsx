@@ -3,13 +3,13 @@ import defaultProfilePdf from '../../../assets/documents/companyProfile.pdf'
 import { useEffect, useRef } from 'react';
 import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
-import LoadingScreen from '../../../components/LoadingScreen';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
+import FutureChatbot from '../../../components/FutureChatbot';
 
 const HomeUi = (props) =>
 {
-    const { isLoadingGetSection, data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
+    const { data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
     const { language, isArabic, t } = useLanguage();
     const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
     const title = getLocalizedField(data, 'title', language);
@@ -25,7 +25,6 @@ const HomeUi = (props) =>
     return (
         <section id="section_1" className={` min-h-[100vh] relative text-white flex justify-center items-center px-[20px] bg-[#000] z-[1] relative py-[60px] home ${isAdmin ? 'pt-[10rem] ' : "pt-[6rem] "}`} >
             <div className="bg-gradient-radial absolute top-0 left-0 right-0 bottom-0 z-[0]" />
-            {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
             {isAdmin &&
                 <EditSection
                     isOpenEditModal={isOpenEditModal}
@@ -62,7 +61,9 @@ const HomeUi = (props) =>
                 </EditSection>
             }
 
-            <div className="md:container md:mx-auto self-end z-[10]">
+            <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col items-center justify-end gap-8">
+                <FutureChatbot />
+
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
                     <h1 className={`grid-cols-1 leading-7 text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
                         {(title || '').split(' ').map((a, k) =>

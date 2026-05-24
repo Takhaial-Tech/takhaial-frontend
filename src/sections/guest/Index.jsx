@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useCallback } from 'react';
 import Navbar from '../../components/Navbar';
 import LoadingScreen from '../../components/LoadingScreen';
 import MediaCoverage from './MediaCoverage/MediaCoverage';
@@ -16,6 +16,7 @@ const Index = () =>
 {
     const [introLoaded, setIntroLoaded] = useState(false);
     const [step, setStep] = useState(0);
+    const handleIntroLoaded = useCallback(() => setIntroLoaded(true), []);
 
     useEffect(() =>
     {
@@ -29,7 +30,7 @@ const Index = () =>
     return (
         <>
             <Suspense fallback={<LoadingScreen />}>
-                <Intro onIntroLoaded={() => setIntroLoaded(true)} />
+                <Intro onIntroLoaded={handleIntroLoaded} />
             </Suspense>
             <Navbar />
             {introLoaded && step >= 1 && (

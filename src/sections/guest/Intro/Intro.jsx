@@ -10,16 +10,22 @@ const Intro = ({ onIntroLoaded }) =>
 
     useEffect(() =>
     {
-        const handleOnPlay = () =>
+        let introStarted = false;
+        let revealTimer;
+        let endTimer;
+
+        const startIntro = () =>
         {
+            if (introStarted) return;
+            introStarted = true;
 
             onIntroLoaded();
-            setTimeout(() =>
+            revealTimer = setTimeout(() =>
             {
-                document.getElementById('content').classList.remove('opacity-0');
+                document.getElementById('content')?.classList.remove('opacity-0');
             }, 5000);
 
-            setTimeout(() =>
+            endTimer = setTimeout(() =>
             {
                 setIntroEnd(true)
             }, 7000);
@@ -29,14 +35,23 @@ const Intro = ({ onIntroLoaded }) =>
 
         if (videoElement)
         {
-            videoElement.addEventListener('play', handleOnPlay);
+            videoElement.addEventListener('play', startIntro);
+            videoElement.addEventListener('loadeddata', startIntro);
+            videoElement.play().catch(startIntro);
         }
+
+        const fallbackTimer = setTimeout(startIntro, 1600);
 
         return () =>
         {
+            clearTimeout(fallbackTimer);
+            clearTimeout(revealTimer);
+            clearTimeout(endTimer);
+
             if (videoElement)
             {
-                videoElement.removeEventListener('play', handleOnPlay);
+                videoElement.removeEventListener('play', startIntro);
+                videoElement.removeEventListener('loadeddata', startIntro);
             }
         };
     }, [onIntroLoaded]);
