@@ -61,7 +61,7 @@ const ProductsUi = (props) =>
 
                             return (
                             <div key={key} className={'relative md:mb-0 mb-5 '}>
-                                <div className="flex h-full flex-col border border-solid border-[red] rounded-xl bg-[#000]/60 transition-all duration-500 hover:scale-105 hover:bg-[#000] hover:shadow-3xl group/item" key={key} >
+                                <div className="flex h-full min-h-[462px] flex-col overflow-hidden rounded-xl border border-solid border-[#ef4444]/70 bg-[#05070d]/75 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition-[transform,border-color,background,box-shadow] duration-300 ease-out hover:scale-[1.02] hover:border-[#f87171] hover:bg-[#070a12]/95 hover:shadow-[0_18px_52px_rgba(239,68,68,0.16)] group/item" key={key} >
                                     {isAdmin &&
                                         <EditSection
                                             isItem={true}
@@ -117,20 +117,20 @@ const ProductsUi = (props) =>
                                             {localizedService.title}
                                         </h1>
                                     </div>
-                                    <p className="p-4 pt-0 group-hover/item:text-base transition-all duration-500 text-sm leading-relaxed text-[#ccc] overflow-hidden">
+                                    <p className="p-4 pt-0 text-sm leading-relaxed text-[#d1d5db] transition-colors duration-300 group-hover/item:text-white overflow-hidden">
                                         {localizedService.summary}
                                     </p>
 
                                     <div className="flex mt-auto">
                                         <Link
                                             to={`/services/${service.slug}`}
-                                            className={`flex w-full transition-all duration-500 ${hasDemoVideo ? 'rounded-bl-xl' : 'rounded-b-xl'} px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2 whitespace-nowrap`}>
+                                            className={`flex min-h-[52px] w-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#ef4444] ${hasDemoVideo ? 'rounded-bl-xl' : 'rounded-b-xl'} px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#202020] hover:bg-[#2a1010] hover:text-white justify-center items-center gap-2 whitespace-nowrap`}>
                                             {t('Read More')}  <img alt={''} width={15} height={15} src={quoteIcon} />
                                         </Link>
                                         {hasDemoVideo &&
                                             <button
                                                 onClick={() => setActiveIntro(service)}
-                                                className="flex w-full transition-all duration-500 rounded-br-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626] justify-center items-center gap-2 whitespace-nowrap">
+                                                className="flex min-h-[52px] w-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#ef4444] rounded-br-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#202020] hover:bg-[#2a1010] hover:text-white justify-center items-center gap-2 whitespace-nowrap">
                                                 {t('Watch Demo')}  <img alt={''} width={15} height={15} src={watchIcon} />
                                             </button>
                                         }
@@ -159,7 +159,7 @@ const ProductsUi = (props) =>
                 contentLabel={t("Demo Videos")}
             >
                 {activeIntroVideo ? (
-                    <div className={`grid gap-4 p-4 ${activeIntroVideos.length > 1 ? 'md:grid-cols-[220px_minmax(0,1fr)]' : ''}`}>
+                    <div className={`grid gap-5 p-5 md:p-6 ${activeIntroVideos.length > 1 ? 'md:grid-cols-[220px_minmax(0,1fr)]' : ''}`}>
                         {activeIntroVideos.length > 1 &&
                             <div className="grid content-start gap-2">
                                 {activeIntroVideos.map((demoVideo, index) => (

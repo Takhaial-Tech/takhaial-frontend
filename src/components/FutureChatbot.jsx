@@ -312,7 +312,7 @@ const FutureChatbot = () =>
                             className={`future-chatbot-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
                         >
                             {message.content.split('\n').map((line, lineIndex) => (
-                                <span key={lineIndex}>{line}</span>
+                                <span key={lineIndex} dir="auto">{line}</span>
                             ))}
                         </div>
                     ))}

@@ -20,7 +20,7 @@ const Sector = (props) =>
 
     return (
         <div ref={setRef} className="relative mb-[3rem] h-full">
-            <div className={`flex h-full min-h-[430px] flex-col overflow-hidden border border-solid border-[red] p-5 rounded-xl transition-all duration-500 relative group/item ${isVisible ? 'shadow-3xl bg-[#000] ' : ''}`}>
+            <div className={`flex h-full min-h-[460px] flex-col overflow-hidden rounded-xl border border-solid border-[#ef4444]/70 bg-[#05070d]/70 p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition-[transform,border-color,background,box-shadow] duration-300 ease-out relative group/item ${isVisible ? 'shadow-[0_18px_52px_rgba(239,68,68,0.14)] bg-[#070a12]/95 border-[#f87171] ' : ''}`}>
                 {isAdmin &&
                     <EditSection
                         isItem={true}
@@ -64,14 +64,14 @@ const Sector = (props) =>
                 <div className="flex h-[88px] items-center pr-[86px]">
                     <img className="h-[76px] max-w-[96px] w-auto object-contain" alt="" src={iconSrc} />
                 </div>
-                <h1 className="min-h-[48px] font-bold text-larg leading-tight glitch" data-glitch={title}>{title}</h1>
+                <h1 className="min-h-[52px] font-bold text-larg leading-tight glitch" data-glitch={title}>{title}</h1>
                 <p
-                    className={`my-[10px] flex-1 overflow-hidden text-xs leading-relaxed transition-all duration-500 ${isVisible ? 'opacity-[1]' : 'opacity-0'}`}
-                    style={{ display: '-webkit-box', WebkitLineClamp: 12, WebkitBoxOrient: 'vertical' }}
+                    className={`my-[10px] flex-1 overflow-hidden text-sm leading-relaxed text-[#d1d5db] transition-opacity duration-500 ${isVisible ? 'opacity-[1]' : 'opacity-0'}`}
+                    style={{ display: '-webkit-box', WebkitLineClamp: 11, WebkitBoxOrient: 'vertical' }}
                 >
                     {disc}
                 </p>
-                <button onClick={() => setModal(ser)} className={`mt-auto w-fit rounded-xl border border-solid border-[#ef4444] bg-[#262626] px-[20px] py-[10px] text-[#ef4444] transition-all duration-500 ${isVisible ? 'opacity-[1]' : 'opacity-0'}`}>
+                <button onClick={() => setModal(ser)} className={`mt-auto min-h-[44px] w-fit rounded-xl border border-solid border-[#ef4444] bg-[#202020] px-[20px] py-[10px] text-[#ef4444] transition-all duration-300 hover:bg-[#2a1010] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef4444] ${isVisible ? 'opacity-[1]' : 'opacity-0'}`}>
                     {t('Watch Demo')}
                 </button>
                 {isAdmin && <DeleteItem className="absolute bottom-[18px] right-[20px] mt-0" sectionNumber={6} itemId={ser?._id} />}

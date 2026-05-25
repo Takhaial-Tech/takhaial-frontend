@@ -72,7 +72,7 @@ const LanguageSwitcher = ({ className = '' }) =>
             <button
                 type="button"
                 aria-label={t('Language')}
-                className="flex items-center justify-center gap-2 h-[42px] min-w-[42px] rounded-xl border border-solid border-[#ef4444] bg-[#262626] px-3 text-[#ef4444] transition-all duration-500 hover:bg-[#000]"
+                className="flex items-center justify-center gap-2 h-[42px] min-w-[42px] rounded-xl border border-solid border-[#ef4444] bg-[#262626] px-3 text-[#ef4444] transition-all duration-300 hover:bg-[#111] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef4444]"
                 onClick={() => setIsOpen((value) => !value)}
             >
                 <LanguageIcon />
@@ -85,7 +85,7 @@ const LanguageSwitcher = ({ className = '' }) =>
                         <button
                             key={option.code}
                             type="button"
-                            className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-all duration-300 hover:bg-[#262626] ${language === option.code ? 'text-[#ef4444]' : 'text-white'}`}
+                            className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-all duration-300 hover:bg-[#262626] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#ef4444] ${language === option.code ? 'text-[#ef4444]' : 'text-white'}`}
                             onClick={() =>
                             {
                                 setLanguage(option.code);

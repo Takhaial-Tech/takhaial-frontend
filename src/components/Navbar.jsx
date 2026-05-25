@@ -52,9 +52,10 @@ const Navbar = (props) =>
         const bar = document.getElementById('nav__track');
         if (bar)
         {
+            const clampedProgress = Math.max(0, Math.min(100, progress));
             bar.style.left = isRtl ? 'auto' : '0';
             bar.style.right = isRtl ? '0' : 'auto';
-            bar.style.width = (progress ) + '%';
+            bar.style.width = `${clampedProgress}%`;
         }
     }, [isRtl]);
 
@@ -75,14 +76,14 @@ const Navbar = (props) =>
                     </a>
 
 
-                    <nav className="lg:block hidden absolute left-1/2 top-[12px] w-[min(620px,calc(100vw-500px))] min-w-[560px] -translate-x-1/2 text-white z-10 h-[60px]" dir={direction}>
+                    <nav className="lg:block hidden absolute left-1/2 top-[12px] w-[min(660px,calc(100vw-500px))] min-w-[560px] -translate-x-1/2 text-white z-10 h-[60px]" dir={direction}>
 
 
-                        <small id="nav__track" className={`z-10 absolute top-[18px] ${isRtl ? 'right-[0] before:right-[0]' : 'left-[0] before:left-[0]'} h-[0.3rem]  bg-[red] bottom-0 before:bg-[red] before:top-[-4px]  before:z-50 before:h-[5.5px] before:content before:absolute before:w-[0] rounded-[40px]`}></small>
+                        <small id="nav__track" className={`z-10 absolute top-[18px] ${isRtl ? 'right-[0] before:right-[0]' : 'left-[0] before:left-[0]'} h-[0.3rem] bg-[#ef4444] bottom-0 before:bg-[#ef4444] before:top-[-4px] before:z-50 before:h-[5.5px] before:content before:absolute before:w-[0] rounded-[40px] transition-[width] duration-150 ease-out`}></small>
                         <div className="relative w-full pb-[0px] px-[0px] pt-[18px] h-[60px]" data-draggable>
-                            <ul className="justify-between list-img-none flex content-center m-[0px] p-[0px] after:content after:absolute after:top-[18px] after:left-[0] after:w-[100%] after:h-[0.25rem] after:z-[-1] after:bg-[#fff] after:cursor-pointer after:rounded-[40px]">
+                            <ul className="justify-between list-img-none flex content-center m-[0px] p-[0px] after:content after:absolute after:top-[18px] after:left-[0] after:w-[100%] after:h-[0.25rem] after:z-[-1] after:bg-[#f5f5f5] after:cursor-pointer after:rounded-[40px]">
                                 {menuLinks.map((a, k) =>
-                                    <li key={k}> <a href={"#" + a.url} className={`${!k || k === menuLinks.length - 1? 'w-[5rem]' : 'w-[5rem]' } after:transform text-xs after:content after:absolute after:top-0 dots-nav after:w-[0.65rem] after:h-[0.65rem] after:bg-[red] after:rounded-full  relative block pt-[1.25rem] px-[0.5rem] pb-[0.5rem] text-center text-white no-underline `}
+                                    <li key={k}> <a href={"#" + a.url} className={`${!k || k === menuLinks.length - 1? 'w-[5rem]' : 'w-[5rem]' } after:transform text-xs after:content after:absolute after:top-0 dots-nav after:w-[0.65rem] after:h-[0.65rem] after:bg-[#ef4444] after:rounded-full relative block pt-[1.25rem] px-[0.5rem] pb-[0.5rem] text-center text-white no-underline transition-colors duration-200 hover:text-[#ef4444] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef4444]`}
                                         style={{ backgroundColor:"" }}
                                     data-link><span dir={direction}>{t(a.name)}</span></a> </li>
                                 )}

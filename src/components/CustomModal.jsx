@@ -32,8 +32,8 @@ const CustomModal = (props) =>
             isOpen={isOpen}
             onRequestClose={() => { allowScroll(); onClose(); }}
             contentLabel={contentLabel}
-            className="focus:outline-none bg-[#000] dark:bg-[#000] text-[#fff] shadow-4xl m-10 rounded-xl relative"
-            overlayClassName="fixed inset-0  bg-opacity-50 z-[2000] flex items-center justify-center backdrop-blur"
+            className="focus:outline-none bg-[#050505] dark:bg-[#050505] text-[#f5f5f5] shadow-4xl m-4 md:m-10 max-h-[calc(100dvh-32px)] max-w-[calc(100vw-32px)] overflow-auto rounded-xl border border-solid border-white/10 relative"
+            overlayClassName="fixed inset-0 bg-black/65 z-[2000] flex items-center justify-center backdrop-blur"
             bodyOpenClassName="overflow-hidden"
         >
             <div>
@@ -41,7 +41,7 @@ const CustomModal = (props) =>
                 <div className='w-full text-right' dir="ltr">
                     <button
                         onClick={onClose}
-                        className="border-[#ef4444] border border-solid hover:bg-white/5 active:bg-white/10 z-[9] bg-[#000]  rounded-none text-[2rem] rounded-tr-lg rounded-bl-lg"                    >
+                        className="border-[#ef4444] border border-solid hover:bg-white/5 active:bg-white/10 z-[9] bg-[#050505] rounded-none text-[2rem] rounded-tr-lg rounded-bl-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef4444]"                    >
                         <svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="1em"><path d="M18 6L6 18M6 6l12 12"></path></svg>
                     </button>
                 </div>
