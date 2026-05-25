@@ -1,10 +1,10 @@
 import ctaicon from '../../../assets/icons/ctaicon.svg'
 import contact_img from '../../../assets/icons/callicon.svg'
 import mailicon from '../../../assets/icons/mailicon.svg'
-import wicon from '../../../assets/icons/wicon.svg'
 import cta from '../../../assets/icons/cta.svg'
 import contactVideo from '../../../assets/videos/contact.mp4'
 import QuickActions from '../../../components/QuickActions'
+import FutureChatbot from '../../../components/FutureChatbot'
 import { FormikContainer, Input } from '../../../components/inputs'
 import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
@@ -13,7 +13,6 @@ import { useState } from 'react'
 import Btn from '../../../components/Btn'
 import EditSection from '../../../components/EditSection'
 import { contactSettingsInputs } from './contactSettingsInputs'
-import { buildWhatsappHref } from '../../../site-settings'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { getLocalizedField } from '../../../i18n/localizedContent'
 import CompatibleVideo from '../../../components/CompatibleVideo'
@@ -133,10 +132,10 @@ const ContactUi = (props) =>
             </section>
 
 
-            <a target='__blank' href={buildWhatsappHref(settings.whatsapp)} className="overflow-visible	text-center w-fit h-fit bg-[#25d366] rounded-full content-center z-10 fixed left-5 bottom-5" >
-                <img alt="" width={55} height={55} src={wicon} />
-            </a>
-            <div className={'quick-action-floating rounded-2xl fixed z-40 right-[20px] w-[210px] max-w-[calc(100vw-40px)] bg-[#050505]/95 border-[#ef4444] border border-solid p-2 shadow-[0_18px_48px_rgba(0,0,0,0.42)]'} style={{ bottom: 'max(20px, env(safe-area-inset-bottom))' }} >
+            <div className="future-chatbot-anchor future-chatbot-anchor--floating">
+                <FutureChatbot />
+            </div>
+            <div className={'quick-action-floating rounded-2xl fixed z-40 right-[20px] w-[300px] max-w-[calc(100vw-40px)] bg-[#050505]/95 border-[#ef4444] border border-solid p-2 shadow-[0_18px_48px_rgba(0,0,0,0.42)]'} style={{ bottom: 'max(20px, env(safe-area-inset-bottom))' }} >
                 <h2 className="quick-action-title text-white mb-2 px-1">{t('Quick action')}</h2>
 
                 {isAdmin ? <Btn className={"w-full "} type="button" onClick={logout}>{t('Logout')}</Btn> : <QuickActions />}

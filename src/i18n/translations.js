@@ -29,6 +29,7 @@ export const arabicTranslations = {
     'Contact Us': 'تواصل معنا',
     'We look forward to learning more about you and how we can help you achieve your goals!': 'نتطلع لمعرفة المزيد عنك وكيف يمكننا مساعدتك في تحقيق أهدافك.',
     Call: 'اتصال',
+    WhatsApp: 'واتساب',
     Email: 'البريد الإلكتروني',
     Name: 'الاسم',
     Phone: 'رقم الهاتف',

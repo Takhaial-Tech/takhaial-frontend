@@ -140,6 +140,18 @@ const FutureChatbot = () =>
         listRef.current.scrollTop = listRef.current.scrollHeight;
     }, [isSending, messages, typedDraft, phase]);
 
+    useEffect(() =>
+    {
+        if (!isOpen) return undefined;
+
+        document.body.classList.add('future-chatbot-body-lock');
+
+        return () =>
+        {
+            document.body.classList.remove('future-chatbot-body-lock');
+        };
+    }, [isOpen]);
+
     const apiMessages = useMemo(() =>
     {
         return messages
@@ -297,7 +309,12 @@ const FutureChatbot = () =>
                     <span className="future-chatbot-greet-brand">{copy.brand}</span>
                 </div>
 
-                <div ref={listRef} className="future-chatbot-messages">
+                <div
+                    ref={listRef}
+                    className="future-chatbot-messages"
+                    onTouchMove={(event) => event.stopPropagation()}
+                    onWheel={(event) => event.stopPropagation()}
+                >
                     {phase === 'typing' && (
                         <div className="future-chatbot-message is-assistant is-typing">
                             <span>

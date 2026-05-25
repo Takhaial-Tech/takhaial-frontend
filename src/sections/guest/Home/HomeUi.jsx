@@ -4,7 +4,6 @@ import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
-import FutureChatbot from '../../../components/FutureChatbot';
 import CompatibleVideo from '../../../components/CompatibleVideo';
 
 const HomeUi = (props) =>
@@ -55,10 +54,6 @@ const HomeUi = (props) =>
             }
 
             <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col items-center justify-end gap-8">
-                <div className="future-chatbot-anchor">
-                    <FutureChatbot />
-                </div>
-
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
                     <h1 className={`grid-cols-1 leading-7 text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
                         {(title || '').split(' ').map((a, k) =>

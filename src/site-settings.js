@@ -34,6 +34,6 @@ export const buildWhatsappHref = (phone) =>
 {
     if (!phone) return '#';
 
-    const cleanPhone = String(phone).replace(/[^\d+]/g, '');
+    const cleanPhone = String(phone).replace(/\D/g, '');
     return `https://wa.me/${cleanPhone}`;
 }
