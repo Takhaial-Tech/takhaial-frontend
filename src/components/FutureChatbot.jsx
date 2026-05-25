@@ -17,6 +17,8 @@ const chatCopy = {
         thinking: 'Thinking',
         fallback: 'I could not reach the assistant right now. Please try again in a moment.',
         inputTooLong: `Please keep each message under ${MAX_CHAT_INPUT_LENGTH} characters.`,
+        openLabel: 'Open Takhaial AI chat',
+        closeLabel: 'Close chat',
         status: 'Online',
     },
     ar: {
@@ -32,6 +34,8 @@ const chatCopy = {
         fallback:
             '\u0645\u0634 \u0642\u0627\u062f\u0631 \u0623\u0648\u0635\u0644 \u0644\u0644\u0645\u0633\u0627\u0639\u062f \u062d\u0627\u0644\u064a\u0627. \u062c\u0631\u0628 \u062a\u0627\u0646\u064a \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a.',
         inputTooLong: `\u0645\u0646 \u0641\u0636\u0644\u0643 \u062e\u0644\u064a \u0643\u0644 \u0631\u0633\u0627\u0644\u0629 \u0623\u0642\u0644 \u0645\u0646 ${MAX_CHAT_INPUT_LENGTH} \u062d\u0631\u0641.`,
+        openLabel: '\u0627\u0641\u062a\u062d \u0634\u0627\u062a \u062a\u062e\u064a\u0644 \u0627\u0644\u0630\u0643\u064a',
+        closeLabel: '\u0625\u063a\u0644\u0627\u0642 \u0627\u0644\u0634\u0627\u062a',
         status: '\u0645\u062a\u0627\u062d',
     },
 };
@@ -49,7 +53,8 @@ const FutureChatbot = () =>
 {
     const { direction, language } = useLanguage();
     const copy = chatCopy[language === 'ar' ? 'ar' : 'en'];
-    const [phase, setPhase] = useState('assemble');
+    const [isOpen, setIsOpen] = useState(false);
+    const [phase, setPhase] = useState('closed');
     const [messages, setMessages] = useState([]);
     const [typedDraft, setTypedDraft] = useState('');
     const [input, setInput] = useState('');
@@ -59,6 +64,7 @@ const FutureChatbot = () =>
 
     const goToReady = useCallback(() =>
     {
+        setIsOpen(true);
         setTypedDraft('');
         setPhase('ready');
         setMessages((current) =>
@@ -73,6 +79,13 @@ const FutureChatbot = () =>
 
     useEffect(() =>
     {
+        if (!isOpen)
+        {
+            setPhase('closed');
+            setTypedDraft('');
+            return undefined;
+        }
+
         if (hasUserMessages)
         {
             setPhase('ready');
@@ -91,7 +104,7 @@ const FutureChatbot = () =>
         ];
 
         return () => timers.forEach(clearTimeout);
-    }, [language, hasUserMessages]);
+    }, [isOpen, language, hasUserMessages]);
 
     useEffect(() =>
     {
@@ -193,11 +206,41 @@ const FutureChatbot = () =>
         }
     };
 
-    const showSkip = phase !== 'ready';
+    const openChat = useCallback(() =>
+    {
+        setIsOpen(true);
+        setPhase(hasUserMessages || messages.length ? 'ready' : 'assemble');
+    }, [hasUserMessages, messages.length]);
+
+    const closeChat = useCallback(() =>
+    {
+        setIsOpen(false);
+        setTypedDraft('');
+    }, []);
+
+    const showSkip = isOpen && phase !== 'ready';
 
     return (
-        <div className="future-chatbot-shell" data-phase={phase} dir={direction}>
-            <div className="future-chatbot-panel">
+        <div className={`future-chatbot-shell ${isOpen ? 'is-open' : 'is-closed'}`} data-phase={phase} dir={direction}>
+            <button
+                type="button"
+                className="future-chatbot-launcher"
+                onClick={openChat}
+                aria-label={copy.openLabel}
+                aria-expanded={isOpen}
+            >
+                <span className="future-chatbot-launcher-aura" aria-hidden="true" />
+                <span className="future-chatbot-launcher-core" aria-hidden="true">
+                    <svg viewBox="0 0 28 28" focusable="false" aria-hidden="true">
+                        <path d="M7.2 8.4h13.6a3.2 3.2 0 0 1 3.2 3.2v4.8a3.2 3.2 0 0 1-3.2 3.2h-6.2l-4.5 3.3v-3.3H7.2A3.2 3.2 0 0 1 4 16.4v-4.8a3.2 3.2 0 0 1 3.2-3.2Z" />
+                        <path d="M9.5 13.8h.1M14 13.8h.1M18.5 13.8h.1" />
+                    </svg>
+                </span>
+            </button>
+
+            {isOpen && (
+            <div className="future-chatbot-popover">
+                <div className="future-chatbot-panel">
                 <div className="future-chatbot-grid" aria-hidden="true" />
                 <div className="future-chatbot-glow" aria-hidden="true" />
 
@@ -214,6 +257,15 @@ const FutureChatbot = () =>
                 >
                     <rect x="0.5" y="0.5" width="99" height="99" rx="2" ry="2" />
                 </svg>
+
+                <button
+                    type="button"
+                    className="future-chatbot-close"
+                    onClick={closeChat}
+                    aria-label={copy.closeLabel}
+                >
+                    <span aria-hidden="true" />
+                </button>
 
                 {showSkip && (
                     <button
@@ -287,7 +339,9 @@ const FutureChatbot = () =>
                         {copy.send}
                     </button>
                 </form>
+                </div>
             </div>
+            )}
         </div>
     );
 };
