@@ -9,13 +9,14 @@ import { FormikContainer, Input } from '../../../components/inputs'
 import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
 import { contactValidationSchema } from './contactValidationSchema'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Btn from '../../../components/Btn'
 import EditSection from '../../../components/EditSection'
 import { contactSettingsInputs } from './contactSettingsInputs'
 import { buildWhatsappHref } from '../../../site-settings'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { getLocalizedField } from '../../../i18n/localizedContent'
+import CompatibleVideo from '../../../components/CompatibleVideo'
 
 const ContactUi = (props) =>
 {
@@ -24,13 +25,6 @@ const ContactUi = (props) =>
     const title = getLocalizedField(settings, 'contactTitle', language);
     const desc = getLocalizedField(settings, 'contactDesc', language);
     const [isOpenEditSettingsModal, setIsOpenEditSettingsModal] = useState(false);
-    // enforce video to play 
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef.current) videoRef.current.play();
-    }, [])
-
     return (
         <>
             <section id="section_9" className={' mb-20 md:mb-0 min-h-screen relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#020815] z-[1] grid'} >
@@ -127,15 +121,13 @@ const ContactUi = (props) =>
                     )}
                 </ul>
                 <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center gap-1" > &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> {t('All rights reserved.')} </p>
-                {<video
-                    ref={videoRef}
-                    webkit-playsinline="true"
-                    playsInline={true}
+                {<CompatibleVideo
                     src={contactVideo}
-                    type="video/mp4"
                     autoPlay
                     muted
                     loop
+                    controls={false}
+                    preload="auto"
                     className=" absolute  left-0 z-[-1] top-[0] h-[100vh] bottom-[0] w-full  object-cover" />
                 }
             </section>

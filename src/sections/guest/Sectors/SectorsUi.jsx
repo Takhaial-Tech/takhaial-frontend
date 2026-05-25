@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomModal from '../../../components/CustomModal';
+import CompatibleVideo from '../../../components/CompatibleVideo';
 import Sector from './Sector';
 import { mediaUrl } from '../../../config';
 import LoadingScreen from '../../../components/LoadingScreen';
@@ -97,9 +98,13 @@ const SectorsUi = (props) =>
 
                     return (
                     <div key={key} className={`modal-video relative inline-table  grid-cols-2 gap-6 flex items-center pb-[40px] ${ser?.video ? 'md:grid' : "max-w-[400px]"}`} >
-                        {ser?.video && <video controls autoPlay style={{ borderRadius: "0.75rem", width: "100%" }}>
-                            <source src={mediaUrl + ser.video} />
-                        </video>}
+                        {ser?.video &&
+                            <CompatibleVideo
+                                src={ser.video}
+                                title={getLocalizedField(ser, 'title', language)}
+                                style={{ borderRadius: "0.75rem", width: "100%" }}
+                            />
+                        }
                         <div className="min-h-[250px] border border-solid border-[red] p-5 rounded-xl transition-all duration-500 grid relative content-end bg-[#000] group/item">
                             <img className="max-h-[80px] max-w-[96px] w-auto h-auto object-contain" alt="" src={modalIcon} />
                             <h1 className="font-bold text-larg mt-[10px] glitch" data-glitch={getLocalizedField(ser, 'title', language)}>{getLocalizedField(ser, 'title', language)}</h1>

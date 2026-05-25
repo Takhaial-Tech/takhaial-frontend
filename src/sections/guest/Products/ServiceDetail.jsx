@@ -9,7 +9,7 @@ import useAddItem from '../../../hooks/use-add-item'
 import EditSection from '../../../components/EditSection'
 import LoadingScreen from '../../../components/LoadingScreen'
 import { FormikControl } from '../../../components/inputs'
-import { mediaUrl } from '../../../config'
+import CompatibleVideo from '../../../components/CompatibleVideo'
 import { getLocalizedServiceVideos, getServiceBySlug, getServiceRecords, localizeService, serviceHasDemoVideo, serviceToFormValues } from './serviceContent'
 import { serviceDetailInputs } from './productsInputs'
 import { useLanguage } from '../../../i18n/LanguageContext'
@@ -81,13 +81,13 @@ const ServiceDetail = () =>
         <main className="min-h-screen bg-[#000] text-white relative overflow-hidden">
             {isLoadingGetSection && <LoadingScreen isAbsolute={true} />}
             <div className="bg-gradient-radial2 absolute top-0 left-0 right-0 bottom-0 z-[0]" />
-            <video
+            <CompatibleVideo
+                src={productsVideo}
                 autoPlay
                 muted
                 loop
-                playsInline={true}
-                webkit-playsinline="true"
-                src={productsVideo}
+                controls={false}
+                preload="auto"
                 className="rotate-100 absolute left-0 top-0 w-full h-full object-cover opacity-30 z-[0]"
             />
             <div className="relative z-10 px-[20px] py-[28px] md:px-10">
@@ -175,13 +175,11 @@ const ServiceDetail = () =>
                                             <h3 className="mb-3 text-lg font-bold text-[#ef4444]">
                                                 {t('Demo Project')} {index + 1}
                                             </h3>
-                                            <video
-                                                controls
-                                                preload="metadata"
+                                            <CompatibleVideo
+                                                src={demoVideo}
+                                                title={`${localizedService.title} - ${t('Demo Project')} ${index + 1}`}
                                                 className="w-full max-h-[70vh] rounded-xl bg-[#000]"
-                                            >
-                                                <source src={`${mediaUrl}${demoVideo}`} />
-                                            </video>
+                                            />
                                         </article>
                                     ))}
                                 </div>

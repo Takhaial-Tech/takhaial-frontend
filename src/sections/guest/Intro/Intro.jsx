@@ -67,13 +67,14 @@ const Intro = ({ onIntroLoaded }) =>
             <video
                 ref={videoRef}
                 muted
-                src={introVideo}
-                type="video/mp4"
                 webkit-playsinline="true"
                 playsInline={true}
                 autoPlay
+                preload="auto"
                 className="rotate-100 absolute left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover"
-            />
+            >
+                <source src={introVideo} type="video/mp4" />
+            </video>
         </div>
     );
 };

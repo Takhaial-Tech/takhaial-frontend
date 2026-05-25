@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
 import aboutVideo from '../../../assets/videos/about.mp4'
 import LoadingScreen from '../../../components/LoadingScreen';
 import EditSection from '../../../components/EditSection';
 import { missionInputsData, visionInputsData } from './aboutInputsData';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
+import CompatibleVideo from '../../../components/CompatibleVideo';
 
 const AboutUi = (props) =>
 {
@@ -15,13 +15,6 @@ const AboutUi = (props) =>
     const missionDisc = getLocalizedField(data[0], 'disc', language);
     const visionTitle = getLocalizedField(data[1], 'title', language);
     const visionDisc = getLocalizedField(data[1], 'disc', language);
-
-    // enforce video to play 
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef.current) videoRef.current.play();
-    }, [])
 
     return (
         <section id="section_2" className={' min-h-[100vh] relative text-white flex justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px]'} >
@@ -62,15 +55,13 @@ const AboutUi = (props) =>
                     </div>
                 </div>
             </div>
-            <video
-                ref={videoRef}
-                webkit-playsinline="true"
-                playsInline={true}
+            <CompatibleVideo
                 src={aboutVideo}
-                type="video/mp4"
                 autoPlay
                 muted
                 loop
+                controls={false}
+                preload="auto"
                 className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
         </section>
     )

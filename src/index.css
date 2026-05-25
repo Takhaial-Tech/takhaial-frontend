@@ -385,6 +385,72 @@ html[lang="ar"] * {
     border-radius: 0 0 0.75rem 0.75rem;
 }
 
+.compatible-video-frame {
+    width: 100%;
+}
+
+.compatible-video-fallback,
+.compatible-video-ios-loader {
+    width: 100%;
+    min-height: 240px;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid rgba(239, 68, 68, 0.7);
+    border-radius: 0.75rem;
+    background:
+        linear-gradient(145deg, rgba(0, 0, 0, 0.94), rgba(18, 5, 8, 0.92)),
+        radial-gradient(80% 80% at 50% 0%, rgba(239, 68, 68, 0.18), transparent 60%);
+    color: #fff;
+    text-align: center;
+}
+
+.compatible-video-fallback h3,
+.compatible-video-ios-loader h3 {
+    max-width: 560px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.compatible-video-fallback p,
+.compatible-video-ios-loader p {
+    max-width: 560px;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.compatible-video-fallback a,
+.compatible-video-ios-loader button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 9px 18px;
+    border: 1px solid #ef4444;
+    border-radius: 0.75rem;
+    background: #262626;
+    color: #ef4444;
+    transition: background .25s ease, color .25s ease;
+}
+
+.compatible-video-fallback a:hover,
+.compatible-video-ios-loader button:not(:disabled):hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.compatible-video-ios-loader button:disabled {
+    cursor: wait;
+    opacity: .62;
+}
+
+.compatible-video-error {
+    color: #ef4444 !important;
+}
+
 /* custom scroll bar */
 *::-webkit-scrollbar {
     width: 8px;
@@ -527,8 +593,8 @@ html {
 
 .future-chatbot-anchor {
     position: absolute;
-    top: clamp(220px, 31vh, 340px);
-    left: clamp(250px, 28vw, 610px);
+    top: clamp(74px, 12vh, 138px);
+    left: clamp(360px, 38vw, 760px);
     width: auto;
     margin: 0;
     padding: 0;
@@ -652,7 +718,7 @@ html {
 .future-chatbot-popover {
     --chatbot-open-x: 0px;
     position: absolute;
-    top: 102px;
+    top: 0;
     left: 0;
     width: min(100vw - 40px, 520px);
     transform-origin: 42px -34px;

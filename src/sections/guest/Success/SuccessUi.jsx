@@ -17,6 +17,7 @@ import { mediaUrl } from '../../../config';
 import AddSection from '../../../components/AddSection';
 import ImageUploader from '../../../components/inputs/ImageUploader';
 import DeleteItem from '../../../components/DeleteItem';
+import CompatibleVideo from '../../../components/CompatibleVideo';
 
 SwiperCore.use([Autoplay]);
 
@@ -66,13 +67,6 @@ const SuccessUi = (props) =>
             observer.unobserve(containerElement);
         };
     }, []);
-
-    // enforce video to play 
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef.current) videoRef.current.play();
-    }, [])
 
     return (
         <section id="section_5" className={'min-h-[100vh] relative text-white justify-center items-center pt-[6rem] px-[20px] bg-[#000] z-[1]  relative py-[60px] '} >
@@ -171,15 +165,13 @@ const SuccessUi = (props) =>
 
                 <h1 className={'text-center mt-10 font-bold text-l text-white relative glitch-noise'} data-glitch={disc} >{disc}</h1>
             </div>
-            <video
-                ref={videoRef}
-                webkit-playsinline="true"
-                playsInline={true}
+            <CompatibleVideo
                 src={bgVideo}
-                type="video/mp4"
                 autoPlay
                 muted
                 loop
+                controls={false}
+                preload="auto"
                 className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
         </section>
     )

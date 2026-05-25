@@ -2,13 +2,13 @@ import watchIcon from '../../../assets/icons/watch.svg'
 import quoteIcon from '../../../assets/icons/qouticonrev.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
 import CustomModal from '../../../components/CustomModal';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditSection from '../../../components/EditSection';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { productInputsData, productsTitleInput } from './productsInputs';
 import { FormikControl } from '../../../components/inputs';
-import { mediaUrl } from '../../../config';
 import { Link } from 'react-router-dom';
+import CompatibleVideo from '../../../components/CompatibleVideo';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 import { getLocalizedServiceVideos, localizeService, serviceHasDemoVideo, servicesSectionHeader } from './serviceContent';
@@ -23,13 +23,6 @@ const ProductsUi = (props) =>
     const activeIntroVideos = getLocalizedServiceVideos(activeIntro, language);
     const [activeDemoIndex, setActiveDemoIndex] = useState(0);
     const activeIntroVideo = activeIntroVideos[activeDemoIndex] || activeIntroVideos[0];
-    // enforce video to play 
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef.current) videoRef.current.play();
-    }, [])
-
     useEffect(() =>
     {
         setActiveDemoIndex(0);
@@ -150,15 +143,13 @@ const ProductsUi = (props) =>
                     </div>
                 </div>
 
-                <video
-                    ref={videoRef}
-                    autoPlay
-                    webkit-playsinline="true"
-                    playsInline={true}
-                    muted
+                <CompatibleVideo
                     src={productsVideo}
-                    type="video/mp4"
+                    autoPlay
+                    muted
                     loop
+                    controls={false}
+                    preload="auto"
                     className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
             </section>
 
@@ -187,14 +178,11 @@ const ProductsUi = (props) =>
                             <h2 className="mb-3 text-xl font-bold text-[#ef4444]">
                                 {localizedActiveIntro?.title} - {t('Demo Project')} {activeDemoIndex + 1}
                             </h2>
-                            <video
-                                key={activeIntroVideo}
-                                autoPlay
-                                controls
+                            <CompatibleVideo
+                                src={activeIntroVideo}
+                                title={`${localizedActiveIntro?.title || t('Demo Videos')} - ${t('Demo Project')} ${activeDemoIndex + 1}`}
                                 style={{ width: '100%', height: 'calc(100vh - 240px)' }}
-                            >
-                                <source src={`${mediaUrl}${activeIntroVideo}`} />
-                            </video>
+                            />
                         </div>
                     </div>
                 ) : (

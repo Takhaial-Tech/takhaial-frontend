@@ -1,11 +1,11 @@
 import homeVideo from '../../../assets/videos/home.mp4'
 import defaultProfilePdf from '../../../assets/documents/companyProfile.pdf'
-import { useEffect, useRef } from 'react';
 import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 import FutureChatbot from '../../../components/FutureChatbot';
+import CompatibleVideo from '../../../components/CompatibleVideo';
 
 const HomeUi = (props) =>
 {
@@ -14,13 +14,6 @@ const HomeUi = (props) =>
     const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
     const title = getLocalizedField(data, 'title', language);
     const desc = getLocalizedField(data, 'disc', language);
-
-    // enforce video to play 
-    const videoRef = useRef();
-    useEffect(() =>
-    {
-        if (videoRef.current) videoRef.current.play();
-    }, [])
 
     return (
         <section id="section_1" className={` min-h-[100vh] relative text-white flex justify-center items-center px-[20px] bg-[#000] z-[1] relative py-[60px] home ${isAdmin ? 'pt-[10rem] ' : "pt-[6rem] "}`} >
@@ -91,15 +84,13 @@ const HomeUi = (props) =>
                 </div>
             </div>
 
-            <video
-                ref={videoRef}
-                webkit-playsinline="true"
-                playsInline={true}
+            <CompatibleVideo
                 src={homeVideo}
-                type="video/mp4"
                 autoPlay
                 muted
                 loop
+                controls={false}
+                preload="auto"
                 className="rotate-100 absolute  left-0 z-[-1] top-0 bottom-0 w-full h-full object-cover" />
         </section>);
 }
