@@ -203,6 +203,17 @@ const mediaList = (...values) => values
     .filter(Boolean)
     .filter((value, index, list) => list.indexOf(value) === index)
 
+const latestMedia = (value) =>
+{
+    const list = mediaList(value);
+    return list[list.length - 1] || '';
+}
+
+const serviceDemoVideo = (service, field, legacyField) =>
+{
+    return service?.[field] || latestMedia(service?.[legacyField]);
+}
+
 export const textToList = (value, fallback = []) =>
 {
     if (Array.isArray(value)) return value;
@@ -222,12 +233,14 @@ export const getLocalizedServiceVideos = (service, language) =>
 {
     if (!service || !serviceHasDemoVideo(service)) return [];
 
-    const englishVideos = mediaList(service.videos, service.video);
-    const arabicVideos = mediaList(service.videosAr, service.videoAr);
+    const englishVideo = serviceDemoVideo(service, 'video', 'videos');
+    const arabicVideo = serviceDemoVideo(service, 'videoAr', 'videosAr');
 
-    if (language === LANGUAGES.ar.code) return arabicVideos.length ? arabicVideos : englishVideos;
+    const localizedVideo = language === LANGUAGES.ar.code
+        ? arabicVideo || englishVideo
+        : englishVideo || arabicVideo;
 
-    return englishVideos.length ? englishVideos : arabicVideos;
+    return localizedVideo ? [localizedVideo] : [];
 }
 
 export const getLocalizedServiceVideo = (service, language) =>
@@ -264,6 +277,8 @@ export const mergeServiceRecord = (service, record) =>
     const englishWhatWeBuild = hasEditableContent ? textToList(record?.whatWeBuild, service.whatWeBuild) : service.whatWeBuild;
     const englishDeliverables = hasEditableContent ? textToList(record?.deliverables, service.deliverables) : service.deliverables;
     const englishSectors = hasEditableContent ? textToList(record?.sectors, service.sectors) : service.sectors;
+    const englishVideo = hasEditableContent ? record?.video || latestMedia(record?.videos) : '';
+    const arabicVideo = hasEditableContent ? record?.videoAr || latestMedia(record?.videosAr) : '';
 
     return {
         ...service,
@@ -284,10 +299,10 @@ export const mergeServiceRecord = (service, record) =>
         sectorsAr: hasEditableContent ? textToList(record?.sectorsAr, service.sectorsAr || englishSectors.map((item) => translateText(item, LANGUAGES.ar.code))) : service.sectorsAr,
         proof: englishProof,
         proofAr: hasEditableContent ? record?.proofAr || service.proofAr || translateText(englishProof, LANGUAGES.ar.code) : service.proofAr,
-        video: hasEditableContent ? record?.video : null,
-        videoAr: hasEditableContent ? record?.videoAr : null,
-        videos: hasEditableContent ? mediaList(record?.videos, record?.video) : [],
-        videosAr: hasEditableContent ? mediaList(record?.videosAr, record?.videoAr) : [],
+        video: englishVideo,
+        videoAr: arabicVideo,
+        videos: englishVideo ? [englishVideo] : [],
+        videosAr: arabicVideo ? [arabicVideo] : [],
     }
 }
 

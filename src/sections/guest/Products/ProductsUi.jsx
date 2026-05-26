@@ -2,7 +2,6 @@ import watchIcon from '../../../assets/icons/watch.svg'
 import quoteIcon from '../../../assets/icons/qouticonrev.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
 import CustomModal from '../../../components/CustomModal';
-import { useEffect, useState } from 'react';
 import EditSection from '../../../components/EditSection';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { productInputsData, productsTitleInput } from './productsInputs';
@@ -11,22 +10,16 @@ import { Link } from 'react-router-dom';
 import CompatibleVideo from '../../../components/CompatibleVideo';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
-import { getLocalizedServiceVideos, localizeService, serviceHasDemoVideo, servicesSectionHeader } from './serviceContent';
+import { getLocalizedServiceVideo, localizeService, serviceHasDemoVideo, servicesSectionHeader } from './serviceContent';
 
 const ProductsUi = (props) =>
 {
-    const { onChangeVideos, onChangeVideosAr, header, onEditTitle, setActiveIntro, activeIntro, isLoadingGetSection, services, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenEditTitleModal, setIsOpenEditTitleModal } = props;
+    const { onChangeVideo, onChangeVideoAr, header, onEditTitle, setActiveIntro, activeIntro, isLoadingGetSection, services, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenEditTitleModal, setIsOpenEditTitleModal } = props;
     const { language, t } = useLanguage();
     const localizedTitle = getLocalizedField(header, 'title', language, servicesSectionHeader.title);
     const localizedDesc = getLocalizedField(header, 'disc', language, servicesSectionHeader.disc);
     const localizedActiveIntro = localizeService(activeIntro, language);
-    const activeIntroVideos = getLocalizedServiceVideos(activeIntro, language);
-    const [activeDemoIndex, setActiveDemoIndex] = useState(0);
-    const activeIntroVideo = activeIntroVideos[activeDemoIndex] || activeIntroVideos[0];
-    useEffect(() =>
-    {
-        setActiveDemoIndex(0);
-    }, [activeIntro?.slug, language])
+    const activeIntroVideo = getLocalizedServiceVideo(activeIntro, language);
 
     return (
         <>
@@ -78,31 +71,29 @@ const ProductsUi = (props) =>
                                         >
                                             {hasDemoVideo &&
                                                 <>
-                                                    <h1>{t('English Demo Videos')}</h1>
+                                                    <h1>{t('English Demo Video')}</h1>
                                                     <FormikControl
                                                         disabled={isLoadingEdit}
                                                         control="input"
                                                         type="file"
-                                                        name="videos"
+                                                        name="video"
                                                         accept="video/*"
-                                                        multiple={true}
-                                                        placeholder="English Demo Videos"
+                                                        placeholder="English Demo Video"
                                                         className="block md:w-full w-[100%]"
                                                         containerClassName="block w-full"
-                                                        onChange={onChangeVideos} // Necessary to update Formik state with the selected files
+                                                        onChange={onChangeVideo}
                                                     />
-                                                    <h1>{t('Arabic Demo Videos')}</h1>
+                                                    <h1>{t('Arabic Demo Video')}</h1>
                                                     <FormikControl
                                                         disabled={isLoadingEdit}
                                                         control="input"
                                                         type="file"
-                                                        name="videosAr"
+                                                        name="videoAr"
                                                         accept="video/*"
-                                                        multiple={true}
-                                                        placeholder="Arabic Demo Videos"
+                                                        placeholder="Arabic Demo Video"
                                                         className="block md:w-full w-[100%]"
                                                         containerClassName="block w-full"
-                                                        onChange={onChangeVideosAr}
+                                                        onChange={onChangeVideoAr}
                                                     />
                                                 </>
                                             }
@@ -156,31 +147,17 @@ const ProductsUi = (props) =>
             <CustomModal
                 isOpen={!!activeIntro}
                 onClose={() => { setActiveIntro(false) }}
-                contentLabel={t("Demo Videos")}
+                contentLabel={t("Demo Video")}
             >
                 {activeIntroVideo ? (
-                    <div className={`grid gap-5 p-5 md:p-6 ${activeIntroVideos.length > 1 ? 'md:grid-cols-[220px_minmax(0,1fr)]' : ''}`}>
-                        {activeIntroVideos.length > 1 &&
-                            <div className="grid content-start gap-2">
-                                {activeIntroVideos.map((demoVideo, index) => (
-                                    <button
-                                        key={`${demoVideo}-${index}`}
-                                        type="button"
-                                        onClick={() => setActiveDemoIndex(index)}
-                                        className={`rounded-xl border border-solid px-4 py-3 text-start transition-all duration-300 ${activeDemoIndex === index ? 'border-[#ef4444] bg-[#262626] text-[#ef4444]' : 'border-[#333] bg-[#000] text-white'}`}
-                                    >
-                                        {t('Demo Project')} {index + 1}
-                                    </button>
-                                ))}
-                            </div>
-                        }
+                    <div className="grid gap-5 p-5 md:p-6">
                         <div>
                             <h2 className="mb-3 text-xl font-bold text-[#ef4444]">
-                                {localizedActiveIntro?.title} - {t('Demo Project')} {activeDemoIndex + 1}
+                                {localizedActiveIntro?.title} - {t('Demo Video')}
                             </h2>
                             <CompatibleVideo
                                 src={activeIntroVideo}
-                                title={`${localizedActiveIntro?.title || t('Demo Videos')} - ${t('Demo Project')} ${activeDemoIndex + 1}`}
+                                title={`${localizedActiveIntro?.title || t('Demo Video')} - ${t('Demo Video')}`}
                                 style={{ width: '100%', height: 'calc(100vh - 240px)' }}
                             />
                         </div>
