@@ -18,7 +18,7 @@ const chatCopy = {
         fallback: 'I could not reach the assistant right now. Please try again in a moment.',
         inputTooLong: `Please keep each message under ${MAX_CHAT_INPUT_LENGTH} characters.`,
         openLabel: 'Open Takhaial AI chat',
-        closeLabel: 'Close chat',
+        closeLabel: 'Minimize chat',
         status: 'Online',
     },
     ar: {
@@ -35,7 +35,7 @@ const chatCopy = {
             '\u0645\u0634 \u0642\u0627\u062f\u0631 \u0623\u0648\u0635\u0644 \u0644\u0644\u0645\u0633\u0627\u0639\u062f \u062d\u0627\u0644\u064a\u0627. \u062c\u0631\u0628 \u062a\u0627\u0646\u064a \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a.',
         inputTooLong: `\u0645\u0646 \u0641\u0636\u0644\u0643 \u062e\u0644\u064a \u0643\u0644 \u0631\u0633\u0627\u0644\u0629 \u0623\u0642\u0644 \u0645\u0646 ${MAX_CHAT_INPUT_LENGTH} \u062d\u0631\u0641.`,
         openLabel: '\u0627\u0641\u062a\u062d \u0634\u0627\u062a \u062a\u062e\u064a\u0644 \u0627\u0644\u0630\u0643\u064a',
-        closeLabel: '\u0625\u063a\u0644\u0627\u0642 \u0627\u0644\u0634\u0627\u062a',
+        closeLabel: '\u062a\u0635\u063a\u064a\u0631 \u0627\u0644\u0634\u0627\u062a',
         status: '\u0645\u062a\u0627\u062d',
     },
 };
@@ -145,10 +145,32 @@ const FutureChatbot = () =>
         if (!isOpen) return undefined;
 
         document.body.classList.add('future-chatbot-body-lock');
+        const root = document.documentElement;
+        const viewport = window.visualViewport;
+
+        const syncVisualViewport = () =>
+        {
+            const visualHeight = viewport?.height || window.innerHeight;
+            const visualOffsetTop = viewport?.offsetTop || 0;
+            const keyboardOffset = Math.max(0, window.innerHeight - visualHeight - visualOffsetTop);
+
+            root.style.setProperty('--takhaial-chat-visual-height', `${visualHeight}px`);
+            root.style.setProperty('--takhaial-chat-keyboard-offset', `${keyboardOffset}px`);
+        };
+
+        syncVisualViewport();
+        viewport?.addEventListener('resize', syncVisualViewport);
+        viewport?.addEventListener('scroll', syncVisualViewport);
+        window.addEventListener('orientationchange', syncVisualViewport);
 
         return () =>
         {
             document.body.classList.remove('future-chatbot-body-lock');
+            viewport?.removeEventListener('resize', syncVisualViewport);
+            viewport?.removeEventListener('scroll', syncVisualViewport);
+            window.removeEventListener('orientationchange', syncVisualViewport);
+            root.style.removeProperty('--takhaial-chat-visual-height');
+            root.style.removeProperty('--takhaial-chat-keyboard-offset');
         };
     }, [isOpen]);
 

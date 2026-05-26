@@ -975,16 +975,16 @@ html {
 .future-chatbot-close span,
 .future-chatbot-close span::after {
     display: block;
-    width: 14px;
+    width: 16px;
     height: 2px;
     border-radius: 999px;
     background: #fff;
-    transform: rotate(45deg);
+    transform: none;
 }
 
 .future-chatbot-close span::after {
     content: "";
-    transform: rotate(90deg);
+    display: none;
 }
 
 .future-chatbot-skip {
@@ -1894,17 +1894,21 @@ html {
 
     .future-chatbot-messages {
         top: 82px;
-        bottom: 128px;
+        bottom: 82px;
+        padding: 2px 4px 18px;
+        scroll-padding-bottom: 18px;
     }
 
     .future-chatbot-input {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr) 74px;
         gap: 7px;
     }
 
     .future-chatbot-input button {
-        min-width: 100%;
-        height: 40px;
+        width: 74px;
+        min-width: 74px;
+        height: 42px;
+        padding-inline: 8px;
     }
 }
 
@@ -1921,7 +1925,9 @@ html {
 
     .future-chatbot-messages {
         inset-inline: 14px;
-        bottom: 132px;
+        bottom: 88px;
+        padding: 2px 4px 18px;
+        scroll-padding-bottom: 18px;
     }
 
     .future-chatbot-input {
@@ -1933,8 +1939,8 @@ html {
     position: fixed;
     top: auto;
     left: 20px;
-    bottom: max(20px, env(safe-area-inset-bottom));
-    z-index: 45;
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 20px));
+    z-index: 70;
     transform: none;
 }
 
@@ -1951,18 +1957,20 @@ html {
     width: min(520px, calc(100vw - 40px));
     max-height: calc(100vh - 130px);
     max-height: calc(100dvh - 130px);
+    max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 130px);
     transform-origin: 42px calc(100% + 34px);
 }
 
 .future-chatbot-anchor--floating .future-chatbot-panel {
     height: min(430px, calc(100vh - 142px));
     height: min(430px, calc(100dvh - 142px));
+    height: min(430px, calc(var(--takhaial-chat-visual-height, 100dvh) - 142px));
 }
 
 @media (max-width: 768px) {
     .future-chatbot-anchor--floating {
         left: 12px;
-        bottom: max(14px, env(safe-area-inset-bottom));
+        bottom: max(14px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 14px));
     }
 
     .future-chatbot-anchor--floating .future-chatbot-shell {
@@ -1977,12 +1985,19 @@ html {
         width: min(430px, calc(100vw - 24px));
         max-height: calc(100vh - 104px);
         max-height: calc(100dvh - 104px);
+        max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 104px);
         transform-origin: 36px calc(100% + 28px);
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open:focus-within .future-chatbot-popover {
+        bottom: 0;
     }
 
     .future-chatbot-anchor--floating .future-chatbot-panel {
         height: min(430px, calc(100vh - 116px));
         height: min(430px, calc(100dvh - 116px));
+        height: min(430px, calc(var(--takhaial-chat-visual-height, 100dvh) - 116px));
         min-height: min(320px, calc(100dvh - 116px));
+        min-height: min(320px, calc(var(--takhaial-chat-visual-height, 100dvh) - 116px));
     }
 }
