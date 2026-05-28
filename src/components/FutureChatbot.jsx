@@ -161,6 +161,7 @@ const FutureChatbot = () =>
         const body = document.body;
         const viewport = window.visualViewport;
         const lockedScrollY = window.scrollY || root.scrollTop || 0;
+        let visualViewportFrame = 0;
 
         scrollLockRef.current = {
             scrollY: lockedScrollY,
@@ -189,16 +190,31 @@ const FutureChatbot = () =>
         body.style.right = '0';
         body.style.width = '100%';
         body.style.overflow = 'hidden';
-        body.style.touchAction = 'none';
 
         const syncVisualViewport = () =>
         {
+            visualViewportFrame = 0;
             const visualHeight = viewport?.height || window.innerHeight;
+            const visualWidth = viewport?.width || window.innerWidth;
+            const visualOffsetLeft = viewport?.offsetLeft || 0;
             const visualOffsetTop = viewport?.offsetTop || 0;
-            const keyboardOffset = Math.max(0, window.innerHeight - visualHeight - visualOffsetTop);
+            const visualScale = viewport?.scale || 1;
+            const keyboardOffset = visualScale > 1.05
+                ? 0
+                : Math.max(0, window.innerHeight - visualHeight - visualOffsetTop);
 
             root.style.setProperty('--takhaial-chat-visual-height', `${visualHeight}px`);
+            root.style.setProperty('--takhaial-chat-visual-width', `${visualWidth}px`);
+            root.style.setProperty('--takhaial-chat-visual-left', `${visualOffsetLeft}px`);
+            root.style.setProperty('--takhaial-chat-visual-top', `${visualOffsetTop}px`);
+            root.style.setProperty('--takhaial-chat-visual-scale', `${visualScale}`);
             root.style.setProperty('--takhaial-chat-keyboard-offset', `${keyboardOffset}px`);
+        };
+
+        const scheduleVisualViewportSync = () =>
+        {
+            if (visualViewportFrame) return;
+            visualViewportFrame = requestAnimationFrame(syncVisualViewport);
         };
 
         const preventDocumentScroll = (event) =>
@@ -280,13 +296,13 @@ const FutureChatbot = () =>
         };
 
         syncVisualViewport();
-        requestAnimationFrame(syncVisualViewport);
-        viewport?.addEventListener('resize', syncVisualViewport);
-        viewport?.addEventListener('scroll', syncVisualViewport);
-        window.addEventListener('pageshow', syncVisualViewport);
-        window.addEventListener('orientationchange', syncVisualViewport);
-        document.addEventListener('touchstart', rememberTouchY, { passive: true });
-        document.addEventListener('touchmove', preventDocumentScroll, { passive: false });
+        scheduleVisualViewportSync();
+        viewport?.addEventListener('resize', scheduleVisualViewportSync);
+        viewport?.addEventListener('scroll', scheduleVisualViewportSync);
+        window.addEventListener('pageshow', scheduleVisualViewportSync);
+        window.addEventListener('orientationchange', scheduleVisualViewportSync);
+        document.addEventListener('touchstart', rememberTouchY, { passive: true, capture: true });
+        document.addEventListener('touchmove', preventDocumentScroll, { passive: false, capture: true });
         document.addEventListener('wheel', preventWheelChaining, { passive: false });
 
         return () =>
@@ -295,14 +311,19 @@ const FutureChatbot = () =>
 
             root.classList.remove('future-chatbot-page-lock');
             body.classList.remove('future-chatbot-body-lock');
-            viewport?.removeEventListener('resize', syncVisualViewport);
-            viewport?.removeEventListener('scroll', syncVisualViewport);
-            window.removeEventListener('pageshow', syncVisualViewport);
-            window.removeEventListener('orientationchange', syncVisualViewport);
-            document.removeEventListener('touchstart', rememberTouchY);
-            document.removeEventListener('touchmove', preventDocumentScroll);
+            if (visualViewportFrame) cancelAnimationFrame(visualViewportFrame);
+            viewport?.removeEventListener('resize', scheduleVisualViewportSync);
+            viewport?.removeEventListener('scroll', scheduleVisualViewportSync);
+            window.removeEventListener('pageshow', scheduleVisualViewportSync);
+            window.removeEventListener('orientationchange', scheduleVisualViewportSync);
+            document.removeEventListener('touchstart', rememberTouchY, { capture: true });
+            document.removeEventListener('touchmove', preventDocumentScroll, { capture: true });
             document.removeEventListener('wheel', preventWheelChaining);
             root.style.removeProperty('--takhaial-chat-visual-height');
+            root.style.removeProperty('--takhaial-chat-visual-width');
+            root.style.removeProperty('--takhaial-chat-visual-left');
+            root.style.removeProperty('--takhaial-chat-visual-top');
+            root.style.removeProperty('--takhaial-chat-visual-scale');
             root.style.removeProperty('--takhaial-chat-keyboard-offset');
 
             if (lock)

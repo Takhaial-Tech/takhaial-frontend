@@ -1836,9 +1836,9 @@ body.future-chatbot-body-lock {
     }
 
     .quick-action-floating {
-        left: 12px;
-        right: 12px;
-        width: auto;
+        left: calc(var(--takhaial-chat-visual-left, 0px) + 12px);
+        right: auto;
+        width: calc(var(--takhaial-chat-visual-width, 100vw) - 24px);
         max-width: none;
         overflow: hidden;
         padding: 6px;
@@ -1930,6 +1930,10 @@ body.future-chatbot-body-lock {
         gap: 7px;
     }
 
+    .future-chatbot-input input {
+        font-size: 16px;
+    }
+
     .future-chatbot-input button {
         width: 74px;
         min-width: 74px;
@@ -1940,8 +1944,9 @@ body.future-chatbot-body-lock {
 
 @media (max-width: 340px) {
     .quick-action-floating {
-        left: 10px;
-        right: 10px;
+        left: calc(var(--takhaial-chat-visual-left, 0px) + 10px);
+        right: auto;
+        width: calc(var(--takhaial-chat-visual-width, 100vw) - 20px);
     }
 }
 
@@ -2030,8 +2035,12 @@ body.future-chatbot-body-lock {
 
     .future-chatbot-anchor--floating .future-chatbot-shell.is-open {
         position: fixed;
-        inset: 0;
-        width: auto;
+        top: var(--takhaial-chat-visual-top, 0px);
+        left: var(--takhaial-chat-visual-left, 0px);
+        right: auto;
+        bottom: auto;
+        width: var(--takhaial-chat-visual-width, 100vw);
+        height: var(--takhaial-chat-visual-height, 100dvh);
         min-height: 0;
         z-index: 90;
         perspective: none;
@@ -2147,7 +2156,7 @@ body.future-chatbot-body-lock {
     .future-chatbot-input input {
         height: 40px;
         padding: 0 10px;
-        font-size: .84rem;
+        font-size: 16px;
     }
 
     .future-chatbot-input button {
