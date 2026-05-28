@@ -77,6 +77,7 @@ const FutureChatbot = () =>
     const goToReady = useCallback(() =>
     {
         setIsOpen(true);
+        setHasUserMessages(true);
         setTypedDraft('');
         setPhase('ready');
         setMessages((current) =>
@@ -205,14 +206,17 @@ const FutureChatbot = () =>
             const shell = shellRef.current;
             const messages = listRef.current;
             const target = event.target;
+            const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+            const isInsideShell = path.length ? path.includes(shell) : shell?.contains(target);
+            const isInsideMessages = path.length ? path.includes(messages) : messages?.contains(target);
 
-            if (!shell?.contains(target))
+            if (!isInsideShell)
             {
                 event.preventDefault();
                 return;
             }
 
-            if (!messages?.contains(target))
+            if (!isInsideMessages)
             {
                 event.preventDefault();
                 return;
@@ -276,8 +280,10 @@ const FutureChatbot = () =>
         };
 
         syncVisualViewport();
+        requestAnimationFrame(syncVisualViewport);
         viewport?.addEventListener('resize', syncVisualViewport);
         viewport?.addEventListener('scroll', syncVisualViewport);
+        window.addEventListener('pageshow', syncVisualViewport);
         window.addEventListener('orientationchange', syncVisualViewport);
         document.addEventListener('touchstart', rememberTouchY, { passive: true });
         document.addEventListener('touchmove', preventDocumentScroll, { passive: false });
@@ -291,6 +297,7 @@ const FutureChatbot = () =>
             body.classList.remove('future-chatbot-body-lock');
             viewport?.removeEventListener('resize', syncVisualViewport);
             viewport?.removeEventListener('scroll', syncVisualViewport);
+            window.removeEventListener('pageshow', syncVisualViewport);
             window.removeEventListener('orientationchange', syncVisualViewport);
             document.removeEventListener('touchstart', rememberTouchY);
             document.removeEventListener('touchmove', preventDocumentScroll);

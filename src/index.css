@@ -619,6 +619,13 @@ body.future-chatbot-body-lock {
     overflow: hidden;
 }
 
+.future-chatbot-shell,
+.future-chatbot-shell *,
+.future-chatbot-shell *::before,
+.future-chatbot-shell *::after {
+    box-sizing: border-box;
+}
+
 .future-chatbot-shell {
     position: relative;
     width: min(100vw - 40px, 520px);
@@ -739,11 +746,13 @@ body.future-chatbot-body-lock {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 25;
     width: min(100vw - 40px, 520px);
     max-height: calc(100vh - 96px);
     max-height: calc(100dvh - 96px);
     transform-origin: 42px -34px;
     animation: future-popover-open .7s cubic-bezier(0.23, 1, 0.32, 1) both;
+    pointer-events: auto;
 }
 
 /* ---------- Panel container ---------- */
@@ -1254,7 +1263,7 @@ body.future-chatbot-body-lock {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 2px 4px;
     z-index: 4;
     min-height: 0;
@@ -1827,10 +1836,17 @@ body.future-chatbot-body-lock {
     }
 
     .quick-action-floating {
+        left: 12px;
         right: 12px;
-        width: 250px;
+        width: auto;
+        max-width: none;
+        overflow: hidden;
         padding: 6px;
         border-radius: 14px;
+    }
+
+    .quick-action-floating > div {
+        max-width: 100%;
     }
 
     .quick-action-title {
@@ -1924,7 +1940,8 @@ body.future-chatbot-body-lock {
 
 @media (max-width: 340px) {
     .quick-action-floating {
-        width: 190px;
+        left: 10px;
+        right: 10px;
     }
 }
 
@@ -2009,5 +2026,135 @@ body.future-chatbot-body-lock {
         height: min(430px, calc(var(--takhaial-chat-visual-height, 100dvh) - 116px));
         min-height: min(320px, calc(100dvh - 116px));
         min-height: min(320px, calc(var(--takhaial-chat-visual-height, 100dvh) - 116px));
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open {
+        position: fixed;
+        inset: 0;
+        width: auto;
+        min-height: 0;
+        z-index: 90;
+        perspective: none;
+        pointer-events: none;
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open .future-chatbot-popover {
+        position: absolute;
+        top: auto;
+        left: max(10px, env(safe-area-inset-left));
+        right: max(10px, env(safe-area-inset-right));
+        bottom: max(82px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 82px));
+        z-index: 90;
+        width: auto;
+        max-width: none;
+        max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 94px);
+        transform-origin: 38px calc(100% + 24px);
+        pointer-events: auto;
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open:focus-within .future-chatbot-popover {
+        bottom: max(82px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 82px));
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open .future-chatbot-panel {
+        height: min(430px, calc(var(--takhaial-chat-visual-height, 100dvh) - 94px));
+        min-height: 0;
+        max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 94px);
+    }
+}
+
+@media (max-width: 380px) {
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open .future-chatbot-popover {
+        left: max(8px, env(safe-area-inset-left));
+        right: max(8px, env(safe-area-inset-right));
+        bottom: max(76px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 76px));
+        max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 86px);
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open:focus-within .future-chatbot-popover {
+        bottom: max(76px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 76px));
+    }
+
+    .future-chatbot-anchor--floating .future-chatbot-shell.is-open .future-chatbot-panel {
+        height: min(410px, calc(var(--takhaial-chat-visual-height, 100dvh) - 86px));
+        max-height: calc(var(--takhaial-chat-visual-height, 100dvh) - 86px);
+        border-radius: 13px;
+    }
+
+    .future-chatbot-shell[data-phase="inputCenter"] .future-chatbot-orb,
+    .future-chatbot-shell[data-phase="inputDescend"] .future-chatbot-orb,
+    .future-chatbot-shell[data-phase="typing"] .future-chatbot-orb,
+    .future-chatbot-shell[data-phase="ready"] .future-chatbot-orb {
+        width: 40px;
+        height: 40px;
+        top: 18px;
+        left: 16px;
+    }
+
+    .future-chatbot-shell[dir="rtl"][data-phase="inputCenter"] .future-chatbot-orb,
+    .future-chatbot-shell[dir="rtl"][data-phase="inputDescend"] .future-chatbot-orb,
+    .future-chatbot-shell[dir="rtl"][data-phase="typing"] .future-chatbot-orb,
+    .future-chatbot-shell[dir="rtl"][data-phase="ready"] .future-chatbot-orb {
+        right: 16px;
+        left: auto;
+    }
+
+    .future-chatbot-header {
+        top: 20px;
+        inset-inline-start: 64px;
+        max-width: calc(100% - 116px);
+    }
+
+    .future-chatbot-header h2 {
+        font-size: .9rem;
+    }
+
+    .future-chatbot-kicker {
+        font-size: .56rem;
+        letter-spacing: 1.4px;
+    }
+
+    .future-chatbot-close {
+        top: 12px;
+        inset-inline-end: 12px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .future-chatbot-messages {
+        top: 76px;
+        inset-inline: 12px;
+        bottom: 70px;
+        gap: 8px;
+        padding: 2px 3px 14px;
+        scroll-padding-bottom: 14px;
+    }
+
+    .future-chatbot-message {
+        max-width: 92%;
+        padding: 8px 10px;
+        font-size: .82rem;
+        line-height: 1.48;
+    }
+
+    .future-chatbot-input {
+        inset-inline: 12px;
+        bottom: 12px;
+        grid-template-columns: minmax(0, 1fr) minmax(58px, 64px);
+        gap: 6px;
+    }
+
+    .future-chatbot-input input {
+        height: 40px;
+        padding: 0 10px;
+        font-size: .84rem;
+    }
+
+    .future-chatbot-input button {
+        width: auto;
+        min-width: 58px;
+        height: 40px;
+        padding-inline: 7px;
+        font-size: .78rem;
     }
 }
