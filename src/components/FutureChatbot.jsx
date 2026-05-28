@@ -49,6 +49,15 @@ const PHASE_TIMINGS = {
 
 const TYPE_SPEED_MS = 22;
 
+const isScrollable = (element) => element && element.scrollHeight > element.clientHeight + 1;
+
+const isAtScrollTop = (element) => element.scrollTop <= 0;
+
+const isAtScrollBottom = (element) =>
+{
+    return element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+};
+
 const FutureChatbot = () =>
 {
     const { direction, language } = useLanguage();
@@ -60,7 +69,10 @@ const FutureChatbot = () =>
     const [input, setInput] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [hasUserMessages, setHasUserMessages] = useState(false);
+    const shellRef = useRef(null);
     const listRef = useRef(null);
+    const touchYRef = useRef(null);
+    const scrollLockRef = useRef(null);
 
     const goToReady = useCallback(() =>
     {
@@ -144,9 +156,39 @@ const FutureChatbot = () =>
     {
         if (!isOpen) return undefined;
 
-        document.body.classList.add('future-chatbot-body-lock');
         const root = document.documentElement;
+        const body = document.body;
         const viewport = window.visualViewport;
+        const lockedScrollY = window.scrollY || root.scrollTop || 0;
+
+        scrollLockRef.current = {
+            scrollY: lockedScrollY,
+            body: {
+                left: body.style.left,
+                overflow: body.style.overflow,
+                position: body.style.position,
+                right: body.style.right,
+                top: body.style.top,
+                touchAction: body.style.touchAction,
+                width: body.style.width,
+            },
+            root: {
+                overflow: root.style.overflow,
+                overscrollBehavior: root.style.overscrollBehavior,
+            },
+        };
+
+        root.classList.add('future-chatbot-page-lock');
+        body.classList.add('future-chatbot-body-lock');
+        root.style.overflow = 'hidden';
+        root.style.overscrollBehavior = 'none';
+        body.style.position = 'fixed';
+        body.style.top = `-${lockedScrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        body.style.overflow = 'hidden';
+        body.style.touchAction = 'none';
 
         const syncVisualViewport = () =>
         {
@@ -158,19 +200,118 @@ const FutureChatbot = () =>
             root.style.setProperty('--takhaial-chat-keyboard-offset', `${keyboardOffset}px`);
         };
 
+        const preventDocumentScroll = (event) =>
+        {
+            const shell = shellRef.current;
+            const messages = listRef.current;
+            const target = event.target;
+
+            if (!shell?.contains(target))
+            {
+                event.preventDefault();
+                return;
+            }
+
+            if (!messages?.contains(target))
+            {
+                event.preventDefault();
+                return;
+            }
+
+            if (!isScrollable(messages))
+            {
+                event.preventDefault();
+                return;
+            }
+
+            const currentY = event.touches?.[0]?.clientY;
+            if (typeof currentY !== 'number')
+            {
+                event.preventDefault();
+                return;
+            }
+
+            const previousY = touchYRef.current ?? currentY;
+            const deltaY = currentY - previousY;
+
+            if ((deltaY > 0 && isAtScrollTop(messages)) || (deltaY < 0 && isAtScrollBottom(messages)))
+            {
+                touchYRef.current = currentY;
+                event.preventDefault();
+                return;
+            }
+
+            touchYRef.current = currentY;
+            event.stopPropagation();
+        };
+
+        const rememberTouchY = (event) =>
+        {
+            touchYRef.current = event.touches?.[0]?.clientY ?? null;
+        };
+
+        const preventWheelChaining = (event) =>
+        {
+            const messages = listRef.current;
+
+            if (!messages?.contains(event.target))
+            {
+                event.preventDefault();
+                return;
+            }
+
+            if (!isScrollable(messages))
+            {
+                event.preventDefault();
+                return;
+            }
+
+            const scrollingUp = event.deltaY < 0;
+            const scrollingDown = event.deltaY > 0;
+
+            if ((scrollingUp && isAtScrollTop(messages)) || (scrollingDown && isAtScrollBottom(messages)))
+            {
+                event.preventDefault();
+            }
+        };
+
         syncVisualViewport();
         viewport?.addEventListener('resize', syncVisualViewport);
         viewport?.addEventListener('scroll', syncVisualViewport);
         window.addEventListener('orientationchange', syncVisualViewport);
+        document.addEventListener('touchstart', rememberTouchY, { passive: true });
+        document.addEventListener('touchmove', preventDocumentScroll, { passive: false });
+        document.addEventListener('wheel', preventWheelChaining, { passive: false });
 
         return () =>
         {
-            document.body.classList.remove('future-chatbot-body-lock');
+            const lock = scrollLockRef.current;
+
+            root.classList.remove('future-chatbot-page-lock');
+            body.classList.remove('future-chatbot-body-lock');
             viewport?.removeEventListener('resize', syncVisualViewport);
             viewport?.removeEventListener('scroll', syncVisualViewport);
             window.removeEventListener('orientationchange', syncVisualViewport);
+            document.removeEventListener('touchstart', rememberTouchY);
+            document.removeEventListener('touchmove', preventDocumentScroll);
+            document.removeEventListener('wheel', preventWheelChaining);
             root.style.removeProperty('--takhaial-chat-visual-height');
             root.style.removeProperty('--takhaial-chat-keyboard-offset');
+
+            if (lock)
+            {
+                root.style.overflow = lock.root.overflow;
+                root.style.overscrollBehavior = lock.root.overscrollBehavior;
+                body.style.position = lock.body.position;
+                body.style.top = lock.body.top;
+                body.style.left = lock.body.left;
+                body.style.right = lock.body.right;
+                body.style.width = lock.body.width;
+                body.style.overflow = lock.body.overflow;
+                body.style.touchAction = lock.body.touchAction;
+                window.scrollTo(0, lock.scrollY);
+                scrollLockRef.current = null;
+            }
         };
     }, [isOpen]);
 
@@ -255,7 +396,12 @@ const FutureChatbot = () =>
     const showSkip = isOpen && phase !== 'ready';
 
     return (
-        <div className={`future-chatbot-shell ${isOpen ? 'is-open' : 'is-closed'}`} data-phase={phase} dir={direction}>
+        <div
+            ref={shellRef}
+            className={`future-chatbot-shell ${isOpen ? 'is-open' : 'is-closed'}`}
+            data-phase={phase}
+            dir={direction}
+        >
             <button
                 type="button"
                 className="future-chatbot-launcher"
@@ -334,8 +480,6 @@ const FutureChatbot = () =>
                 <div
                     ref={listRef}
                     className="future-chatbot-messages"
-                    onTouchMove={(event) => event.stopPropagation()}
-                    onWheel={(event) => event.stopPropagation()}
                 >
                     {phase === 'typing' && (
                         <div className="future-chatbot-message is-assistant is-typing">

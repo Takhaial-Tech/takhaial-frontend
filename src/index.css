@@ -610,6 +610,15 @@ html {
     z-index: 12;
 }
 
+html.future-chatbot-page-lock,
+body.future-chatbot-body-lock {
+    overscroll-behavior: none;
+}
+
+body.future-chatbot-body-lock {
+    overflow: hidden;
+}
+
 .future-chatbot-shell {
     position: relative;
     width: min(100vw - 40px, 520px);
@@ -1250,6 +1259,7 @@ html {
     z-index: 4;
     min-height: 0;
     overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
     opacity: 0;
