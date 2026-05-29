@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import logo from '../../../assets/icons/logo.svg'
 import productsVideo from '../../../assets/videos/products.mp4'
@@ -14,6 +14,7 @@ import { getLocalizedServiceVideo, getServiceBySlug, getServiceRecords, localize
 import { serviceDetailInputs } from './productsInputs'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import LanguageSwitcher from '../../../components/LanguageSwitcher'
+import { trackTikTokEvent } from '../../../helpers/tiktokPixel'
 
 const ServiceDetail = () =>
 {
@@ -32,6 +33,17 @@ const ServiceDetail = () =>
     const localizedService = localizeService(service, language);
     const hasDemoVideo = serviceHasDemoVideo(service);
     const selectedVideo = getLocalizedServiceVideo(service, language);
+
+    useEffect(() =>
+    {
+        if (!fallbackService || !service?.slug) return;
+
+        trackTikTokEvent('ViewContent', {
+            content_type: 'service',
+            content_id: service.slug,
+            content_name: localizedService.title,
+        });
+    }, [fallbackService, localizedService.title, service?.slug]);
 
     if (!fallbackService)
     {
@@ -221,6 +233,12 @@ const ServiceDetail = () =>
                     <div className="flex flex-wrap gap-4 mb-16">
                         <Link
                             to={`/services/${service.slug}/request-quote`}
+                            onClick={() => trackTikTokEvent('Contact', {
+                                content_type: 'service_detail',
+                                content_id: service.slug,
+                                content_name: localizedService.title,
+                                method: 'quote_request',
+                            })}
                             className="transition-all duration-500 rounded-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
                             {t('Request a Quote')}

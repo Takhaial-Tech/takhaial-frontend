@@ -11,6 +11,7 @@ import CompatibleVideo from '../../../components/CompatibleVideo';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
 import { getLocalizedServiceVideo, localizeService, serviceHasDemoVideo, servicesSectionHeader } from './serviceContent';
+import { trackTikTokEvent } from '../../../helpers/tiktokPixel';
 
 const ProductsUi = (props) =>
 {
@@ -115,12 +116,25 @@ const ProductsUi = (props) =>
                                     <div className="flex mt-auto">
                                         <Link
                                             to={`/services/${service.slug}`}
+                                            onClick={() => trackTikTokEvent('ViewContent', {
+                                                content_type: 'service_card',
+                                                content_id: service.slug,
+                                                content_name: localizedService.title,
+                                            })}
                                             className={`flex min-h-[52px] w-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#ef4444] ${hasDemoVideo ? 'rounded-bl-xl' : 'rounded-b-xl'} px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#202020] hover:bg-[#2a1010] hover:text-white justify-center items-center gap-2 whitespace-nowrap`}>
                                             {t('Read More')}  <img alt={''} width={15} height={15} src={quoteIcon} />
                                         </Link>
                                         {hasDemoVideo &&
                                             <button
-                                                onClick={() => setActiveIntro(service)}
+                                                onClick={() =>
+                                                {
+                                                    trackTikTokEvent('ViewContent', {
+                                                        content_type: 'service_demo',
+                                                        content_id: service.slug,
+                                                        content_name: localizedService.title,
+                                                    });
+                                                    setActiveIntro(service);
+                                                }}
                                                 className="flex min-h-[52px] w-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#ef4444] rounded-br-xl px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#202020] hover:bg-[#2a1010] hover:text-white justify-center items-center gap-2 whitespace-nowrap">
                                                 {t('Watch Demo')}  <img alt={''} width={15} height={15} src={watchIcon} />
                                             </button>

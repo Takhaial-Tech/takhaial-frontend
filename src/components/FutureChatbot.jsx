@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { backendUrl } from '../config';
 import { useLanguage } from '../i18n/LanguageContext';
+import { trackTikTokEvent } from '../helpers/tiktokPixel';
 
 const MAX_CHAT_INPUT_LENGTH = 700;
 
@@ -73,6 +74,7 @@ const FutureChatbot = () =>
     const listRef = useRef(null);
     const touchYRef = useRef(null);
     const scrollLockRef = useRef(null);
+    const hasTrackedChatContactRef = useRef(false);
 
     const goToReady = useCallback(() =>
     {
@@ -369,6 +371,15 @@ const FutureChatbot = () =>
                 { role: 'assistant', content: copy.inputTooLong },
             ]);
             return;
+        }
+
+        if (!hasTrackedChatContactRef.current)
+        {
+            trackTikTokEvent('Contact', {
+                content_type: 'ai_chat',
+                content_name: 'Takhaial AI Agent',
+            });
+            hasTrackedChatContactRef.current = true;
         }
 
         setMessages((currentMessages) => [...currentMessages, { role: 'user', content }]);

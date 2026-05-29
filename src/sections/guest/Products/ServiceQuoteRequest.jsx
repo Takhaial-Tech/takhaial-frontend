@@ -13,6 +13,7 @@ import { quoteRequestInitialValues, quoteRequestValidationSchema } from './quote
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { useSelector } from 'react-redux'
 import CompatibleVideo from '../../../components/CompatibleVideo'
+import { trackTikTokEvent } from '../../../helpers/tiktokPixel'
 
 const encodeMailBody = (value) => encodeURIComponent(value).replace(/%20/g, '+')
 
@@ -34,6 +35,12 @@ const ServiceQuoteRequest = () =>
 
     const onSubmit = (values) =>
     {
+        trackTikTokEvent('Lead', {
+            content_type: 'service_quote',
+            content_id: rawService.slug,
+            content_name: service.title,
+        });
+
         const subject = `${t('Quote request')} - ${service.title} - ${values.companyName}`;
         const body = [
             `${t('Service')}: ${service.title}`,
