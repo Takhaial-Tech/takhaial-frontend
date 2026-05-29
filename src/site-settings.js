@@ -2,6 +2,7 @@ import ficon from './assets/icons/ficon.svg'
 import xicon from './assets/icons/xicon.svg'
 import inicon from './assets/icons/inicon.svg'
 import tagicon from './assets/icons/tagicon.svg'
+import tiktokicon from './assets/icons/tiktokicon.svg'
 
 export const defaultSiteSettings = {
     contactTitle: 'Contact Us',
@@ -15,6 +16,7 @@ export const defaultSiteSettings = {
     x: 'https://x.com/TakhaialTechx',
     linkedin: 'https://www.linkedin.com/company/takhaialtechx/',
     instagram: 'https://www.instagram.com/takhaial.tech?igsh=YTU4a3N0N3Z3YjYz',
+    tiktok: 'https://www.tiktok.com/@takhaialtech',
     hasProfilePdf: false,
     profilePdfFilename: null,
     profilePdfUpdatedAt: null,
@@ -27,6 +29,7 @@ export const buildChannels = (settings = defaultSiteSettings) => (
         { img: xicon, href: settings.x },
         { img: inicon, href: settings.linkedin },
         { img: tagicon, href: settings.instagram },
+        { img: tiktokicon, href: settings.tiktok },
     ].filter(channel => !!channel.href)
 )
 

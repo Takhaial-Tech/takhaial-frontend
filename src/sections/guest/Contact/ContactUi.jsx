@@ -48,6 +48,7 @@ const ContactUi = (props) =>
                             x: settings.x,
                             linkedin: settings.linkedin,
                             instagram: settings.instagram,
+                            tiktok: settings.tiktok,
                         }}
                         actionTitle="Save Contact Info"
                         className='right-[20px]'

@@ -98,4 +98,13 @@ export const contactSettingsInputs = [
         className: 'block md:w-full w-[100%]',
         containerClassName: 'block w-full'
     },
+    {
+        control: "input",
+        type: "url",
+        name: "tiktok",
+        placeholder: "TikTok URL",
+        placeholderAr: "TikTok URL",
+        className: 'block md:w-full w-[100%]',
+        containerClassName: 'block w-full'
+    },
 ]
