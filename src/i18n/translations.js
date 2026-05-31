@@ -16,6 +16,8 @@ export const LANGUAGES = {
 export const DEFAULT_LANGUAGE = LANGUAGES.en.code;
 
 export const arabicTranslations = {
+    'Privacy Policy': 'سياسة الخصوصية',
+    'Terms of Service': 'شروط الخدمة',
     English: 'الإنجليزية',
     Arabic: 'العربية',
     Language: 'اللغة',

@@ -10,6 +10,7 @@ import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
 import { contactValidationSchema } from './contactValidationSchema'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Btn from '../../../components/Btn'
 import EditSection from '../../../components/EditSection'
 import { contactSettingsInputs } from './contactSettingsInputs'
@@ -120,7 +121,17 @@ const ContactUi = (props) =>
                         </a>
                     )}
                 </ul>
-                <p className="whitespace-break-spaces z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center gap-1" > &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> {t('All rights reserved.')} </p>
+                <div className="z-30 mb-3 justify-self-center text-white flex width-fit flex-wrap text-center justify-center gap-x-3 gap-y-1">
+                    <p className="whitespace-break-spaces flex gap-1">
+                        &copy; {new Date().getFullYear()} <a href="#section_1" >takhaialtech.com</a> {t('All rights reserved.')}
+                    </p>
+                    <Link className="text-[#ef4444] hover:text-white transition-colors duration-300" to="/privacy-policy">
+                        {t('Privacy Policy')}
+                    </Link>
+                    <Link className="text-[#ef4444] hover:text-white transition-colors duration-300" to="/terms-of-service">
+                        {t('Terms of Service')}
+                    </Link>
+                </div>
                 {<CompatibleVideo
                     src={contactVideo}
                     autoPlay
