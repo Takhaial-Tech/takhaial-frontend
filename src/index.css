@@ -398,6 +398,14 @@ html[lang="ar"] * {
     width: 100%;
 }
 
+/* Background/overlay videos: the wrapper must not occupy layout space, or it
+   competes with the section content as a flex/grid sibling and halves its width.
+   display: contents removes the wrapper's box while leaving the absolutely
+   positioned <video> exactly where it was. */
+.compatible-video-frame--overlay {
+    display: contents;
+}
+
 .compatible-video-fallback,
 .compatible-video-ios-loader {
     width: 100%;

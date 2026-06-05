@@ -83,8 +83,15 @@ const CompatibleVideo = ({
 
     const showFallback = isUnsupportedFormat || hasPlaybackError;
 
+    // When the video is used as a full-bleed background/overlay (the caller
+    // positions it with `absolute`/`fixed`), the wrapper must not take part in
+    // layout. Otherwise it becomes a sibling flex/grid item and steals width
+    // from the real content. `display: contents` makes the wrapper vanish from
+    // layout without changing the video's positioning or stacking order.
+    const isOverlay = /(^|\s)(absolute|fixed)(\s|$)/.test(className);
+
     return (
-        <div className="compatible-video-frame">
+        <div className={`compatible-video-frame ${isOverlay ? 'compatible-video-frame--overlay' : ''}`}>
             {!showFallback && (
                 <video
                     ref={videoRef}

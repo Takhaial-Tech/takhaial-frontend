@@ -55,10 +55,10 @@ const HomeUi = (props) =>
 
             <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col items-center justify-end gap-8">
                 <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
-                    <h1 className={`grid-cols-1 leading-7 text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
-                        {(title || '').split(' ').map((a, k) =>
-                            <span key={k} className="glitch-wrapper ">
-                                <span className="glitch-trans block" data-glitch={a}>{a}</span> <br />
+                    <h1 className={`grid-cols-1 leading-tight text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
+                        {(title || '').split(' ').filter(Boolean).map((a, k) =>
+                            <span key={k} className="glitch-wrapper block">
+                                <span className="glitch-trans block" data-glitch={a}>{a}</span>
                             </span>
                         )}
                     </h1>
