@@ -52,13 +52,6 @@ const TYPE_SPEED_MS = 22;
 
 const isScrollable = (element) => element && element.scrollHeight > element.clientHeight + 1;
 
-const isAtScrollTop = (element) => element.scrollTop <= 0;
-
-const isAtScrollBottom = (element) =>
-{
-    return element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
-};
-
 const FutureChatbot = () =>
 {
     const { direction, language } = useLanguage();
@@ -72,7 +65,6 @@ const FutureChatbot = () =>
     const [hasUserMessages, setHasUserMessages] = useState(false);
     const shellRef = useRef(null);
     const listRef = useRef(null);
-    const touchYRef = useRef(null);
     const scrollLockRef = useRef(null);
     const hasTrackedChatContactRef = useRef(false);
 
@@ -219,79 +211,20 @@ const FutureChatbot = () =>
             visualViewportFrame = requestAnimationFrame(syncVisualViewport);
         };
 
-        const preventDocumentScroll = (event) =>
-        {
-            const shell = shellRef.current;
-            const messages = listRef.current;
-            const target = event.target;
-            const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
-            const isInsideShell = path.length ? path.includes(shell) : shell?.contains(target);
-            const isInsideMessages = path.length ? path.includes(messages) : messages?.contains(target);
-
-            if (!isInsideShell)
-            {
-                event.preventDefault();
-                return;
-            }
-
-            if (!isInsideMessages)
-            {
-                event.preventDefault();
-                return;
-            }
-
-            if (!isScrollable(messages))
-            {
-                event.preventDefault();
-                return;
-            }
-
-            const currentY = event.touches?.[0]?.clientY;
-            if (typeof currentY !== 'number')
-            {
-                event.preventDefault();
-                return;
-            }
-
-            const previousY = touchYRef.current ?? currentY;
-            const deltaY = currentY - previousY;
-
-            if ((deltaY > 0 && isAtScrollTop(messages)) || (deltaY < 0 && isAtScrollBottom(messages)))
-            {
-                touchYRef.current = currentY;
-                event.preventDefault();
-                return;
-            }
-
-            touchYRef.current = currentY;
-            event.stopPropagation();
-        };
-
-        const rememberTouchY = (event) =>
-        {
-            touchYRef.current = event.touches?.[0]?.clientY ?? null;
-        };
-
-        const preventWheelChaining = (event) =>
+        // Canonical iOS-safe scroll isolation: let the chat message list scroll
+        // natively (CSS overscroll-behavior: contain stops it from chaining to the
+        // page), and block touch/wheel scrolling everywhere else while the chat is
+        // open so the locked page behind it never moves or rubber-bands.
+        const isolateChatScroll = (event) =>
         {
             const messages = listRef.current;
 
-            if (!messages?.contains(event.target))
+            if (messages && messages.contains(event.target) && isScrollable(messages))
             {
-                event.preventDefault();
                 return;
             }
 
-            if (!isScrollable(messages))
-            {
-                event.preventDefault();
-                return;
-            }
-
-            const scrollingUp = event.deltaY < 0;
-            const scrollingDown = event.deltaY > 0;
-
-            if ((scrollingUp && isAtScrollTop(messages)) || (scrollingDown && isAtScrollBottom(messages)))
+            if (event.cancelable)
             {
                 event.preventDefault();
             }
@@ -303,9 +236,8 @@ const FutureChatbot = () =>
         viewport?.addEventListener('scroll', scheduleVisualViewportSync);
         window.addEventListener('pageshow', scheduleVisualViewportSync);
         window.addEventListener('orientationchange', scheduleVisualViewportSync);
-        document.addEventListener('touchstart', rememberTouchY, { passive: true, capture: true });
-        document.addEventListener('touchmove', preventDocumentScroll, { passive: false, capture: true });
-        document.addEventListener('wheel', preventWheelChaining, { passive: false });
+        document.addEventListener('touchmove', isolateChatScroll, { passive: false });
+        document.addEventListener('wheel', isolateChatScroll, { passive: false });
 
         return () =>
         {
@@ -318,9 +250,8 @@ const FutureChatbot = () =>
             viewport?.removeEventListener('scroll', scheduleVisualViewportSync);
             window.removeEventListener('pageshow', scheduleVisualViewportSync);
             window.removeEventListener('orientationchange', scheduleVisualViewportSync);
-            document.removeEventListener('touchstart', rememberTouchY, { capture: true });
-            document.removeEventListener('touchmove', preventDocumentScroll, { capture: true });
-            document.removeEventListener('wheel', preventWheelChaining);
+            document.removeEventListener('touchmove', isolateChatScroll);
+            document.removeEventListener('wheel', isolateChatScroll);
             root.style.removeProperty('--takhaial-chat-visual-height');
             root.style.removeProperty('--takhaial-chat-visual-width');
             root.style.removeProperty('--takhaial-chat-visual-left');

@@ -829,6 +829,16 @@ body.future-chatbot-body-lock {
     animation: future-scan-pass 4.8s linear infinite;
 }
 
+/* iOS Safari: a clip-path on any ancestor of an overflow:scroll element kills
+   touch scrolling. The open animation leaves the panel clipped (clip-path is held
+   by animation-fill-mode: forwards, so !important is required to override it). Once
+   the chat is interactive we clear it — overflow:hidden + border-radius still keep
+   the panel's rounded corners, so there is no visual change. */
+.future-chatbot-shell[data-phase="typing"] .future-chatbot-panel,
+.future-chatbot-shell[data-phase="ready"] .future-chatbot-panel {
+    clip-path: none !important;
+}
+
 .future-chatbot-shell[data-phase="ready"]:hover .future-chatbot-panel {
     border-color: rgba(6, 94, 225, 0.34);
     box-shadow:
@@ -1271,6 +1281,9 @@ body.future-chatbot-body-lock {
     overscroll-behavior-y: contain;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
+    /* Promote the scroller to its own compositing layer so iOS Safari keeps
+       momentum touch-scrolling working even though the panel uses backdrop-filter. */
+    transform: translateZ(0);
     opacity: 0;
     clip-path: inset(45% 0 45% 0);
     transition:
@@ -1280,11 +1293,18 @@ body.future-chatbot-body-lock {
     scrollbar-color: rgba(6, 94, 225, 0.45) transparent;
 }
 
-.future-chatbot-shell[data-phase="inputDescend"] .future-chatbot-messages,
+.future-chatbot-shell[data-phase="inputDescend"] .future-chatbot-messages {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transition-delay: 250ms;
+}
+
+/* Once the chat is interactive, drop clip-path entirely: an active clip-path on
+   the scroll container breaks touch scrolling in iOS Safari. */
 .future-chatbot-shell[data-phase="typing"] .future-chatbot-messages,
 .future-chatbot-shell[data-phase="ready"] .future-chatbot-messages {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
+    clip-path: none;
     transition-delay: 250ms;
 }
 
