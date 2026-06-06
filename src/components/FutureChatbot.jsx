@@ -134,12 +134,10 @@ const FutureChatbot = () =>
             const width = viewport ? viewport.width : window.innerWidth;
             const offsetLeft = viewport ? viewport.offsetLeft : 0;
             const offsetTop = viewport ? viewport.offsetTop : 0;
-            // Height of the on-screen keyboard (and any bottom UI) so the sheet can
-            // lift its lower edge above it. The window top stays anchored, so the
-            // close button is always reachable even if this estimate is imperfect.
-            const keyboard = Math.max(0, Math.round(window.innerHeight - height - offsetTop));
             root.style.setProperty('--tk-chat-vh', `${height}px`);
-            root.style.setProperty('--tk-chat-kb', `${keyboard}px`);
+            root.style.setProperty('--tk-chat-vw', `${width}px`);
+            root.style.setProperty('--tk-chat-vv-top', `${offsetTop}px`);
+            root.style.setProperty('--tk-chat-vv-left', `${offsetLeft}px`);
             root.style.setProperty('--takhaial-chat-visual-width', `${width}px`);
             root.style.setProperty('--takhaial-chat-visual-left', `${offsetLeft}px`);
         };
@@ -273,7 +271,9 @@ const FutureChatbot = () =>
             window.removeEventListener('resize', scheduleSync);
             window.removeEventListener('orientationchange', scheduleSync);
             root.style.removeProperty('--tk-chat-vh');
-            root.style.removeProperty('--tk-chat-kb');
+            root.style.removeProperty('--tk-chat-vw');
+            root.style.removeProperty('--tk-chat-vv-top');
+            root.style.removeProperty('--tk-chat-vv-left');
             root.style.removeProperty('--takhaial-chat-visual-width');
             root.style.removeProperty('--takhaial-chat-visual-left');
             removeScrollIsolation();
