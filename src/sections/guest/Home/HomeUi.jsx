@@ -53,17 +53,17 @@ const HomeUi = (props) =>
                 </EditSection>
             }
 
-            <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col items-center justify-end gap-8">
-                <div className=" w-full  md:grid md:grid-cols-4 gap-10 items-start flex-wrap">
-                    <h1 className={`grid-cols-1 leading-tight text-4xl font-bold ${isArabic ? 'text-right justify-self-start' : 'text-right justify-self-right'}`}>
+            <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col justify-end gap-8">
+                <div className={`w-full flex flex-col gap-6 ${isArabic ? 'text-right' : 'text-left'}`}>
+                    <h1 className={`leading-[1.12] text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-bold ${isArabic ? 'text-right' : 'text-left'}`}>
                         {(title || '').split(' ').filter(Boolean).map((a, k) =>
-                            <span key={k} className="glitch-wrapper block">
-                                <span className="glitch-trans block" data-glitch={a}>{a}</span>
+                            <span key={k} className="glitch-wrapper inline-block me-[0.35em]">
+                                <span className="glitch-trans inline-block" data-glitch={a}>{a}</span>
                             </span>
                         )}
                     </h1>
-                    <div className="col-span-3">
-                        <h2 className="content-center text-xl max-w-[630px]">
+                    <div className="w-full">
+                        <h2 className="text-xl max-w-[630px]">
                             {desc}
                         </h2>
                         <a
@@ -71,7 +71,7 @@ const HomeUi = (props) =>
                             target="_blank"
                             rel="noreferrer"
                             download
-                            className="block mt-[10px] transition-all duration-500 w-fit rounded-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
+                            className="inline-block mt-[16px] transition-all duration-500 w-fit rounded-xl  px-[20px] py-[10px] border border-solid border-[#ef4444] text-[#ef4444] bg-[#262626]"
                         >
                             {t('Download Profile')}
                         </a>
