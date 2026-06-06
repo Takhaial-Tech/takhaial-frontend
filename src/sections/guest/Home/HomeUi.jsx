@@ -11,7 +11,8 @@ const HomeUi = (props) =>
     const { data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
     const { language, isArabic, t } = useLanguage();
     const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
-    const title = getLocalizedField(data, 'title', language);
+    const heroTitle = isArabic ? 'تخيل تك' : 'Takhaial Tech';
+    const heroSince = isArabic ? 'منذ 2022' : 'Since 2022';
     const desc = getLocalizedField(data, 'disc', language);
 
     return (
@@ -55,13 +56,18 @@ const HomeUi = (props) =>
 
             <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col justify-end gap-8">
                 <div className={`w-full flex flex-col gap-6 ${isArabic ? 'text-right' : 'text-left'}`}>
-                    <h1 className={`leading-[1.12] text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-bold ${isArabic ? 'text-right' : 'text-left'}`}>
-                        {(title || '').split(' ').filter(Boolean).map((a, k) =>
-                            <span key={k} className="glitch-wrapper inline-block me-[0.35em]">
-                                <span className="glitch-trans inline-block" data-glitch={a}>{a}</span>
-                            </span>
-                        )}
-                    </h1>
+                    <div className="w-full">
+                        <h1 className={`leading-[1.12] text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-bold ${isArabic ? 'text-right' : 'text-left'}`}>
+                            {heroTitle.split(' ').filter(Boolean).map((a, k) =>
+                                <span key={k} className="glitch-wrapper inline-block me-[0.35em]">
+                                    <span className="glitch-trans inline-block" data-glitch={a}>{a}</span>
+                                </span>
+                            )}
+                        </h1>
+                        <p className={`mt-2 leading-tight text-[1.35rem] sm:text-[1.75rem] md:text-[2.1rem] font-semibold text-white/75 ${isArabic ? 'text-right' : 'text-left'}`}>
+                            {heroSince}
+                        </p>
+                    </div>
                     <div className="w-full">
                         <h2 className="text-xl max-w-[630px]">
                             {desc}
