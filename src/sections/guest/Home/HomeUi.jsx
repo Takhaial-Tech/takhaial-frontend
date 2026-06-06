@@ -53,7 +53,7 @@ const HomeUi = (props) =>
                 </EditSection>
             }
 
-            <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col justify-end gap-8">
+            <div className="md:container md:mx-auto z-[10] flex min-h-[calc(100vh-10rem)] w-full flex-col justify-end gap-8 pb-[18vh] md:pb-0">
                 <div className={`w-full flex flex-col gap-6 ${isArabic ? 'text-right' : 'text-left'}`}>
                     <div className="w-full">
                         <h1 className={`leading-[1.12] text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-bold ${isArabic ? 'text-right' : 'text-left'}`}>
