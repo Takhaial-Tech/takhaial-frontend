@@ -118,8 +118,12 @@ const FutureChatbot = () =>
             const width = viewport ? viewport.width : window.innerWidth;
             const offsetLeft = viewport ? viewport.offsetLeft : 0;
             const offsetTop = viewport ? viewport.offsetTop : 0;
+            // Height of the on-screen keyboard (and any bottom UI) so the sheet can
+            // lift its lower edge above it. The window top stays anchored, so the
+            // close button is always reachable even if this estimate is imperfect.
+            const keyboard = Math.max(0, Math.round(window.innerHeight - height - offsetTop));
             root.style.setProperty('--tk-chat-vh', `${height}px`);
-            root.style.setProperty('--tk-chat-vtop', `${offsetTop}px`);
+            root.style.setProperty('--tk-chat-kb', `${keyboard}px`);
             root.style.setProperty('--takhaial-chat-visual-width', `${width}px`);
             root.style.setProperty('--takhaial-chat-visual-left', `${offsetLeft}px`);
         };
@@ -167,7 +171,7 @@ const FutureChatbot = () =>
             window.removeEventListener('resize', scheduleSync);
             window.removeEventListener('orientationchange', scheduleSync);
             root.style.removeProperty('--tk-chat-vh');
-            root.style.removeProperty('--tk-chat-vtop');
+            root.style.removeProperty('--tk-chat-kb');
             root.style.removeProperty('--takhaial-chat-visual-width');
             root.style.removeProperty('--takhaial-chat-visual-left');
 
@@ -225,18 +229,22 @@ const FutureChatbot = () =>
         setInput('');
         setIsSending(true);
 
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 35000);
+
         try
         {
             const response = await fetch(`${backendUrl}chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                signal: controller.signal,
                 body: JSON.stringify({
                     language,
                     messages: [...apiMessages, { role: 'user', content }],
                 }),
             });
 
-            const result = await response.json();
+            const result = await response.json().catch(() => ({}));
             setMessages((current) => [
                 ...current,
                 { role: 'assistant', content: result?.reply || result?.message || copy.fallback },
@@ -246,6 +254,7 @@ const FutureChatbot = () =>
             setMessages((current) => [...current, { role: 'assistant', content: copy.fallback }]);
         } finally
         {
+            clearTimeout(timeout);
             setIsSending(false);
         }
     };

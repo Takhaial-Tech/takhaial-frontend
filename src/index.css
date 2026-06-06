@@ -1039,8 +1039,9 @@ body.tk-chat-locked {
 /* ---------- Mobile: full-height bottom sheet ---------- */
 @media (max-width: 767px) {
     .tk-chat-root {
-        top: var(--tk-chat-vtop, 0px);
-        height: var(--tk-chat-vh, 100dvh);
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
     }
 
     .tk-chat-launcher {
@@ -1055,16 +1056,20 @@ body.tk-chat-locked {
         height: 26px;
     }
 
+    /* The top edge stays anchored (close button always reachable) and the bottom
+       edge lifts above the keyboard via --tk-chat-kb. position: fixed is relative
+       to the layout viewport, so the keyboard inset must be subtracted explicitly
+       on iOS Safari. */
     .tk-chat-window {
         left: 0;
         right: 0;
-        bottom: 0;
-        top: max(env(safe-area-inset-top), 20px);
+        top: max(env(safe-area-inset-top), 12px);
+        bottom: var(--tk-chat-kb, 0px);
         width: 100%;
         height: auto;
         border-radius: 22px 22px 0 0;
         transform-origin: bottom center;
-        transform: translateY(100%);
+        transform: translateY(110%);
     }
 
     .tk-chat-window.is-open {
