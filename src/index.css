@@ -2030,7 +2030,9 @@ body.future-chatbot-body-lock {
 @media (max-width: 768px) {
     .future-chatbot-anchor--floating {
         left: 12px;
-        bottom: max(14px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 14px));
+        /* Sit above the floating Call/WhatsApp/Quote bar on mobile (it spans the
+           full width down here, unlike desktop where it is a narrow right card). */
+        bottom: max(84px, calc(env(safe-area-inset-bottom) + var(--takhaial-chat-keyboard-offset, 0px) + 84px));
     }
 
     .future-chatbot-anchor--floating .future-chatbot-shell {
