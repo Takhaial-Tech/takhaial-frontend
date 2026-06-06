@@ -56,7 +56,8 @@ const FutureChatbot = () =>
 
     const listRef = useRef(null);
     const inputRef = useRef(null);
-    const bodyLockRef = useRef(null);
+    const scrollLockRef = useRef(null);
+    const activeRequestRef = useRef(null);
     const hasTrackedRef = useRef(false);
 
     const openChat = useCallback(() =>
@@ -69,7 +70,14 @@ const FutureChatbot = () =>
         setIsOpen(true);
     }, [language]);
 
-    const closeChat = useCallback(() => setIsOpen(false), []);
+    const closeChat = useCallback(() =>
+    {
+        activeRequestRef.current?.abort();
+        activeRequestRef.current = null;
+        inputRef.current?.blur();
+        setIsSending(false);
+        setIsOpen(false);
+    }, []);
 
     // Mount/unmount with enter + exit animation (double rAF to flip enter state).
     useEffect(() =>
@@ -95,14 +103,22 @@ const FutureChatbot = () =>
         if (!isMounted) return undefined;
         const onKey = (event) =>
         {
-            if (event.key === 'Escape') setIsOpen(false);
+            if (event.key === 'Escape') closeChat();
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
-    }, [isMounted]);
+    }, [closeChat, isMounted]);
 
-    // Lock the page behind the sheet on mobile only, and keep the sheet sized to
-    // the visual viewport so the on-screen keyboard never hides the input.
+    useEffect(() => () =>
+    {
+        activeRequestRef.current?.abort();
+        activeRequestRef.current = null;
+    }, []);
+
+    // Lock the page behind the sheet on mobile without fixing <body>. Fixed body
+    // locks are fragile in iOS Safari once the keyboard and fetch state change.
+    // Instead, freeze document overflow and prevent scroll chaining outside the
+    // chat's own message list.
     useEffect(() =>
     {
         if (!isMounted) return undefined;
@@ -141,26 +157,112 @@ const FutureChatbot = () =>
         window.addEventListener('orientationchange', scheduleSync);
 
         const lockBody = isMobileViewport();
+        let startY = 0;
+        let startX = 0;
+        let removeScrollIsolation = () => {};
+
         if (lockBody)
         {
             const body = document.body;
-            const scrollY = window.scrollY || window.pageYOffset || 0;
-            bodyLockRef.current = {
-                scrollY,
-                position: body.style.position,
-                top: body.style.top,
-                left: body.style.left,
-                right: body.style.right,
-                width: body.style.width,
+            scrollLockRef.current = {
+                rootOverflow: root.style.overflow,
+                rootOverscrollBehavior: root.style.overscrollBehavior,
                 overflow: body.style.overflow,
+                overscrollBehavior: body.style.overscrollBehavior,
             };
+
+            root.classList.add('tk-chat-page-locked');
             body.classList.add('tk-chat-locked');
-            body.style.position = 'fixed';
-            body.style.top = `-${scrollY}px`;
-            body.style.left = '0';
-            body.style.right = '0';
-            body.style.width = '100%';
+            root.style.overflow = 'hidden';
+            root.style.overscrollBehavior = 'none';
             body.style.overflow = 'hidden';
+            body.style.overscrollBehavior = 'none';
+
+            const getElement = (target) => target instanceof Element ? target : null;
+            const isInsideWindow = (target) => Boolean(getElement(target)?.closest('.tk-chat-window'));
+            const getMessageList = (target) => getElement(target)?.closest('.tk-chat-body');
+
+            const onTouchStart = (event) =>
+            {
+                const touch = event.touches?.[0];
+                startY = touch?.clientY ?? 0;
+                startX = touch?.clientX ?? 0;
+            };
+
+            const onTouchMove = (event) =>
+            {
+                const target = event.target;
+                if (!isInsideWindow(target))
+                {
+                    event.preventDefault();
+                    return;
+                }
+
+                const messageList = getMessageList(target);
+                if (!messageList)
+                {
+                    event.preventDefault();
+                    return;
+                }
+
+                const touch = event.touches?.[0];
+                const currentY = touch?.clientY ?? startY;
+                const currentX = touch?.clientX ?? startX;
+                const deltaY = currentY - startY;
+                const deltaX = currentX - startX;
+
+                if (Math.abs(deltaX) > Math.abs(deltaY))
+                {
+                    event.preventDefault();
+                    return;
+                }
+
+                const atTop = messageList.scrollTop <= 0;
+                const atBottom =
+                    Math.ceil(messageList.scrollTop + messageList.clientHeight) >= messageList.scrollHeight;
+
+                if ((atTop && deltaY > 0) || (atBottom && deltaY < 0))
+                {
+                    event.preventDefault();
+                }
+            };
+
+            const onWheel = (event) =>
+            {
+                const target = event.target;
+                if (!isInsideWindow(target))
+                {
+                    event.preventDefault();
+                    return;
+                }
+
+                const messageList = getMessageList(target);
+                if (!messageList)
+                {
+                    event.preventDefault();
+                    return;
+                }
+
+                const atTop = messageList.scrollTop <= 0;
+                const atBottom =
+                    Math.ceil(messageList.scrollTop + messageList.clientHeight) >= messageList.scrollHeight;
+
+                if ((atTop && event.deltaY < 0) || (atBottom && event.deltaY > 0))
+                {
+                    event.preventDefault();
+                }
+            };
+
+            document.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
+            document.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+            document.addEventListener('wheel', onWheel, { passive: false, capture: true });
+
+            removeScrollIsolation = () =>
+            {
+                document.removeEventListener('touchstart', onTouchStart, { capture: true });
+                document.removeEventListener('touchmove', onTouchMove, { capture: true });
+                document.removeEventListener('wheel', onWheel, { capture: true });
+            };
         }
 
         return () =>
@@ -174,20 +276,19 @@ const FutureChatbot = () =>
             root.style.removeProperty('--tk-chat-kb');
             root.style.removeProperty('--takhaial-chat-visual-width');
             root.style.removeProperty('--takhaial-chat-visual-left');
+            removeScrollIsolation();
 
-            const lock = bodyLockRef.current;
+            const lock = scrollLockRef.current;
             if (lock)
             {
                 const body = document.body;
+                root.classList.remove('tk-chat-page-locked');
                 body.classList.remove('tk-chat-locked');
-                body.style.position = lock.position;
-                body.style.top = lock.top;
-                body.style.left = lock.left;
-                body.style.right = lock.right;
-                body.style.width = lock.width;
+                root.style.overflow = lock.rootOverflow;
+                root.style.overscrollBehavior = lock.rootOverscrollBehavior;
                 body.style.overflow = lock.overflow;
-                window.scrollTo(0, lock.scrollY);
-                bodyLockRef.current = null;
+                body.style.overscrollBehavior = lock.overscrollBehavior;
+                scrollLockRef.current = null;
             }
         };
     }, [isMounted]);
@@ -228,8 +329,13 @@ const FutureChatbot = () =>
         setMessages((current) => [...current, { role: 'user', content }]);
         setInput('');
         setIsSending(true);
+        if (isMobileViewport())
+        {
+            inputRef.current?.blur();
+        }
 
         const controller = new AbortController();
+        activeRequestRef.current = controller;
         const timeout = setTimeout(() => controller.abort(), 35000);
 
         try
@@ -245,18 +351,31 @@ const FutureChatbot = () =>
             });
 
             const result = await response.json().catch(() => ({}));
+            if (controller.signal.aborted || activeRequestRef.current !== controller) return;
+
             setMessages((current) => [
                 ...current,
                 { role: 'assistant', content: result?.reply || result?.message || copy.fallback },
             ]);
         } catch (err)
         {
+            if (controller.signal.aborted) return;
             setMessages((current) => [...current, { role: 'assistant', content: copy.fallback }]);
         } finally
         {
             clearTimeout(timeout);
-            setIsSending(false);
+            if (activeRequestRef.current === controller)
+            {
+                activeRequestRef.current = null;
+                setIsSending(false);
+            }
         }
+    };
+
+    const handleCloseTouch = (event) =>
+    {
+        event.preventDefault();
+        closeChat();
     };
 
     const sheet = isMounted
@@ -271,6 +390,7 @@ const FutureChatbot = () =>
                     className={`tk-chat-scrim${show ? ' is-open' : ''}`}
                     aria-label={copy.closeLabel}
                     onClick={closeChat}
+                    onTouchEnd={handleCloseTouch}
                     tabIndex={-1}
                 />
 
@@ -300,6 +420,7 @@ const FutureChatbot = () =>
                             type="button"
                             className="tk-chat-close"
                             onClick={closeChat}
+                            onTouchEnd={handleCloseTouch}
                             aria-label={copy.closeLabel}
                         >
                             <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">

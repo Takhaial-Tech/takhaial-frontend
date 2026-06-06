@@ -603,14 +603,15 @@ html {
 /* ================================================================
    Takhaial AI chat — premium, mobile/iOS-Safari friendly.
    Launcher FAB + portaled window (desktop card / mobile bottom sheet).
-   Scroll is isolated (overscroll-behavior: contain + body lock); no
-   clip-path/backdrop-filter on any ancestor of the scroll container.
+   Scroll is isolated without fixed-body locking; no clip-path/backdrop-filter
+   on any ancestor of the scroll container.
    ================================================================ */
 
 :root {
     --tk-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+html.tk-chat-page-locked,
 body.tk-chat-locked {
     overflow: hidden;
     overscroll-behavior: none;
@@ -636,6 +637,8 @@ body.tk-chat-locked {
     border: none;
     border-radius: 50%;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     color: #fff;
     background: linear-gradient(140deg, #2563eb 0%, #1e3a8a 48%, #ef4444 135%);
     box-shadow:
@@ -700,9 +703,10 @@ body.tk-chat-locked {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: var(--tk-chat-vh, 100dvh);
     z-index: 2147483001;
     pointer-events: none;
+    overscroll-behavior: none;
 }
 
 .tk-chat-scrim {
@@ -712,6 +716,8 @@ body.tk-chat-locked {
     padding: 0;
     border: none;
     cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
     background: rgba(2, 4, 10, 0.55);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
@@ -742,6 +748,8 @@ body.tk-chat-locked {
         0 30px 80px rgba(0, 0, 0, 0.55),
         inset 0 1px 0 rgba(255, 255, 255, 0.04);
     pointer-events: auto;
+    isolation: isolate;
+    touch-action: manipulation;
     transform-origin: bottom left;
     opacity: 0;
     transform: translateY(14px) scale(.98);
@@ -830,6 +838,8 @@ body.tk-chat-locked {
     border: none;
     border-radius: 50%;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     color: rgba(255, 255, 255, 0.7);
     background: rgba(255, 255, 255, 0.06);
     transition: background .2s ease, color .2s ease, transform .16s ease;
@@ -861,6 +871,7 @@ body.tk-chat-locked {
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    touch-action: pan-y;
     transform: translateZ(0);
     display: flex;
     flex-direction: column;
@@ -963,6 +974,7 @@ body.tk-chat-locked {
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     border-top: 1px solid rgba(255, 255, 255, 0.07);
     background: rgba(255, 255, 255, 0.02);
+    touch-action: manipulation;
 }
 
 .tk-chat-input input {
@@ -977,6 +989,9 @@ body.tk-chat-locked {
     /* 16px keeps iOS Safari from zooming the page on focus. */
     font-size: 16px;
     outline: none;
+    touch-action: manipulation;
+    -webkit-user-select: text;
+    user-select: text;
     transition: border-color .2s ease, background .2s ease;
 }
 
@@ -999,6 +1014,8 @@ body.tk-chat-locked {
     border: none;
     border-radius: 50%;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     color: #fff;
     background: linear-gradient(140deg, #ef4444, #c81e1e);
     box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
@@ -1040,8 +1057,7 @@ body.tk-chat-locked {
 @media (max-width: 767px) {
     .tk-chat-root {
         top: 0;
-        height: 100vh;
-        height: 100dvh;
+        height: var(--tk-chat-vh, 100dvh);
     }
 
     .tk-chat-launcher {
@@ -1066,6 +1082,7 @@ body.tk-chat-locked {
         top: max(env(safe-area-inset-top), 12px);
         bottom: var(--tk-chat-kb, 0px);
         width: 100%;
+        max-height: calc(var(--tk-chat-vh, 100dvh) - max(env(safe-area-inset-top), 12px) - var(--tk-chat-kb, 0px));
         height: auto;
         border-radius: 22px 22px 0 0;
         transform-origin: bottom center;
@@ -1122,4 +1139,3 @@ body.tk-chat-locked {
         transform: none !important;
     }
 }
-
