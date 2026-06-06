@@ -3,17 +3,16 @@ import defaultProfilePdf from '../../../assets/documents/companyProfile.pdf'
 import EditSection from '../../../components/EditSection';
 import { homeInputsData } from './homeInputsData';
 import { useLanguage } from '../../../i18n/LanguageContext';
-import { getBilingualInitialValues, getLocalizedField } from '../../../i18n/localizedContent';
+import { getBilingualInitialValues } from '../../../i18n/localizedContent';
 import CompatibleVideo from '../../../components/CompatibleVideo';
 
 const HomeUi = (props) =>
 {
     const { data, isAdmin, onEdit, isLoadingEdit, isOpenEditModal, setIsOpenEditModal, isOpenProfileModal, setIsOpenProfileModal, isLoadingEditSettings, onEditProfilePdf, setProfilePdfFile, siteSettings } = props;
-    const { language, isArabic, t } = useLanguage();
+    const { isArabic, t } = useLanguage();
     const profilePdfHref = siteSettings?.profilePdfUrl || defaultProfilePdf;
     const heroTitle = isArabic ? 'تخيل تك' : 'Takhaial Tech';
     const heroSince = isArabic ? 'منذ 2022' : 'Since 2022';
-    const desc = getLocalizedField(data, 'disc', language);
 
     return (
         <section id="section_1" className={` min-h-[100vh] relative text-white flex justify-center items-center px-[20px] bg-[#000] z-[1] relative py-[60px] home ${isAdmin ? 'pt-[10rem] ' : "pt-[6rem] "}`} >
@@ -69,9 +68,6 @@ const HomeUi = (props) =>
                         </p>
                     </div>
                     <div className="w-full">
-                        <h2 className="text-xl max-w-[630px]">
-                            {desc}
-                        </h2>
                         <a
                             href={profilePdfHref}
                             target="_blank"
