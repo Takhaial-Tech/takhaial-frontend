@@ -4,7 +4,6 @@ import mailicon from '../../../assets/icons/mailicon.svg'
 import cta from '../../../assets/icons/cta.svg'
 import contactVideo from '../../../assets/videos/contact.mp4'
 import QuickActions from '../../../components/QuickActions'
-import FutureChatbot from '../../../components/FutureChatbot'
 import { FormikContainer, Input } from '../../../components/inputs'
 import { contactIntialValues } from './ContactInputsData'
 import Textarea from '../../../components/inputs/Textarea'
@@ -144,9 +143,6 @@ const ContactUi = (props) =>
             </section>
 
 
-            <div className="future-chatbot-anchor future-chatbot-anchor--floating">
-                <FutureChatbot />
-            </div>
             <div className={'quick-action-floating rounded-2xl fixed z-40 right-[20px] w-[300px] max-w-[calc(100vw-40px)] bg-[#050505]/95 border-[#ef4444] border border-solid p-2 shadow-[0_18px_48px_rgba(0,0,0,0.42)]'} style={{ bottom: 'max(20px, env(safe-area-inset-bottom))' }} >
                 <h2 className="quick-action-title text-white mb-2 px-1">{t('Quick action')}</h2>
 

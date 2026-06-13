@@ -76,6 +76,29 @@ const CompatibleVideo = ({
         setIsUnsupportedFormat(sourceType ? !canBrowserPlay(sourceType) : false);
     }, [sourceType, sourceUrl]);
 
+    // Looping background videos pause while off-screen: with several sections
+    // each autoplaying a video, decoding them all at once contends for the
+    // GPU and makes the visible one stutter.
+    useEffect(() =>
+    {
+        const video = videoRef.current;
+        if (!video || !autoPlay) return undefined;
+
+        const observer = new IntersectionObserver(([entry]) =>
+        {
+            if (entry.isIntersecting)
+            {
+                video.play()?.catch?.(() => {});
+            } else
+            {
+                video.pause();
+            }
+        }, { threshold: 0.05 });
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, [autoPlay, sourceUrl, isUnsupportedFormat, hasPlaybackError]);
+
     if (!sourceUrl)
     {
         return null;

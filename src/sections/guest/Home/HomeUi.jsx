@@ -5,6 +5,7 @@ import { homeInputsData } from './homeInputsData';
 import { useLanguage } from '../../../i18n/LanguageContext';
 import { getBilingualInitialValues } from '../../../i18n/localizedContent';
 import CompatibleVideo from '../../../components/CompatibleVideo';
+import RobotAssistant from '../../../components/RobotAssistant';
 
 const HomeUi = (props) =>
 {
@@ -80,6 +81,8 @@ const HomeUi = (props) =>
                     </div>
                 </div>
             </div>
+
+            <RobotAssistant />
 
             <CompatibleVideo
                 src={homeVideo}

@@ -697,6 +697,114 @@ body.tk-chat-locked {
     100% { opacity: 0; }
 }
 
+/* ---------- Robot assistant (3D, lives in the home hero) ---------- */
+.tk-robot-anchor {
+    position: absolute;
+    z-index: 20;
+    left: 12vw;
+    top: 13vh;
+    width: min(28vw, 56vh);
+    aspect-ratio: 1 / 1;
+    height: auto;
+}
+
+/* Mirror to the right side for the Arabic (RTL) layout. */
+.rtl-layout .tk-robot-anchor {
+    left: auto;
+    right: 12vw;
+}
+
+.tk-robot-stage {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .25s var(--tk-ease);
+}
+
+.tk-robot-anchor[data-phase="idle"] .tk-robot-stage:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+.tk-robot-stage:active {
+    transform: scale(.96);
+}
+
+.tk-robot-stage:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+    border-radius: 18px;
+}
+
+/* The draw surface is much larger than the robot's box so animated limbs
+   never clip at the frame edge. Must stay in sync with STAGE_OVERSCAN (2.2)
+   in RobotStage.jsx — the camera pulls back by the same factor, keeping the
+   robot's apparent size unchanged. Clicks pass through to the stage button. */
+.tk-robot-canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 220%;
+    height: 220%;
+    transform: translate(-50%, -50%);
+    display: block;
+    background: transparent;
+    pointer-events: none;
+}
+
+/* Tap-me hint: a small hand that taps toward the robot with a ripple. */
+.tk-robot-hint {
+    position: absolute;
+    right: 24%;
+    top: 34%;
+    width: clamp(40px, 12%, 64px);
+    aspect-ratio: 1 / 1;
+    height: auto;
+    pointer-events: none;
+    animation: tk-robot-tap 1.6s ease-in-out infinite;
+}
+
+.tk-robot-hint svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+    stroke: #1e293b;
+    stroke-width: .8;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+    transform: rotate(-18deg);
+}
+
+.tk-robot-hint-ripple {
+    position: absolute;
+    left: 2px;
+    top: -4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    animation: tk-robot-ripple 1.6s ease-out infinite;
+}
+
+@keyframes tk-robot-tap {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    35% { transform: translate(-7px, 9px) scale(.92); }
+    55% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes tk-robot-ripple {
+    0%, 30% { transform: scale(.4); opacity: 0; }
+    45% { opacity: .85; }
+    80%, 100% { transform: scale(1.7); opacity: 0; }
+}
+
 /* ---------- Overlay root + scrim ---------- */
 .tk-chat-root {
     position: fixed;
@@ -759,6 +867,76 @@ body.tk-chat-locked {
 .tk-chat-window.is-open {
     opacity: 1;
     transform: translateY(0) scale(1);
+}
+
+/* Desktop: the window springs out of the robot in the hero (the robot box is
+   at left 12vw / top 13vh, width min(28vw, 56vh) — keep in sync with
+   .tk-robot-anchor). The mobile bottom sheet below is untouched. */
+@media (min-width: 768px) {
+
+    /* Anchored to the document, not the screen: scrolling the page moves the
+       open chat away together with the robot instead of following the user. */
+    .tk-chat-root {
+        position: absolute;
+    }
+
+    .tk-chat-window {
+        position: absolute;
+        left: calc(12vw + min(28vw, 56vh) * 0.74);
+        top: calc(13vh + min(28vw, 56vh) * 0.1);
+        bottom: auto;
+        height: min(600px, calc(var(--tk-chat-vh, 100dvh) - 13vh - 90px));
+        transform-origin: left center;
+        transform: translateX(-48px) scale(.5);
+        filter: blur(10px);
+        transition:
+            opacity .26s cubic-bezier(0.22, 1, 0.36, 1),
+            transform .26s cubic-bezier(0.22, 1, 0.36, 1),
+            filter .26s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tk-chat-window.is-open {
+        animation: tk-chat-pop-out .55s cubic-bezier(0.3, 1.35, 0.5, 1) both;
+    }
+
+    .tk-chat-root[dir="rtl"] .tk-chat-window {
+        left: auto;
+        right: calc(12vw + min(28vw, 56vh) * 0.74);
+        transform-origin: right center;
+        transform: translateX(48px) scale(.5);
+    }
+
+    .tk-chat-root[dir="rtl"] .tk-chat-window.is-open {
+        animation-name: tk-chat-pop-out-rtl;
+    }
+}
+
+@keyframes tk-chat-pop-out {
+    from {
+        opacity: 0;
+        transform: translateX(-48px) scale(.5);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes tk-chat-pop-out-rtl {
+    from {
+        opacity: 0;
+        transform: translateX(48px) scale(.5);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 /* ---------- Header ---------- */
@@ -1069,6 +1247,18 @@ body.tk-chat-locked {
         height: 56px;
     }
 
+    /* Mobile hero: robot floats centered in the open space above the title.
+       16vh (not 11vh) keeps the raised hand of the greeting on-screen. */
+    .tk-robot-anchor,
+    .rtl-layout .tk-robot-anchor {
+        left: 50%;
+        right: auto;
+        top: 16vh;
+        transform: translateX(-50%);
+        width: min(64vw, 42vh);
+    }
+
+
     .tk-chat-launcher svg {
         width: 26px;
         height: 26px;
@@ -1094,8 +1284,35 @@ body.tk-chat-locked {
         transform: translateY(0);
     }
 
+    /* Semi-transparent sheet so the robot stays visible behind the chat.
+       Deliberately NO backdrop-filter on the window — it is an ancestor of
+       the scroll container and blur there breaks iOS scrolling. */
+    .tk-chat-window {
+        background: linear-gradient(180deg, rgba(12, 17, 28, 0.76) 0%, rgba(8, 11, 19, 0.84) 100%);
+    }
+
+    /* Lighten the scrim and drop its blur so the robot shows through. */
+    .tk-chat-scrim {
+        background: rgba(2, 4, 10, 0.18);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    /* Solid header: page controls (language/menu) must not show through
+       behind the chat title while the rest of the sheet stays translucent. */
     .tk-chat-head {
         padding: 16px 14px;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0)),
+            #0c111c;
+    }
+
+    /* Solid input bar too: the quick-action bar behind the page must not
+       show through the message field and send button. */
+    .tk-chat-input {
+        background:
+            linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+            #080b13;
     }
 
     /* Floating Call/WhatsApp/Quote bar (separate component) — preserve. */
@@ -1131,7 +1348,10 @@ body.tk-chat-locked {
     .tk-chat-scrim,
     .tk-chat-msg,
     .tk-chat-launcher,
-    .tk-chat-launcher-pulse {
+    .tk-chat-launcher-pulse,
+    .tk-robot-stage,
+    .tk-robot-hint,
+    .tk-robot-hint-ripple {
         transition-duration: .01ms !important;
         animation: none !important;
     }

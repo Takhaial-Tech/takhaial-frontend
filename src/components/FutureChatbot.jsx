@@ -42,12 +42,17 @@ const chatCopy = {
 const isMobileViewport = () =>
     typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
 
-const FutureChatbot = () =>
+// Standalone by default (renders its own launcher FAB). Pass `open` +
+// `onOpenChange` to control it from a parent (e.g. the robot assistant),
+// and `showLauncher={false}` to hide the built-in launcher.
+const FutureChatbot = ({ open, onOpenChange, showLauncher = true }) =>
 {
     const { direction, language } = useLanguage();
     const copy = chatCopy[language === 'ar' ? 'ar' : 'en'];
 
-    const [isOpen, setIsOpen] = useState(false);
+    const isControlled = typeof open === 'boolean';
+    const [internalOpen, setInternalOpen] = useState(false);
+    const isOpen = isControlled ? open : internalOpen;
     const [isMounted, setIsMounted] = useState(false);
     const [show, setShow] = useState(false);
     const [messages, setMessages] = useState([]);
@@ -67,8 +72,9 @@ const FutureChatbot = () =>
                 ? current
                 : [{ role: 'assistant', content: chatCopy[language === 'ar' ? 'ar' : 'en'].initialMessage }]
         );
-        setIsOpen(true);
-    }, [language]);
+        if (isControlled) onOpenChange?.(true);
+        else setInternalOpen(true);
+    }, [language, isControlled, onOpenChange]);
 
     const closeChat = useCallback(() =>
     {
@@ -76,8 +82,21 @@ const FutureChatbot = () =>
         activeRequestRef.current = null;
         inputRef.current?.blur();
         setIsSending(false);
-        setIsOpen(false);
-    }, []);
+        if (isControlled) onOpenChange?.(false);
+        else setInternalOpen(false);
+    }, [isControlled, onOpenChange]);
+
+    // In controlled mode the parent flips `open` directly, so seed the
+    // greeting message here instead of relying on openChat().
+    useEffect(() =>
+    {
+        if (!isControlled || !open) return;
+        setMessages((current) =>
+            current.length
+                ? current
+                : [{ role: 'assistant', content: chatCopy[language === 'ar' ? 'ar' : 'en'].initialMessage }]
+        );
+    }, [isControlled, open, language]);
 
     // Mount/unmount with enter + exit animation (double rAF to flip enter state).
     useEffect(() =>
@@ -477,22 +496,24 @@ const FutureChatbot = () =>
 
     return (
         <>
-            <button
-                type="button"
-                className="tk-chat-launcher"
-                data-open={isOpen ? 'true' : 'false'}
-                onClick={openChat}
-                aria-label={copy.openLabel}
-                aria-expanded={isOpen}
-            >
-                <span className="tk-chat-launcher-pulse" aria-hidden="true" />
-                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-                    <path d="M6.5 7.5h11a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-2.5 2.5h-5l-3.6 2.6V16.5H6.5A2.5 2.5 0 0 1 4 14v-4a2.5 2.5 0 0 1 2.5-2.5Z" />
-                    <circle cx="9" cy="12" r="1" />
-                    <circle cx="12" cy="12" r="1" />
-                    <circle cx="15" cy="12" r="1" />
-                </svg>
-            </button>
+            {showLauncher && (
+                <button
+                    type="button"
+                    className="tk-chat-launcher"
+                    data-open={isOpen ? 'true' : 'false'}
+                    onClick={openChat}
+                    aria-label={copy.openLabel}
+                    aria-expanded={isOpen}
+                >
+                    <span className="tk-chat-launcher-pulse" aria-hidden="true" />
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                        <path d="M6.5 7.5h11a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-2.5 2.5h-5l-3.6 2.6V16.5H6.5A2.5 2.5 0 0 1 4 14v-4a2.5 2.5 0 0 1 2.5-2.5Z" />
+                        <circle cx="9" cy="12" r="1" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="15" cy="12" r="1" />
+                    </svg>
+                </button>
+            )}
             {sheet}
         </>
     );
