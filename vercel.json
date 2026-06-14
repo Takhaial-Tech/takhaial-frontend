@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/phook",
+      "destination": "https://app.takhaialtech.com/phook",
+      "permanent": false
+    }
+  ]
+}
