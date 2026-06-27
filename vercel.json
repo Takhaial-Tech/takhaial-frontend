@@ -5,5 +5,15 @@
       "destination": "https://app.takhaialtech.com/phook",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/smartegypt",
+      "destination": "/smartegypt/index.html"
+    },
+    {
+      "source": "/smartegypt/",
+      "destination": "/smartegypt/index.html"
+    }
   ]
 }
