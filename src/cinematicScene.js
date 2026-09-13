@@ -112,8 +112,10 @@ export function createCinematicScene(renderer) {
 
   /* The woven information ribbon. Denser tubes than the baked film carried,
      because nothing is being squeezed into a 1536 px frame any more. */
+  const wide = new THREE.Group();
+  world.add(wide);
   const weave = new THREE.Group();
-  world.add(weave);
+  wide.add(weave);
   for (let band = 0; band < 9; band++) {
     const pts = [];
     for (let j = 0; j <= 240; j++) {
@@ -144,7 +146,7 @@ export function createCinematicScene(renderer) {
 
   /* Seventy-two objects migrating from scatter into a lattice. */
   const field = new THREE.Group();
-  world.add(field);
+  wide.add(field);
   const cubes = [];
   const cubeGeo = track(new RoundedBoxGeometry(0.36, 0.36, 0.36, 4, 0.055));
   for (let i = 0; i < 72; i++) {
@@ -162,7 +164,7 @@ export function createCinematicScene(renderer) {
   /* The flow. The rails themselves are gone; their paths survive only to carry
      lights, each trailing a short tail. */
   const rails = new THREE.Group();
-  world.add(rails);
+  wide.add(rails);
   const TAIL = 7;
   const flows = [];
   for (let i = 0; i < 7; i++) {
@@ -187,7 +189,7 @@ export function createCinematicScene(renderer) {
   function endpoint(width, height, x, y) {
     const g = new THREE.Group();
     g.position.set(x, y, 0.8);
-    world.add(g);
+    wide.add(g);
     const box = track(new RoundedBoxGeometry(width, height, 0.14, 4, 0.09));
     g.add(new THREE.Mesh(box, darkMaterial));
     const edges = track(new THREE.EdgesGeometry(box, 30));
@@ -196,6 +198,63 @@ export function createCinematicScene(renderer) {
   }
   const web = endpoint(1.28, 0.9, -0.93, -2.58),
     app = endpoint(0.51, 0.97, 1.03, -2.58);
+
+  /* ---- the portrait composition -----------------------------------------
+     A phone is not a narrow desktop. Squeezing three masses into it put the
+     weave straight behind the headline and shrank everything past reading. So
+     portrait gets its own scene: the mark at the top, light falling down the
+     outer thirds, and the lattice settling along the bottom. The middle stays
+     empty, because that is where the sentence lives. */
+  const tall = new THREE.Group();
+  tall.visible = false;
+  world.add(tall);
+
+  const STREAMS = 6, STREAM_TAIL = 9;
+  const streams = [];
+  for (let i = 0; i < STREAMS; i++) {
+    const side = i % 2 ? 1 : -1;
+    const lane = Math.floor(i / 2);
+    const x = side * (1.95 + lane * 0.42);
+    const sway = 0.3 + lane * 0.09;
+    const path = curve([
+      [x, 6.4, -1.2 - lane * 0.5],
+      [x - side * sway, 3.1, -0.8 - lane * 0.4],
+      [x + side * sway * 0.7, -0.2, -0.5 - lane * 0.3],
+      [x - side * sway * 0.5, -3.4, -0.8 - lane * 0.4],
+      [x, -6.4, -1.2 - lane * 0.5],
+    ]);
+    const lights = [];
+    for (let t = 0; t < STREAM_TAIL; t++) {
+      const fade = 1 - t / STREAM_TAIL;
+      lights.push({
+        sprite: spark(0.3 * (0.3 + 0.7 * fade * fade), 0.9 * fade * fade, tall),
+        lag: t * 0.011,
+        fade,
+      });
+    }
+    streams.push({ path, lights, offset: i * 0.173 + (i % 2) * 0.41 });
+  }
+
+  /* The same idea as the wide lattice, laid out along the bottom edge. */
+  const bed = new THREE.Group();
+  tall.add(bed);
+  const bedCubes = [];
+  for (let i = 0; i < 24; i++) {
+    const col = i % 8, row = Math.floor(i / 8);
+    const settled = new THREE.Vector3((col - 3.5) * 0.6, (row - 1) * 0.54, (row - 1) * 0.3);
+    const initial = new THREE.Vector3(
+      Math.sin(i * 2.399) * 2.2,
+      settled.y + 0.85 + Math.abs(Math.cos(i * 1.7)) * 0.7,
+      -1.6 + Math.sin(i * 3.1) * 1.2,
+    );
+    const object = new THREE.Mesh(cubeGeo, i % 9 === 0 ? silver : blue);
+    object.scale.setScalar(0.92);
+    bed.add(object);
+    bedCubes.push({ obj: object, initial, target: settled, index: i });
+  }
+
+  /* A soft ground glow so the lattice sits on something. */
+  const bedGlow = spark(7.2, 0.13, tall);
 
   /* Deterministic depth particles, now twinkling rather than merely present. */
   const stars = [];
@@ -213,11 +272,33 @@ export function createCinematicScene(renderer) {
   let layout = { endY: -2.58, logoY: 3.15 };
   let distance = 16.4;
 
+  const PORTRAIT_BELOW = 0.86;
+
   function applyLayout(aspect) {
-    /* 0 at a phone, 1 at 16:9, beyond 1 on ultrawide so the masses keep
-       spreading rather than pooling in the middle of a very wide window. In
-       portrait the composition opens diagonally, leaving the centre band for
-       the headline — the space the baked film reserved with a vignette. */
+    const portrait = aspect < PORTRAIT_BELOW;
+    wide.visible = !portrait;
+    tall.visible = portrait;
+    if (portrait) {
+      /* Vertical composition: mark up top, light down the outer thirds, the
+         lattice along the bottom, and a clear band through the middle. */
+      const room = clamp((aspect - 0.4) / (PORTRAIT_BELOW - 0.4), 0, 1);
+      const l = {
+        portrait: true,
+        logoY: lerp(5.45, 5.15, room),
+        logoS: lerp(0.76, 0.9, room),
+        bedY: lerp(-5.6, -5.3, room),
+        halfX: lerp(2.6, 3.1, room),
+        halfY: lerp(6.85, 6.6, room),
+      };
+      layout = l;
+      logo.position.set(0, l.logoY, 0.5);
+      logo.scale.setScalar(l.logoS);
+      bed.position.set(0, l.bedY, 0);
+      bedGlow.position.set(0, l.bedY - 0.25, -1.4);
+      return l;
+    }
+    /* 0 at the portrait threshold, 1 at 16:9, beyond 1 on ultrawide so the
+       masses keep spreading rather than pooling in a very wide window. */
     const t = clamp((aspect - 0.55) / (1.78 - 0.55), 0, 1.35);
     const l = {
       weaveX: lerp(-1.45, -5.6, t),
@@ -231,6 +312,7 @@ export function createCinematicScene(renderer) {
       railsY: lerp(-2.1, 0, t),
       railsS: lerp(0.42, 1, t),
       endY: lerp(-4.45, -2.58, t),
+      portrait: false,
     };
     layout = l;
     weave.position.set(l.weaveX, l.weaveY, 0);
@@ -266,8 +348,12 @@ export function createCinematicScene(renderer) {
 
     camera.aspect = FILM_ASPECT;
     const l = applyLayout(vA);
-    const halfX = Math.max(Math.abs(l.weaveX) + 2.5 * l.weaveS, Math.abs(l.fieldX) + 1.45 * l.fieldS, 5.6 * l.railsS);
-    const halfY = Math.max(l.logoY + 1.3 * l.logoS, Math.abs(l.endY) + 0.75);
+    const halfX = l.portrait
+      ? l.halfX
+      : Math.max(Math.abs(l.weaveX) + 2.5 * l.weaveS, Math.abs(l.fieldX) + 1.45 * l.fieldS, 5.6 * l.railsS);
+    const halfY = l.portrait
+      ? l.halfY
+      : Math.max(l.logoY + 1.3 * l.logoS, Math.abs(l.endY) + 0.75);
     const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
     const seenX = vA < FILM_ASPECT ? tan * vA : tan * FILM_ASPECT;
     const seenY = vA < FILM_ASPECT ? tan : (tan * FILM_ASPECT) / vA;
@@ -281,14 +367,44 @@ export function createCinematicScene(renderer) {
     const phase = (t / D) * TAU,
       morph = ease((t - 5) / 5) * (1 - ease((t - 21) / 5.5));
 
-    weave.rotation.set(0.2 + Math.sin(phase) * 0.15, 0.4 + TAU * (t / D), -0.16 + Math.sin(phase) * 0.1);
-
     /* The mark never turns. It drifts, and the halo breathes behind it. */
     logo.position.y = layout.logoY + Math.sin(phase * 2) * 0.085;
     mark.material.opacity = 0.96 + 0.04 * Math.sin(phase * 3);
     markHalo.material.opacity = 0.1 + 0.06 * Math.sin(phase * 3 + 0.9);
     markHalo.scale.setScalar(4.1 + 0.35 * Math.sin(phase * 3 + 0.9));
 
+    if (layout.portrait) {
+      /* Light falls; the lattice gathers underneath it. */
+      for (const { path, lights, offset } of streams)
+        for (const { sprite, lag, fade } of lights) {
+          const u = clamp(((((t / D) * 2 + offset - lag) % 1) + 1) % 1, 0, 0.9999);
+          path.getPointAt(u, cursor);
+          sprite.position.copy(cursor);
+          const edge = Math.min(1, Math.min(u, 1 - u) / 0.1);
+          sprite.material.opacity = 0.9 * fade * fade * edge;
+        }
+      for (const { obj, initial, target: settled, index } of bedCubes) {
+        const settle = ease((morph - 0.03 * (index % 8)) / 0.8);
+        obj.position.lerpVectors(initial, settled, settle);
+        obj.position.y += Math.sin(phase + index * 0.5) * 0.075 * (1 - settle * 0.75);
+        obj.rotation.set((1 - settle) * (0.3 + Math.sin(phase + index) * 0.3), (1 - settle) * (index * 0.2 + phase) + settle * 0.35, 0);
+      }
+      bed.rotation.set(0.34 + Math.sin(phase) * 0.05, Math.sin(phase) * 0.16, 0);
+      bedGlow.material.opacity = 0.09 + 0.05 * Math.sin(phase * 2);
+
+      for (const s of stars) {
+        s.obj.position.set(s.x * 0.42 + Math.sin(phase) * 0.2, s.y * 1.25 + Math.cos(phase) * 0.12, s.z);
+        const twinkle = 0.5 + 0.5 * Math.sin(phase * s.rate * 6 + s.phase);
+        s.obj.material.opacity = 0.18 + 0.46 * twinkle;
+        s.obj.scale.setScalar(s.base * (0.8 + 0.45 * twinkle));
+      }
+
+      camera.position.set(Math.sin(phase) * 0.18, Math.sin(phase) * 0.1, distance - Math.sin(phase) * 0.3);
+      camera.lookAt(0, 0, 0);
+      return;
+    }
+
+    weave.rotation.set(0.2 + Math.sin(phase) * 0.15, 0.4 + TAU * (t / D), -0.16 + Math.sin(phase) * 0.1);
     field.rotation.set(0.14 + Math.sin(phase) * 0.12, 0.2 + Math.sin(phase) * 0.36, Math.sin(phase) * 0.07);
     for (const { obj, initial, target: settled, index } of cubes) {
       const settle = ease((morph - 0.025 * (index % 6)) / 0.85);
