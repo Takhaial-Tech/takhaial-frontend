@@ -366,17 +366,18 @@ function Home({ settings }) {
       <section className="tk-home-offer" aria-labelledby="workflow-section-title">
        <div className="tk-container">
         <div className="tk-split-head">
-          <Label>Built around your business</Label>
+          <Label>How it works</Label>
           <div>
             <h2 id="workflow-section-title">
-              AI is the capability.
+              A request comes in.
               <br />
-              Better work is the point.
+              The system does the next step.
             </h2>
             <p>
-              We help you connect information, decisions and tools into
-              something your team can actually use. Start with one opportunity.
-              Build it properly. Grow from there.
+              Pick an example below and run it. This is the shape of what we
+              build: the request is captured, the missing detail is found, a
+              person approves what matters, and the next action is created — in
+              the tools your team already uses.
             </p>
           </div>
         </div>
@@ -1363,9 +1364,9 @@ export default function TakhaialApp() {
       <Suspense fallback={<div className="tk-loading">Loading studio…</div>}>
         <Admin
           defaultSettings={{
-            heroTitle: "Your worst bottleneck isn’t on any report.",
+            heroTitle: "Custom AI and automation for your operation.",
             heroDescription:
-              "We map how the work actually runs, find the waste nobody logged, and build the one system that removes it.",
+              "We build one process properly — document handling, safety monitoring, enquiry response, reporting — and connect it to the systems you already use.",
             contactEmail: company.email,
           }}
         />

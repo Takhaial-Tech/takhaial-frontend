@@ -2,24 +2,24 @@ import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createHeroRenderer } from "./heroRenderer";
 import "./hero-sequence.css";
 
-/* The three scroll phases carry one argument: find the hidden problem, build the
-   single thing that removes it, prove it before the commercial conversation. */
+/* Three plain steps. A visitor should be able to say what we do, how we start
+   and what it costs them to find out, without decoding a metaphor. */
 const content = {
   reliability: {
-    category: "First, the diagnosis",
-    title: "We start with the work, not the wishlist.",
-    body: "Requests, approvals, documents, handovers. We map what happens today, where it waits, and what the waiting costs you.",
+    category: "Step one",
+    title: "We map how the work moves today.",
+    body: "A short engagement with the people doing the job: where requests wait, what gets re-typed, and what the delay is costing.",
   },
   applications: {
-    category: "Then, one build",
-    title: "One application. One problem removed.",
-    body: "Not a platform you grow into. A focused system that takes out a specific bottleneck and connects to the tools your team already uses.",
-    href: "/services/ai-automation", cta: "Explore automation",
+    category: "Step two",
+    title: "We build one system that handles it.",
+    body: "A working application for that one process, connected to the tools you already run. Not a platform you have to move your company into.",
+    href: "/services", cta: "See what we build",
   },
   data: {
-    category: "Proof before commitment",
-    title: "You watch it work before it’s yours.",
-    body: "Time saved, waste removed, incidents avoided—measured on your operation, against what the process did before.",
+    category: "Step three",
+    title: "You see the numbers before you commit.",
+    body: "We measure the result against how the process ran before — hours, errors, response time — and the commercial agreement comes after that.",
     href: "/approach", cta: "How we work",
   },
 };
@@ -122,9 +122,9 @@ export default function HeroSequence({ SmartLink, title, description }) {
         {failed && !reduced && <video ref={fallbackVideo} className="source-hero__fallback" src="/takhaial/media/ai-cinematic-loop.mp4" poster="/takhaial/media/ai-cinematic-poster.webp" autoPlay muted playsInline loop preload="auto" aria-hidden="true" tabIndex={-1}/>}
         <div className="source-hero__opening" aria-hidden={phase!=="opening"&&!reduced} inert={phase!=="opening"&&!reduced?true:undefined}>
           <div className="source-hero__opening-content">
-            <h1 id="hero-title">{title||<>Your worst bottleneck<br/>isn’t on any report.</>}</h1>
-            <p className="source-hero__opening-body">{description||'We map how the work actually runs, find the waste nobody logged, and build the one system that removes it.'}</p>
-            <SmartLink href="/contact" className="source-hero__cta source-hero__cta--opening">Find your first workflow<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></SmartLink>
+            <h1 id="hero-title">{title||<>Custom AI and automation<br/>for your operation.</>}</h1>
+            <p className="source-hero__opening-body">{description||'We build one process properly — document handling, safety monitoring, enquiry response, reporting — and connect it to the systems you already use.'}</p>
+            <SmartLink href="/contact" className="source-hero__cta source-hero__cta--opening">Talk to our team<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></SmartLink>
           </div>
           <button className="source-hero__scroll" type="button" onClick={()=>window.scrollTo({top:innerHeight*.65,behavior:"smooth"})} tabIndex={phase==='opening'?0:-1}>
             <span>Scroll to explore</span><span className="source-hero__arrow">↓</span>
