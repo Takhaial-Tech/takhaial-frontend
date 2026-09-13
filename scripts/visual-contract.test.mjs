@@ -100,9 +100,16 @@ test('AI hero renders its authored motion live while the quote uses an original 
  assert.match(hero,/poster="\/takhaial\/media\/ai-cinematic-poster\.webp"/);
  assert.match(renderer,/createCinematicScene\(renderer\)/);
  assert.match(renderer,/uLive:\{value:live\?1:0\}/);
- // The scene keeps the measured numbers of the film it replaces.
+ // The scene keeps the measured timing and object counts of the film it replaces.
  assert.match(scene,/CINEMATIC_DURATION = 26\.5/);
- for(const count of [/band < 9/,/ring < 7/,/i < 72/,/i < 7;/,/i < 65/])assert.match(scene,count);
+ for(const count of [/band < 9/,/i < 72/,/i < 7;/])assert.match(scene,count);
+ // The wing motif is the flat brand mark: loaded from the PNG, never rotated.
+ assert.match(scene,/TextureLoader\(\)\.load\("\/takhaial\/brand\/mark\.png"\)/);
+ assert.doesNotMatch(scene,/logo\.rotation/);
+ assert.ok((await fs.stat('public/takhaial/brand/mark.png')).size>10000,'brand mark is real art');
+ // The flow rails carry lights only; no tube geometry is built for them.
+ assert.doesNotMatch(scene,/pipe\(/);
+ assert.match(scene,/lights\.push/);
  assert.match(quote,/src="\/takhaial\/media\/oil-sector-ar\.mp4"/);
  assert.match(quote,/poster="\/takhaial\/media\/oil-sector-ar\.webp"/);
  for(const source of [hero,quote])assert.doesNotMatch(source,/hero-packed-polish|automation-loop/);
