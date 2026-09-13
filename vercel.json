@@ -1,19 +1,76 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "VITE_PUBLIC_PREVIEW=true npm run build",
+  "outputDirectory": "dist",
   "redirects": [
     {
       "source": "/phook",
       "destination": "https://app.takhaialtech.com/phook",
       "permanent": false
+    },
+    {
+      "source": "/services/ai",
+      "destination": "/services/ai-automation",
+      "permanent": true
+    },
+    {
+      "source": "/services/vr",
+      "destination": "/services/immersive-experiences",
+      "permanent": true
+    },
+    {
+      "source": "/services/ar",
+      "destination": "/services/immersive-experiences",
+      "permanent": true
+    },
+    {
+      "source": "/services/mobile-apps",
+      "destination": "/services/systems-integration",
+      "permanent": true
+    },
+    {
+      "source": "/services/advertising",
+      "destination": "/services/ai-creative-pipelines",
+      "permanent": true
+    },
+    { "source": "/solutions", "destination": "/industries", "permanent": true },
+    {
+      "source": "/solutions/:slug",
+      "destination": "/industries",
+      "permanent": true
     }
   ],
   "rewrites": [
+    { "source": "/smartegypt", "destination": "/smartegypt/index.html" },
+    { "source": "/smartegypt/", "destination": "/smartegypt/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
     {
-      "source": "/smartegypt",
-      "destination": "/smartegypt/index.html"
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "source": "/smartegypt/",
-      "destination": "/smartegypt/index.html"
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/takhaial/media/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
     }
   ]
 }

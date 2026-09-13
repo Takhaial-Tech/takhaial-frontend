@@ -1,0 +1,50 @@
+.tk-admin { min-height: 100svh; background: #0a1010; color: #eef2eb; font-family: Arial, sans-serif; padding: 32px 24px 64px; }
+.tk-admin * { box-sizing: border-box; }
+.tk-admin-shell { width: min(100%, 900px); margin: 0 auto; }
+.tk-admin-header { display: flex; justify-content: space-between; align-items: center; gap: 18px; border-bottom: 1px solid #ffffff20; padding-bottom: 25px; }
+.tk-admin a { color: inherit; text-decoration: none; }
+.tk-admin-brand { font-size: 21px; font-weight: 600; letter-spacing: -.7px; }
+.tk-admin-brand span { margin-left: 8px; }
+.tk-admin-badge, .tk-admin-eyebrow { color: #aabcac; font: 11px/1.5 ui-monospace, monospace; letter-spacing: 1.6px; }
+.tk-admin-badge { padding: 7px 10px; border: 1px solid #ffffff25; border-radius: 3px; white-space: nowrap; }
+.tk-admin-intro { padding: 64px 0 20px; max-width: 600px; }
+.tk-admin h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 400; line-height: 1.04; letter-spacing: -2px; margin: 20px 0; }
+.tk-admin p { color: #b0bdb5; line-height: 1.65; font-size: 15px; }
+.tk-admin-status:empty { display: none; }
+.tk-admin-status p { padding: 14px 18px; border-radius: 4px; }
+.tk-admin .tk-admin-error { background: #51252b; color: #ffdadf; }
+.tk-admin .tk-admin-success { background: #203b30; color: #d0f0dd; }
+.tk-admin-card { margin-top: 24px; background: #111b18; padding: clamp(22px, 5vw, 40px); border: 1px solid #ffffff20; border-radius: 10px; }
+.tk-admin h2 { font-size: 25px; letter-spacing: -.6px; font-weight: 400; margin: 0 0 12px; }
+.tk-admin-card > p { max-width: 650px; margin-bottom: 27px; }
+.tk-admin form { display: flex; flex-direction: column; align-items: stretch; }
+.tk-admin label { font-size: 14px; margin: 22px 0 9px; color: #e7eee9; }
+.tk-admin input, .tk-admin textarea { appearance: none; width: 100%; min-width: 0; padding: 13px 14px; border: 1px solid #506257; border-radius: 4px; background: #09120e; color: #fff; font: inherit; line-height: 1.6; }
+.tk-admin input::placeholder, .tk-admin textarea::placeholder { color: #87998d; opacity: 1; }
+.tk-admin textarea { resize: vertical; }
+.tk-admin small { color: #91a396; margin-top: 7px; font-size: 12px; line-height: 1.5; }
+.tk-admin button { border: 1px solid #627768; border-radius: 4px; padding: 12px 17px; min-height: 44px; background: transparent; color: #d5e1d8; font: inherit; font-size: 14px; cursor: pointer; transition: background .15s, border-color .15s; }
+.tk-admin button:hover:not(:disabled) { background: #284333; border-color: #a8c5af; }
+.tk-admin button:disabled { opacity: .45; cursor: not-allowed; }
+.tk-admin .tk-admin-primary { color: #102319; background: #bddbc3; border-color: #bddbc3; }
+.tk-admin .tk-admin-primary:hover:not(:disabled) { background: #d3efda; }
+.tk-admin form > .tk-admin-primary { align-self: flex-start; margin-top: 28px; }
+.tk-admin :focus-visible { outline: 2px solid #d8efcc; outline-offset: 4px; }
+.tk-admin-editor-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.tk-admin-editor-heading p { margin-bottom: 0; }
+.tk-admin-edited { padding-top: 5px; color: #a4b5a9; font-size: 12px; white-space: nowrap; }
+.tk-admin-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.tk-admin-editor-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid #ffffff20; margin-top: 30px; padding-top: 25px; font-size: 14px; }
+.tk-admin-notice { border-left: 2px solid #466e51; padding-left: 18px; margin-top: 35px; max-width: 770px; }
+.tk-admin-notice strong { font-size: 13px; font-weight: 500; }
+.tk-admin-notice p { font-size: 12px; line-height: 1.75; }
+@media (max-width: 540px) {
+  .tk-admin { padding: 23px 16px 45px; }
+  .tk-admin-brand { font-size: 18px; }
+  .tk-admin-badge { font-size: 9px; letter-spacing: 1px; }
+  .tk-admin-intro { padding-top: 43px; }
+  .tk-admin-editor-heading { flex-direction: column; gap: 5px; }
+  .tk-admin-actions { flex-direction: column; }
+  .tk-admin-actions button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .tk-admin button { transition: none; } }

@@ -1,0 +1,16 @@
+/* Measured palette. Hex comments are reference values, not separate styles. */
+:root {
+  --tk-base-ink: #152038;
+  --tk-ink: oklch(0.2466491 0.0485607 264.46515); /* #152038 */
+  --tk-muted: oklch(0.4396554 0.0420542 260.23782); /* #45536a */
+  --tk-subtle: oklch(0.4866624 0.0424683 261.12776); /* #526078 */
+  --tk-surface: oklch(0.996269 0.0010599 197.1391); /* #fdfefe */
+  --tk-panel: oklch(0.9596719 0.0119943 259.8227); /* #edf2fa */
+  --tk-border: oklch(0.8194133 0.030327 257.77263); /* #b8c5d8 */
+  --tk-accent: oklch(0.4786089 0.1928664 260.3712); /* #0753c7 */
+  --tk-accent-hover: oklch(0.3998809 0.1648327 260.19188); /* #003f9e */
+  --tk-on-dark: oklch(0.9869528 0.0062074 255.47419); /* #f8fbff */
+  --tk-dark: oklch(0.1851145 0.0374181 255.64733); /* #071323 */
+  --tk-dark-muted: oklch(0.8689231 0.0328466 258.37021); /* #c7d5ea */
+  --tk-accent-soft: oklch(0.9249154 0.0330739 261.03233); /* #dae7fd */
+}
