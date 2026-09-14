@@ -1,0 +1,816 @@
+{
+ "company": {
+  "name": "Takhaial Tech",
+  "email": "info@takhaialtech.com",
+  "whatsapp": "201033930216",
+  "portfolio": "https://ammarkeshta.tech/",
+  "linkedin": "https://www.linkedin.com/company/takhaialtechx/"
+ },
+ "services": [
+  {
+   "slug": "ai-automation",
+   "name": "AI & workflow automation",
+   "short": "Turn repeated work into a connected process.",
+   "headline": "Less handoff. More progress.",
+   "lead": "A request should not need five people to copy it between five tools. We design workflows that move information, trigger the right action and surface the decisions that need a person.",
+   "focus": "Start with the workflow, not the model.",
+   "body": "We map what happens today: inputs, owners, systems, exceptions and the cost of waiting. Then we define a focused first release. Deterministic rules handle predictable steps; AI helps interpret language and unstructured content. Human approval remains where the consequences matter.",
+   "examples": [
+    "Route incoming inquiries to the right team with their context attached.",
+    "Extract document fields and send uncertain results for review.",
+    "Connect requests, approvals, task creation and status updates."
+   ],
+   "deliverables": [
+    "Workflow map and prioritised opportunity brief",
+    "Connected pilot with review and exception paths",
+    "Integration, permissions and evaluation plan",
+    "Handover, operating guide and improvement backlog"
+   ],
+   "steps": [
+    "Discover the bottleneck",
+    "Build one useful flow",
+    "Test the exceptions",
+    "Launch, observe, improve"
+   ],
+   "lane": "operations"
+  },
+  {
+   "slug": "ai-agents",
+   "name": "AI assistants & agents",
+   "short": "Give conversations a useful next action.",
+   "headline": "An assistant that knows what to do next.",
+   "lead": "Help customers and teams find answers, qualify a request or complete a task. Connect the conversation to approved knowledge and the tools that can act on it.",
+   "focus": "Helpful answers. Explicit boundaries.",
+   "body": "We define what the assistant can know, what it may do and when it must hand over. Tool access is scoped to the job. Actions that change business records or contact customers can require approval. The experience includes uncertainty and escalation, not just the happy path.",
+   "examples": [
+    "A website assistant that gathers requirements before handing over to sales.",
+    "A service assistant that answers from approved material and routes exceptions.",
+    "A guided assistant inside a product or an immersive experience."
+   ],
+   "deliverables": [
+    "Conversation and escalation design",
+    "Knowledge and tool integrations",
+    "Evaluation scenarios and review controls",
+    "Web or application interface and handover"
+   ],
+   "steps": [
+    "Define the job",
+    "Connect trusted context",
+    "Set action boundaries",
+    "Evaluate real conversations"
+   ],
+   "lane": "sales"
+  },
+  {
+   "slug": "knowledge-systems",
+   "name": "Knowledge & document intelligence",
+   "short": "Make company information usable.",
+   "headline": "Your knowledge. Ready for the next question.",
+   "lead": "Company knowledge lives in documents, inboxes and people’s heads. Build a way to find the right context, see its source and turn it into the next step.",
+   "focus": "An answer should lead back to evidence.",
+   "body": "We organise source material, design access boundaries and connect retrieval to an actual task. That might be answering an internal question, checking a document or preparing a draft. We plan for outdated files, incomplete evidence and questions the system should not answer.",
+   "examples": [
+    "Search policies and working documents with source references.",
+    "Prepare a structured brief from a set of approved documents.",
+    "Extract, classify and review incoming forms or reports."
+   ],
+   "deliverables": [
+    "Source inventory and access map",
+    "Document preparation and retrieval workflow",
+    "Answer interface with references and review",
+    "Quality checks and source-update process"
+   ],
+   "steps": [
+    "Inventory sources",
+    "Structure and connect",
+    "Ask with context",
+    "Review and maintain"
+   ],
+   "lane": "knowledge"
+  },
+  {
+   "slug": "systems-integration",
+   "name": "Software & systems integration",
+   "short": "Connect the tools behind the workflow.",
+   "headline": "Make your systems work together.",
+   "lead": "Build the interfaces and connections a workflow actually needs: internal tools, portals, APIs and shared operational views.",
+   "focus": "A useful system is more than a dashboard.",
+   "body": "We start with the actions people need to take. Data models, permissions, integration boundaries and error handling are designed with the interface. The result can sit alongside your current tools instead of asking the whole company to start again.",
+   "examples": [
+    "Connect forms, CRM records, approvals and notifications.",
+    "Build a focused internal tool around a repeated operational task.",
+    "Give field and office teams a shared workflow with clear ownership."
+   ],
+   "deliverables": [
+    "Product and data-flow specification",
+    "Web interface and API integrations",
+    "Role and permission design",
+    "Testing, release and handover documentation"
+   ],
+   "steps": [
+    "Understand the systems",
+    "Define the data contract",
+    "Build the usable core",
+    "Test end to end"
+   ],
+   "lane": "operations"
+  },
+  {
+   "slug": "ai-creative-pipelines",
+   "name": "AI-assisted creative pipelines",
+   "short": "Connect 3D control with generative exploration.",
+   "headline": "More direction. Better creative control.",
+   "lead": "Build a repeatable creative workflow around references, 3D guidance, generation and human review. Use AI where it supports a usable production result.",
+   "focus": "The workflow matters as much as the output.",
+   "body": "We combine real-time and technical-art experience with AI-assisted production techniques. Camera planning, source assets, consistent references and quality checks help connect an experiment to a practical creative process. The right workflow depends on the content and the tools you already use.",
+   "examples": [
+    "Guide generative shots with a planned3D camera and scene.",
+    "Develop visual concepts with consistent references and review.",
+    "Bring generated assets into a Unity production workflow."
+   ],
+   "deliverables": [
+    "Workflow and toolchain design",
+    "A focused visual or pipeline prototype",
+    "Reference, asset and review guidance",
+    "A handover with clear quality boundaries"
+   ],
+   "steps": [
+    "Set the visual brief",
+    "Build the guidance",
+    "Generate and review",
+    "Prepare for production"
+   ],
+   "lane": "knowledge"
+  },
+  {
+   "slug": "immersive-experiences",
+   "name": "XR & spatial experiences",
+   "short": "Let people understand by experiencing.",
+   "headline": "Bring the experience into the room.",
+   "lead": "Virtual showrooms, spatial product demonstrations and interactive training make complex ideas tangible. This is part of our engineering foundation—and a platform for future AI-enabled experiences.",
+   "focus": "Use immersion where it earns its place.",
+   "body": "We choose between VR, AR and mixed reality around the audience, device and environment. Interaction, 3D content, performance and deployment are considered together. AI can be added where a guide, conversational interface or connected workflow makes the experience more useful.",
+   "examples": [
+    "A virtual product environment people can explore.",
+    "An augmented-reality product demonstration in a physical space.",
+    "A training simulation with guided actions and feedback."
+   ],
+   "deliverables": [
+    "Experience concept and interaction design",
+    "Real-time 3D content and application",
+    "Device-ready build and performance checks",
+    "Content update and deployment guidance"
+   ],
+   "steps": [
+    "Define the experience",
+    "Prototype the interaction",
+    "Build the world",
+    "Test on the target device"
+   ],
+   "lane": "training"
+  },
+  {
+   "slug": "real-time-3d",
+   "name": "Real-time 3D & technical art",
+   "short": "Build the visual systems behind the experience.",
+   "headline": "From a visual idea to a working world.",
+   "lead": "Unity and Unreal production, shaders, tools and cinematic environments connect creative intent to interactive software.",
+   "focus": "Craft that works in real time.",
+   "body": "We bring environment art, technical art and application thinking into the same process. Visual direction is tested against performance and interaction needs. Selected work from Ammar’s portfolio demonstrates this depth, with authorship kept separate from company client delivery.",
+   "examples": [
+    "Interactive environments and product visualisation.",
+    "Procedural materials, shaders and environment tools.",
+    "Cinematic previs and 3D-to-AI creative exploration."
+   ],
+   "deliverables": [
+    "Visual and technical direction",
+    "Production-ready scene or interactive prototype",
+    "Materials, tools and reusable content",
+    "Performance review and handover"
+   ],
+   "steps": [
+    "Set the visual target",
+    "Build a technical prototype",
+    "Develop the scene",
+    "Review in motion"
+   ],
+   "lane": "training"
+  }
+ ],
+ "industries": [
+  {
+   "slug": "industry-and-energy",
+   "name": "Industry, energy & logistics",
+   "short": "Protect people first. Then protect the margin.",
+   "headline": "Where a missed second costs more than a missed report.",
+   "lead": "Factories, plants, ports and fleets already generate the signals that matter. The work is turning them into something a supervisor can act on before an incident, not after it.",
+   "sectors": [
+    "Factories",
+    "Oil & gas",
+    "Power plants",
+    "Ports",
+    "Airports",
+    "Transport & fleets"
+   ],
+   "problem": "Safety, quality and maintenance data arrives late, in three different formats, and usually after the event it was supposed to prevent. The people closest to the risk are the ones with the least time to write it down.",
+   "groups": [
+    {
+     "title": "Occupational safety",
+     "latin": "HSE",
+     "items": [
+      "Live video analysis for missing protective equipment, falls and restricted-zone entry, with alerts tied to a specific area.",
+      "A safety officer dictates an incident report by voice, in their own dialect, and receives a formatted report ready for management.",
+      "Hands-free operation through connected smart helmets, for environments where stopping to type is not an option."
+     ]
+    },
+    {
+     "title": "Production & quality",
+     "items": [
+      "Defect detection on the line, so waste is caught in the batch rather than at the customer.",
+      "Automatic reading of analogue and digital gauges, with operators alerted to abnormal values.",
+      "Predictive maintenance that reads early signals and schedules the stop instead of suffering it."
+     ]
+    },
+    {
+     "title": "Logistics & sites",
+     "items": [
+      "Shipment tracking and perimeter monitoring for sensitive facilities.",
+      "Traffic and lane-violation analysis across yards and access roads.",
+      "Thermal imaging for fire, overheating and leak detection before the event becomes an emergency."
+     ]
+    }
+   ],
+   "guardrail": "Vision systems support the safety process; they do not replace it. Detection thresholds, camera placement and escalation rules are agreed with your HSE team, and deployment needs on-site testing.",
+   "services": [
+    "ai-automation",
+    "immersive-experiences"
+   ],
+   "lane": "operations"
+  },
+  {
+   "slug": "real-estate",
+   "name": "Real estate & managed communities",
+   "short": "Answer faster. Know which buyer is real.",
+   "headline": "The unit sells itself. The follow-up does not.",
+   "lead": "Developers and community operators lose more to slow replies and unrecorded maintenance than to the market. Both are workflow problems.",
+   "sectors": [
+    "Development",
+    "Property marketing",
+    "Community management",
+    "Residential & commercial"
+   ],
+   "problem": "Enquiries arrive across several listing platforms at once, sales teams answer the loudest rather than the closest to buying, and the reason a client walked away is never written down anywhere useful.",
+   "groups": [
+    {
+     "title": "Marketing & sales",
+     "items": [
+      "Connected listing platforms with instant answers on price, area and payment plans.",
+      "Lead scoring that tells the sales team which conversations are worth a call today.",
+      "Rejection reasons captured and analysed, so the pattern behind lost deals becomes visible."
+     ]
+    },
+    {
+     "title": "Community operations",
+     "items": [
+      "Camera monitoring that flags unfamiliar vehicles and access to restricted areas outside working hours.",
+      "A maintenance supervisor records notes by voice while walking lighting, lifts and landscaping; the report reaches the operational system before the walk ends."
+     ]
+    }
+   ],
+   "guardrail": "Scoring guides attention, it does not decide. Pricing, availability and any commitment to a client stay with a person.",
+   "services": [
+    "ai-agents",
+    "systems-integration"
+   ],
+   "lane": "sales"
+  },
+  {
+   "slug": "hospitality-and-public-spaces",
+   "name": "Hospitality, tourism & public spaces",
+   "short": "Remove the wait between a request and the right person.",
+   "headline": "A guest should not have to ask twice.",
+   "lead": "Hotels, venues, retail and healthcare share one problem: a request in the wrong language, at the wrong desk, at the busiest hour.",
+   "sectors": [
+    "Hotels",
+    "Travel",
+    "Malls & retail",
+    "Hospitals",
+    "Museums"
+   ],
+   "problem": "Reception becomes a bottleneck for requests it was never meant to process, and language turns a two-minute task into a twenty-minute one.",
+   "groups": [
+    {
+     "title": "Hotel operations",
+     "items": [
+      "An in-room assistant that takes housekeeping, food and maintenance requests and routes them straight to the responsible team.",
+      "Instant translation of a guest request into the language of the staff member who will act on it.",
+      "Room preparation ordered by arrival time and guest status rather than by room number."
+     ]
+    },
+    {
+     "title": "Travel & tourism",
+     "items": [
+      "Draft itineraries and budgets built from a traveller’s stated interests, before a consultant spends an hour on them.",
+      "A profile and readiness summary prepared before the sales call, not during it.",
+      "A companion experience for visitors: local prices, transport, regulations, currency and live translation in one place."
+     ]
+    },
+    {
+     "title": "Retail & healthcare",
+     "items": [
+      "Loss prevention, footfall analysis and crowd-density alerts for public areas.",
+      "Fall detection for elderly and at-risk patients under camera supervision.",
+      "Protocol compliance checks for sterilisation and protective equipment in clinical areas."
+     ]
+    }
+   ],
+   "guardrail": "Anything involving patients, minors or biometric identification needs a legal and clinical review in the deployment country before it is built, not after.",
+   "services": [
+    "ai-agents",
+    "immersive-experiences"
+   ],
+   "lane": "sales"
+  },
+  {
+   "slug": "professional-services",
+   "name": "Professional & legal services",
+   "short": "The deadline you forget is the client you lose.",
+   "headline": "Casework is a workflow with legal consequences.",
+   "lead": "Formation offices, law firms and consultancies run on documents, dates and follow-up—three things that degrade quietly when they live in a spreadsheet.",
+   "sectors": [
+    "Law firms",
+    "Company formation",
+    "Consulting",
+    "Corporate teams"
+   ],
+   "problem": "Client documents arrive incomplete, renewal dates are tracked by whoever remembers them, and the same qualifying questions get asked in every first meeting.",
+   "groups": [
+    {
+     "title": "Formation & compliance",
+     "items": [
+      "An assistant that reads the client’s intended activity and outlines the entity options, with the trade-offs stated plainly.",
+      "Document collection and verification tracked digitally, so a missing signature is caught at intake rather than at submission.",
+      "A dashboard of every case stage, with automatic notice before licences, residencies and banking obligations expire."
+     ]
+    },
+    {
+     "title": "Running the practice",
+     "items": [
+      "The same workflow layer covers intake, finance and recruitment instead of three disconnected tools.",
+      "Renewal and follow-up become a scheduled conversation rather than an emergency."
+     ]
+    }
+   ],
+   "guardrail": "The system prepares and tracks. It does not give legal advice, and no filing leaves the office without a qualified person approving it.",
+   "services": [
+    "knowledge-systems",
+    "ai-automation"
+   ],
+   "lane": "knowledge"
+  },
+  {
+   "slug": "workforce-training",
+   "name": "Workforce training & knowledge transfer",
+   "short": "Experience that leaves the building, kept inside it.",
+   "headline": "The expert cannot stand next to everyone.",
+   "lead": "This layer sits inside every sector above. New staff need answers without interrupting a senior colleague; technicians need guidance in the moment, on the equipment.",
+   "sectors": [
+    "Internal capability for every sector above"
+   ],
+   "problem": "Operating manuals are complete and unread. The knowledge people actually use lives with a handful of senior staff, and it walks out with them.",
+   "groups": [
+    {
+     "title": "Ask the manual",
+     "latin": "Q&A",
+     "items": [
+      "Operating procedures, curricula and policies become answerable by voice or text, with the source passage attached to every answer.",
+      "New staff get unblocked without pulling an experienced colleague off the line."
+     ]
+    },
+    {
+     "title": "Guided inspection",
+     "latin": "Field",
+     "items": [
+      "Step-by-step voice guidance through complex maintenance, so the procedure is followed in the order it was written."
+     ]
+    },
+    {
+     "title": "Simulation",
+     "latin": "AR / VR",
+     "items": [
+      "Vision tracking inside the simulation confirms the trainee followed the correct sequence, and corrects an unsafe action while it happens."
+     ]
+    }
+   ],
+   "guardrail": "This supports training. It is not a certification programme, and it does not replace the assessment your regulator recognises.",
+   "services": [
+    "knowledge-systems",
+    "immersive-experiences"
+   ],
+   "lane": "training"
+  }
+ ],
+ "engines": [
+  {
+   "slug": "grounded-knowledge",
+   "name": "Grounded answers, flexible input",
+   "short": "Every answer carries its source.",
+   "body": "A knowledge graph built from your own approved documents sits behind each answer, so a result can be traced back to the page it came from. On the way in, people write or speak in plain language—including dialect—and the system turns it into the structured record your reports expect.",
+   "meta": "Retrieval with references · Voice and free-text capture · Structured output"
+  },
+  {
+   "slug": "vision-and-xr",
+   "name": "Computer vision & extended reality",
+   "short": "Cameras that understand what they see.",
+   "body": "Existing cameras become a source of operational awareness: protective equipment, production defects, restricted areas, unusual readings. The same perception layer tracks what a trainee is doing inside an AR or VR simulation and corrects an unsafe action while it is happening.",
+   "meta": "Real-time video analysis · Thermal and gauge reading · Guided simulation"
+  },
+  {
+   "slug": "scenario-analytics",
+   "name": "Predictive scenario analytics",
+   "short": "Dashboards that answer “what if?”",
+   "body": "A report about last quarter is not a decision. We model the variables that actually move your numbers—cost, supply, headcount, demand—so a manager can test a change before committing to it and see which assumption the answer depends on.",
+   "meta": "Forecasting · Scenario modelling · Assumption tracking"
+  },
+  {
+   "slug": "secure-by-design",
+   "name": "Security built for the long term",
+   "short": "Data protection that survives the next decade.",
+   "body": "Sensitive operational data outlives the system that stored it. We design encryption, access boundaries and retention with that lifetime in mind, including post-quantum ready algorithms where a client’s sector or procurement process requires them.",
+   "meta": "Access boundaries · Encryption in transit and at rest · Post-quantum ready options"
+  }
+ ],
+ "engagement": {
+  "steps": [
+   [
+    "Find the real problem",
+    "We come in as an operational partner first: map how the work actually happens, where it waits, and what the waiting costs. The opportunity is usually not the one in the brief."
+   ],
+   [
+    "Build one focused proof",
+    "A working application against that one problem, scoped small enough to evaluate and delivered on a defined trial rather than a signed transformation programme."
+   ],
+   [
+    "Prove it in your numbers",
+    "Time saved, waste removed, incidents avoided, revenue recovered—measured on your operation, against what the process did before."
+   ],
+   [
+    "Then agree the commercial terms",
+    "The subscription starts when the value is visible, and it scales with usage and active users rather than a fixed licence for capacity you never touch."
+   ]
+  ],
+  "principles": [
+   [
+    "Usage-based, not shelf-ware",
+    "You pay for what the system actually processes, so a quiet month costs less than a busy one."
+   ],
+   [
+    "It grows with the team",
+    "As more of your people work inside the system, the value and the cost move together—not ahead of each other."
+   ],
+   [
+    "New problems, new tools",
+    "Growth creates new bottlenecks. Finding and solving them is the ongoing work, not an upsell event."
+   ]
+  ]
+ },
+ "projects": [
+  {
+   "slug": "automotive-experience",
+   "name": "Automotive VR experience",
+   "type": "Takhaial project",
+   "category": "XR",
+   "media": "automotive-vr",
+   "summary": "A virtual automotive environment built for spatial exploration and product interaction.",
+   "tags": [
+    "Virtual reality",
+    "Product experience",
+    "Real-time 3D"
+   ]
+  },
+  {
+   "slug": "lexus-ar-experience",
+   "name": "Lexus AR experience",
+   "type": "Takhaial project",
+   "category": "XR",
+   "media": "lexus-ar",
+   "summary": "A spatial automotive demonstration that brings the product into the viewer’s environment.",
+   "tags": [
+    "Augmented reality",
+    "Automotive",
+    "Spatial interface"
+   ]
+  },
+  {
+   "slug": "mixed-reality-surgery",
+   "name": "Mixed-reality visualisation",
+   "type": "Takhaial demonstration",
+   "category": "XR",
+   "media": "mixed-reality-surgery",
+   "summary": "A mixed-reality demonstration exploring spatial information and guided interaction.",
+   "tags": [
+    "Mixed reality",
+    "Visualisation",
+    "Spatial UI"
+   ]
+  },
+  {
+   "slug": "interactive-product-validation",
+   "name": "Interactive product validation",
+   "type": "Takhaial prototype",
+   "category": "XR",
+   "media": "product-validation",
+   "summary": "A guided mixed-reality prototype around an electrical product and its measurements.",
+   "tags": [
+    "Mixed reality",
+    "Guided workflows",
+    "Physical computing"
+   ]
+  },
+  {
+   "slug": "heritage-spatial-experience",
+   "name": "Heritage spatial experience",
+   "type": "Takhaial prototype",
+   "category": "XR",
+   "media": "heritage-vr",
+   "summary": "A cultural environment explored through immersive storytelling and spatial navigation.",
+   "tags": [
+    "Virtual reality",
+    "Culture",
+    "Interactive storytelling"
+   ]
+  },
+  {
+   "slug": "oil-sector-ar",
+   "name": "Industrial AR exploration",
+   "type": "Takhaial demonstration",
+   "category": "XR",
+   "media": "oil-sector-ar",
+   "summary": "An industrial augmented-reality demonstration from the supplied Takhaial project archive.",
+   "tags": [
+    "Augmented reality",
+    "Industrial visualisation",
+    "3D systems"
+   ]
+  },
+  {
+   "slug": "safety-training",
+   "name": "Safety training R&D",
+   "type": "Takhaial R&D",
+   "category": "XR",
+   "media": "safety-training",
+   "summary": "An immersive training research prototype from the local project archive.",
+   "tags": [
+    "R&D",
+    "Training simulation",
+    "Real-time interaction"
+   ]
+  },
+  {
+   "slug": "real-estate-vr",
+   "name": "Real-estate VR experience",
+   "type": "Takhaial demonstration",
+   "category": "XR",
+   "media": "real-estate-vr",
+   "summary": "An explorable real-estate environment from the Takhaial project video archive.",
+   "tags": [
+    "Virtual reality",
+    "Real estate",
+    "Interactive environments"
+   ]
+  },
+  {
+   "slug": "snow-environment",
+   "name": "Bloody Snow",
+   "type": "Ammar’s personal portfolio",
+   "category": "Real-time 3D",
+   "media": "snow-environment",
+   "summary": "Technical-art and environment work exploring snow, materials and real-time atmosphere.",
+   "tags": [
+    "Technical art",
+    "Environment art",
+    "Real-time 3D"
+   ],
+   "external": "https://ammarkeshta.tech/work/bloody-snow"
+  },
+  {
+   "slug": "the-hell-draft",
+   "name": "The Hell Draft",
+   "type": "Ammar’s personal portfolio",
+   "category": "Real-time 3D",
+   "media": "the-hell-draft",
+   "summary": "A volcanic environment and technical-art study from Ammar Keshta’s portfolio.",
+   "tags": [
+    "Unreal Engine",
+    "Shaders",
+    "Environment art"
+   ],
+   "external": "https://ammarkeshta.tech/work/the-hell-draft"
+  },
+  {
+   "slug": "ai-unity-vr",
+   "name": "AI-assisted Unity VR exploration",
+   "type": "Ammar’s personal R&D",
+   "category": "AI & R&D",
+   "media": "ai-unity-vr",
+   "summary": "An exploration of AI-assisted creation within a Unity and VR workflow.",
+   "tags": [
+    "AI-assisted creation",
+    "Unity",
+    "VR"
+   ],
+   "external": "https://ammarkeshta.tech/work/ai-assisted-stylized-vr"
+  },
+  {
+   "slug": "3d-to-ai-jaguar",
+   "name": "3D-to-AI: Jaguar",
+   "type": "Ammar’s personal R&D",
+   "category": "AI & R&D",
+   "media": "3d-to-ai-jaguar",
+   "summary": "A 3D-guided generative-film study of a jaguar moving through a forest.",
+   "tags": [
+    "3D-to-AI",
+    "Blender",
+    "ComfyUI"
+   ],
+   "external": "https://ammarkeshta.tech/work/3d-to-ai-jaguar"
+  },
+  {
+   "slug": "ai-can-fluids",
+   "name": "AI to 3D: Can & Fluids",
+   "type": "Ammar’s personal R&D",
+   "category": "AI & R&D",
+   "media": "ai-can-fluids",
+   "summary": "A creative-production study combining 3D guidance with generative fluid imagery.",
+   "tags": [
+    "AI-assisted production",
+    "3D guidance",
+    "Visual development"
+   ],
+   "external": "https://ammarkeshta.tech/work/ai-to-3d-can-and-fluids"
+  },
+  {
+   "slug": "lexus-vr-showroom",
+   "name": "Lexus VR Showroom",
+   "type": "Takhaial project",
+   "category": "XR",
+   "media": "lexus-vr-showroom",
+   "summary": "A standalone virtual showroom for Lexus Kuwait, bringing vehicle interiors, exteriors and configurations into an immersive real-time experience.",
+   "tags": [
+    "Virtual reality",
+    "Automotive",
+    "Unity",
+    "Product configuration"
+   ],
+   "external": "https://ammarkeshta.tech/work/lexus-vr-showroom"
+  }
+ ],
+ "articles": [
+  {
+   "slug": "choose-your-first-automation",
+   "title": "How to choose your first automation.",
+   "summary": "Look for a clear owner, repeatable inputs and a result you can verify.",
+   "sections": [
+    [
+     "Start with a task you can describe",
+     "Choose a workflow the team already understands. Write down what starts it, what information it needs, who owns it and what a good result looks like. If the process changes with every person you ask, clarify it before automating it."
+    ],
+    [
+     "Separate interpretation from action",
+     "AI may help read a message or organise a document. Rules are often better for routing, validation and arithmetic. Combining them gives you clearer failure modes than asking one model to run the entire process."
+    ],
+    [
+     "Make the exception path visible",
+     "What happens when a document is incomplete? When confidence is low? When an API fails? A useful pilot includes review, retry and handover. These paths belong in the design, not in a future fix."
+    ],
+    [
+     "Agree on evidence before building",
+     "Decide what you will measure: rework, waiting time, handoffs or completeness. Use a real baseline. Run representative examples and compare results before expanding."
+    ],
+    [
+     "Keep the first release small",
+     "Pick one team and one bounded flow. Learn from real use, improve it, then connect the next part. A small workflow people trust is a better starting point than a broad system nobody can explain."
+    ]
+   ]
+  },
+  {
+   "slug": "agents-with-human-approval",
+   "title": "An AI agent needs boundaries, not just tools.",
+   "summary": "Design permissions, review and escalation before adding more actions.",
+   "sections": [
+    [
+     "Define the job in plain language",
+     "An agent should have a task, a scope and an accountable owner. “Help sales” is too broad. “Prepare a qualified brief from an inbound enquiry and suggest an owner” can be evaluated."
+    ],
+    [
+     "Start with the least access needed",
+     "Read access and write access are different decisions. Limit which records the assistant can see and which tools it can call. Avoid giving broad account access just because it makes a demo easier."
+    ],
+    [
+     "Put approval at the consequential step",
+     "Preparing an email is not the same as sending it. Suggesting a record update is not the same as applying it. Keep a human decision at the point where the action makes a commitment or changes something difficult to reverse."
+    ],
+    [
+     "Test refusal and uncertainty",
+     "Include questions with missing information, conflicting documents and requests outside scope. A useful assistant can say what it does not know, ask a focused question and route the task to a person."
+    ],
+    [
+     "Make the system understandable",
+     "Show the sources, proposed action and current state. Give users a way to correct information and recover from failure. Trust comes from behaviour people can inspect."
+    ]
+   ]
+  },
+  {
+   "slug": "where-ai-meets-xr",
+   "title": "Where AI and immersive technology can meet.",
+   "summary": "Use spatial experiences when location, scale or action is part of the task.",
+   "sections": [
+    [
+     "Begin with the user’s environment",
+     "XR is valuable when a user needs to understand a space, inspect a product or rehearse an action. AI can add context, but it does not make an unnecessary headset necessary."
+    ],
+    [
+     "Give the guide something useful to know",
+     "An assistant in a virtual showroom could answer from approved product information. A cultural guide could connect questions to exhibit material. The experience needs a maintained knowledge source and clear boundaries."
+    ],
+    [
+     "Connect the conversation to the workflow",
+     "A question may become an enquiry, a training need or an issue to review. The interesting opportunity is connecting that context to the right team or system—not simply placing a chatbot inside a 3D scene."
+    ],
+    [
+     "Prototype before making promises",
+     "Device constraints, interaction design and content quality all affect the result. Prototype a bounded scenario, test it with its intended audience and validate domain-specific requirements before deployment."
+    ],
+    [
+     "Build on demonstrated foundations",
+     "Takhaial’s XR work provides practical experience in interactive environments. AI-enabled extensions are a direction we can explore with clients, not features we retroactively attribute to earlier projects."
+    ]
+   ]
+  }
+ ],
+ "solutions": [
+  {
+   "slug": "sales-and-service",
+   "name": "Sales & customer operations",
+   "headline": "Keep every inquiry moving.",
+   "lead": "Connect the first question to a qualified brief, a responsible owner and a clear follow-up.",
+   "problem": "Forms, website conversations and messages often arrive without enough context. Teams repeat questions, copy data and lose track of the next step.",
+   "flow": [
+    "Receive the inquiry",
+    "Extract the context",
+    "Check missing details",
+    "Route to the right owner",
+    "Prepare the follow-up"
+   ],
+   "scenarios": [
+    "Lead intake and qualification",
+    "Customer support triage",
+    "Quotation and brief preparation"
+   ],
+   "guardrail": "A person approves external commitments. The system should not invent prices, availability or promises.",
+   "service": "ai-agents"
+  },
+  {
+   "slug": "business-operations",
+   "name": "Business operations",
+   "headline": "Clear ownership. Fewer manual steps.",
+   "lead": "Bring requests, documents, approvals and updates into a workflow people can follow.",
+   "problem": "Operational work becomes fragile when its state lives in scattered chats and spreadsheets. The first opportunity is often a small, repeatable process—not a company-wide transformation.",
+   "flow": [
+    "Capture the request",
+    "Validate the inputs",
+    "Request approval",
+    "Create the next action",
+    "Report the outcome"
+   ],
+   "scenarios": [
+    "Document processing and review",
+    "Internal requests and approvals",
+    "Status reporting and exception routing"
+   ],
+   "guardrail": "Missing information or an uncertain result goes to review. Irreversible actions need explicit authority.",
+   "service": "ai-automation"
+  },
+  {
+   "slug": "training-and-experiences",
+   "name": "Training & connected experiences",
+   "headline": "When knowledge needs to become action.",
+   "lead": "Explore how AI guidance, real-time software and XR can work together around training, products and complex environments.",
+   "problem": "A static document is not always the best way to explain a spatial task. An immersive scene alone is not always enough either. The right combination depends on the learner, environment and risk.",
+   "flow": [
+    "Understand the task",
+    "Design the learning loop",
+    "Prototype the interaction",
+    "Add contextual guidance",
+    "Evaluate and refine"
+   ],
+   "scenarios": [
+    "Interactive product demonstrations",
+    "Guided spatial learning",
+    "AI-assisted simulation concepts"
+   ],
+   "guardrail": "These are solution directions, not claims of certified training or validated safety outcomes. Deployment needs domain review and target-device testing.",
+   "service": "immersive-experiences"
+  }
+ ]
+}

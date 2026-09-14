@@ -1,75 +1,43 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "npm ci",
-  "buildCommand": "VITE_PUBLIC_PREVIEW=true npm run build",
-  "outputDirectory": "dist",
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/phook",
       "destination": "https://app.takhaialtech.com/phook",
       "permanent": false
     },
-    {
-      "source": "/services/ai",
-      "destination": "/services/ai-automation",
-      "permanent": true
-    },
-    {
-      "source": "/services/vr",
-      "destination": "/services/immersive-experiences",
-      "permanent": true
-    },
-    {
-      "source": "/services/ar",
-      "destination": "/services/immersive-experiences",
-      "permanent": true
-    },
-    {
-      "source": "/services/mobile-apps",
-      "destination": "/services/systems-integration",
-      "permanent": true
-    },
-    {
-      "source": "/services/advertising",
-      "destination": "/services/ai-creative-pipelines",
-      "permanent": true
-    },
+    { "source": "/services/:slug", "destination": "/services#:slug", "permanent": true },
+    { "source": "/industries/:slug", "destination": "/industries#:slug", "permanent": true },
+    { "source": "/insights/:slug", "destination": "/insights#:slug", "permanent": true },
+    { "source": "/work/:slug", "destination": "/work#:slug", "permanent": true },
     { "source": "/solutions", "destination": "/industries", "permanent": true },
-    {
-      "source": "/solutions/:slug",
-      "destination": "/industries",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    { "source": "/smartegypt", "destination": "/smartegypt/index.html" },
-    { "source": "/smartegypt/", "destination": "/smartegypt/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/solutions/:slug", "destination": "/industries", "permanent": true },
+    { "source": "/privacy", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/studio", "destination": "/", "permanent": false }
   ],
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/(css|js|fonts)/(.*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
-      "source": "/fonts/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/takhaial/media/(.*)",
+      "source": "/assets/img/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
+    },
+    {
+      "source": "/assets/video/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
       ]
     }
   ]
