@@ -6,11 +6,13 @@
    footer columns.
    ============================================================ */
 
-/* pega.com renders its mobile hero with 99.2px side padding — a quirk of the
-   u-bolt-padding-*-xlarge classes never shrinking below desktop. 99.2px is a
-   1:1 clone of the live mobile hero; 30px matches every other section. */
+/* pega.com renders its mobile hero with a flat 99.2px side padding — a quirk of
+   the u-bolt-padding-*-xlarge classes never shrinking below desktop. On a tablet
+   that reads as generous; on a 390px phone it eats half the screen, leaving the
+   artwork 200px wide and the headline broken over five lines. So the clone keeps
+   pega's figure as the ceiling and lets it fall to the site's own 30px gutter. */
 :root{
-  --hero-pad-mobile:99.2px;
+  --hero-pad-mobile:clamp(30px,8vw,99.2px);
 }
 
 /* ---------------- pieces that only exist on mobile ---------------- */
@@ -175,11 +177,11 @@
   .hero__inner{padding:0;width:100%;}
   .hero__slide.is-active{
     grid-template-columns:1fr;gap:0;min-height:0;
-    padding:120px var(--hero-pad-mobile) 72px;
+    padding:clamp(56px,12vw,120px) var(--hero-pad-mobile) 72px;
   }
   .hero__copy{max-width:none;}
   .hero__media{order:-1;margin-bottom:26px;}
-  .hero__media img{width:auto;max-width:100%;margin:0 auto;border-radius:0;}
+  .hero__media img{width:auto;max-width:100%;margin:0 auto;border-radius:14px;}
   .hero h1,.hero__title{font-size:41.6px;line-height:49.92px;margin-bottom:21.6px;}
   .hero__copy p{font-size:17px;max-width:none;}
   .hero .btn-row{flex-direction:column;align-items:flex-start;gap:10px;margin-top:24px;}

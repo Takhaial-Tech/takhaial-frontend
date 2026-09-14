@@ -45,16 +45,16 @@ def build_home():
     slides = [
         ("Custom AI and automation <em>for your operation</em>",
          "We build one process properly — document handling, safety monitoring, enquiry response, reporting — and connect it to the systems you already use.",
-         "ai-cinematic-poster", "Takhaial Tech AI and automation",
+         "hero-operation", "Scattered work resolving into one ordered system",
          ("Talk to our team", "contact.html"), ("See what we build", "services.html")),
-        ("You see the numbers <em>before you commit</em>",
-         "We map how the work moves today, build one system that handles it, then measure the result against how the process ran before.",
-         "product-validation", "Interactive product validation",
-         ("How we work", "approach.html"), ("Start with one process", "contact.html")),
         ("When the work has to <em>be seen to be understood</em>",
          "Virtual showrooms, spatial demonstrations and guided training. Real-time 3D is the engineering foundation under our AI work, not a side business.",
          "lexus-vr-showroom", "Lexus VR showroom",
          ("Explore the work", "work.html"), ("XR &amp; spatial", "services.html#immersive-experiences")),
+        ("You see the numbers <em>before you commit</em>",
+         "We map how the work moves today, build one system that handles it, then measure the result against how the process ran before.",
+         "product-validation", "Interactive product validation",
+         ("How we work", "approach.html"), ("Start with one process", "contact.html")),
     ]
     track = ""
     for i, (title, body, media, alt, a, b) in enumerate(slides):
